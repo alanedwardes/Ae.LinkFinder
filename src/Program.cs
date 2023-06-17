@@ -12,6 +12,8 @@ namespace Ae.LinkFinder
     {
         public static async Task Main()
         {
+            Console.WriteLine("Bootstrapping");
+
             var provider = new ServiceCollection()
                 .AddLogging(x => x.AddConsole())
                 .BuildServiceProvider();
@@ -84,6 +86,8 @@ namespace Ae.LinkFinder
             {
                 try
                 {
+                    serviceProvider.GetRequiredService<ILogger<Program>>().LogInformation("Getting links with source {Source}", source);
+
                     var links = await source.GetLinks(token);
 
                     var unseen = await tracker.GetUnseenLinks(links, token);
