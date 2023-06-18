@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
 using System.Text.RegularExpressions;
 
 namespace Ae.LinkFinder.Sources
@@ -10,6 +11,7 @@ namespace Ae.LinkFinder.Sources
     {
         public sealed class Configuration
         {
+            public Uri SeleniumAddress { get; set; }
             public Uri GroupAddress { get; set; }
         }
 
@@ -26,7 +28,7 @@ namespace Ae.LinkFinder.Sources
         {
             _logger.LogInformation("Loading {Address}", _configuration.GroupAddress);
 
-            var driver = new ChromeDriver();
+            var driver = new RemoteWebDriver(_configuration.SeleniumAddress, new ChromeOptions());
 
             driver.Navigate().GoToUrl(_configuration.GroupAddress);
 

@@ -1,4 +1,4 @@
-FROM selenium/standalone-chrome:114.0
+FROM mcr.microsoft.com/dotnet/runtime:6.0
 
 ADD build/output /opt/aelinkfinder
 
