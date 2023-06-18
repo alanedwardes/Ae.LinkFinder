@@ -92,6 +92,14 @@ namespace Ae.LinkFinder
         {
             while (true)
             {
+                DateTime nextUtc = cronExpression.GetNextOccurrence(DateTime.UtcNow) ?? throw new InvalidOperationException($"Unable to get next occurance of {cronExpression}");
+
+                var delay = nextUtc - DateTime.UtcNow;
+
+                serviceProvider.GetRequiredService<ILogger<Program>>().LogInformation("Next occurance is {NextUtc}, waiting {Delay}", nextUtc, delay);
+
+                await Task.Delay(delay, token);
+
                 try
                 {
                     serviceProvider.GetRequiredService<ILogger<Program>>().LogInformation("Getting links with source {Source}", source);
@@ -113,9 +121,6 @@ namespace Ae.LinkFinder
                 {
                     serviceProvider.GetRequiredService<ILogger<Program>>().LogCritical(ex, "Exception from finder");
                 }
-
-                DateTime nextUtc = cronExpression.GetNextOccurrence(DateTime.UtcNow) ?? throw new InvalidOperationException($"Unable to get next occurance of {cronExpression}");
-                await Task.Delay(nextUtc - DateTime.UtcNow, token);
             }
         }
     }
