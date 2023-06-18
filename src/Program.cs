@@ -18,12 +18,16 @@ namespace Ae.LinkFinder
                 .AddLogging(x => x.AddConsole())
                 .BuildServiceProvider();
 
+            var logger = provider.GetRequiredService<ILogger<Program>>();
+
             var rawConfiguration = new ConfigurationBuilder()
                 .AddJsonFile("config.json")
                 .AddJsonFile("config.secret.json", true)
                 .Build();
 
             var configuration = GetConfiguration<LinkFinderConfiguration>(rawConfiguration);
+
+            logger.LogInformation("Loaded configuration with {Finders} finders", configuration.Finders.Count);
 
             var tasks = new List<Task>();
 
@@ -37,7 +41,11 @@ namespace Ae.LinkFinder
                 tasks.Add(GetLinks(cron, source, tracker, destinations, CancellationToken.None, provider));
             }
 
+            logger.LogInformation("Started {Tasks} tasks", tasks.Count);
+
             await Task.WhenAll(tasks);
+
+            logger.LogInformation("Exiting");
         }
 
         private static TConfiguration GetConfiguration<TConfiguration>(IConfiguration rawConfiguration) where TConfiguration : new()
@@ -103,7 +111,7 @@ namespace Ae.LinkFinder
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    serviceProvider.GetRequiredService<ILogger<Program>>().LogCritical(ex, "Exception from finder");
                 }
 
                 DateTime nextUtc = cronExpression.GetNextOccurrence(DateTime.UtcNow) ?? throw new InvalidOperationException($"Unable to get next occurance of {cronExpression}");
