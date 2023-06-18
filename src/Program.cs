@@ -21,8 +21,8 @@ namespace Ae.LinkFinder
             var logger = provider.GetRequiredService<ILogger<Program>>();
 
             var rawConfiguration = new ConfigurationBuilder()
-                .AddJsonFile("config.json")
-                .AddJsonFile("config.secret.json", true)
+                .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "config.json"))
+                .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "config.secret.json"), true)
                 .Build();
 
             var configuration = GetConfiguration<LinkFinderConfiguration>(rawConfiguration);
