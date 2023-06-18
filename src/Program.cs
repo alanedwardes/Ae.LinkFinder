@@ -38,7 +38,7 @@ namespace Ae.LinkFinder
                 var tracker = GetTracker(finder.Tracker, provider);
                 var destinations = finder.Destinations.Select(x => GetDestination(x, provider)).ToList();
 
-                tasks.Add(GetLinks(cron, source, tracker, destinations, CancellationToken.None, provider));
+                tasks.Add(GetLinks(cron, source, tracker, destinations, CancellationToken.None, provider, finder.Testing));
             }
 
             logger.LogInformation("Started {Tasks} tasks", tasks.Count);
@@ -61,6 +61,8 @@ namespace Ae.LinkFinder
             {
                 case "facebook":
                     return ActivatorUtilities.CreateInstance<FacebookGroupPostSource>(serviceProvider, GetConfiguration<FacebookGroupPostSource.Configuration>(type.Configuration));
+                case "twitter":
+                    return ActivatorUtilities.CreateInstance<TwitterSource>(serviceProvider, GetConfiguration<TwitterSource.Configuration>(type.Configuration));
                 default:
                     throw new InvalidOperationException();
             }
@@ -88,9 +90,9 @@ namespace Ae.LinkFinder
             }
         }
 
-        private static async Task GetLinks(CronExpression cronExpression, ILinkSource source, ILinkTracker tracker, IList<ILinkDestination> destinations, CancellationToken token, IServiceProvider serviceProvider)
+        private static async Task GetLinks(CronExpression cronExpression, ILinkSource source, ILinkTracker tracker, IList<ILinkDestination> destinations, CancellationToken token, IServiceProvider serviceProvider, bool testing)
         {
-            while (true)
+            do
             {
                 DateTime nextUtc = cronExpression.GetNextOccurrence(DateTime.UtcNow) ?? throw new InvalidOperationException($"Unable to get next occurance of {cronExpression}");
 
@@ -98,7 +100,10 @@ namespace Ae.LinkFinder
 
                 serviceProvider.GetRequiredService<ILogger<Program>>().LogInformation("Next occurance is {NextUtc}, waiting {Delay}", nextUtc, delay);
 
-                await Task.Delay(delay, token);
+                if (!testing)
+                {
+                    await Task.Delay(delay, token);
+                }
 
                 try
                 {
@@ -122,6 +127,7 @@ namespace Ae.LinkFinder
                     serviceProvider.GetRequiredService<ILogger<Program>>().LogCritical(ex, "Exception from finder");
                 }
             }
+            while (!testing);
         }
     }
 }
