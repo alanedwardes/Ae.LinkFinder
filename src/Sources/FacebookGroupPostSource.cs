@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
 
 namespace Ae.LinkFinder.Sources
 {
@@ -26,8 +27,7 @@ namespace Ae.LinkFinder.Sources
         {
             _logger.LogInformation("Loading {Address}", _configuration.GroupAddress);
 
-            //var driver = new RemoteWebDriver(_configuration.SeleniumAddress, new ChromeOptions());
-            var driver = new ChromeDriver();
+            var driver = new RemoteWebDriver(_configuration.SeleniumAddress, new ChromeOptions());
 
             driver.Navigate().GoToUrl(_configuration.GroupAddress);
 
