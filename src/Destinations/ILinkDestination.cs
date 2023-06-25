@@ -1,7 +1,9 @@
-﻿namespace Ae.LinkFinder.Destinations
+﻿using Ae.LinkFinder.Extractors;
+
+namespace Ae.LinkFinder.Destinations
 {
     public interface ILinkDestination
     {
-        Task PostLinks(ISet<Uri> links);
+        Task PostLinks(IEnumerable<ExtractedPost> posts);
     }
 }

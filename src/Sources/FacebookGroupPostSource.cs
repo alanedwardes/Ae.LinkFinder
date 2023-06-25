@@ -2,12 +2,10 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Remote;
-using System.Text.RegularExpressions;
 
 namespace Ae.LinkFinder.Sources
 {
-    public sealed class FacebookGroupPostSource : ILinkSource
+    public sealed class FacebookGroupPostSource : IContentSource
     {
         public sealed class Configuration
         {
@@ -24,11 +22,12 @@ namespace Ae.LinkFinder.Sources
             _configuration = configuration;
         }
 
-        public async Task<ISet<Uri>> GetLinks(CancellationToken token)
+        public async Task<SourceDocument> GetContent(CancellationToken token)
         {
             _logger.LogInformation("Loading {Address}", _configuration.GroupAddress);
 
-            var driver = new RemoteWebDriver(_configuration.SeleniumAddress, new ChromeOptions());
+            //var driver = new RemoteWebDriver(_configuration.SeleniumAddress, new ChromeOptions());
+            var driver = new ChromeDriver();
 
             driver.Navigate().GoToUrl(_configuration.GroupAddress);
 
@@ -68,19 +67,17 @@ namespace Ae.LinkFinder.Sources
 
             builder.Perform();
 
-            var regex = new Regex("(?<type>posts|permalink)\\\\?\\/(?<id>[0-9]+)");
-
             _logger.LogInformation("Exporting page source");
 
-            var matches = regex.Matches(driver.PageSource);
+            var sourceDocument = new SourceDocument
+            {
+                Body = driver.PageSource,
+                Source = new Uri(driver.Url, UriKind.Absolute)
+            };
 
             driver.Quit();
 
-            var links = matches.Select(x => x.Groups["id"].ToString()).Select(x => new Uri($"{_configuration.GroupAddress}posts/{x}/")).ToHashSet();
-
-            _logger.LogInformation("Found {Links} links out of {Matches} matches", links.Count, matches.Count);
-
-            return links;
+            return sourceDocument;
         }
     }
 }

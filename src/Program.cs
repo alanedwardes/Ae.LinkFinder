@@ -1,4 +1,5 @@
 ﻿using Ae.LinkFinder.Destinations;
+using Ae.LinkFinder.Extractors;
 using Ae.LinkFinder.Sources;
 using Ae.LinkFinder.Trackers;
 using Cronos;
@@ -35,10 +36,11 @@ namespace Ae.LinkFinder
             {
                 var cron = CronExpression.Parse(finder.Cron);
                 var source = GetSource(finder.Source, provider);
+                var extractor = GetExtractor(finder.Extractor, provider);
                 var tracker = GetTracker(finder.Tracker, provider);
                 var destinations = finder.Destinations.Select(x => GetDestination(x, provider)).ToList();
 
-                tasks.Add(GetLinks(cron, source, tracker, destinations, CancellationToken.None, provider, finder.Testing));
+                tasks.Add(GetLinks(cron, source, extractor, tracker, destinations, CancellationToken.None, provider, finder.Testing));
             }
 
             logger.LogInformation("Started {Tasks} tasks", tasks.Count);
@@ -55,7 +57,7 @@ namespace Ae.LinkFinder
             return configuration;
         }
 
-        private static ILinkSource GetSource(LinkFinderType type, IServiceProvider serviceProvider)
+        private static IContentSource GetSource(LinkFinderType type, IServiceProvider serviceProvider)
         {
             switch (type.Type)
             {
@@ -63,6 +65,17 @@ namespace Ae.LinkFinder
                     return ActivatorUtilities.CreateInstance<FacebookGroupPostSource>(serviceProvider, GetConfiguration<FacebookGroupPostSource.Configuration>(type.Configuration));
                 case "twitter":
                     return ActivatorUtilities.CreateInstance<TwitterSource>(serviceProvider, GetConfiguration<TwitterSource.Configuration>(type.Configuration));
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        private static IPostExtractor GetExtractor(LinkFinderType type, IServiceProvider serviceProvider)
+        {
+            switch (type.Type)
+            {
+                case "facebookhtml":
+                    return ActivatorUtilities.CreateInstance<FacebookGroupHtmlPostExtractor>(serviceProvider);
                 default:
                     throw new InvalidOperationException();
             }
@@ -90,7 +103,7 @@ namespace Ae.LinkFinder
             }
         }
 
-        private static async Task GetLinks(CronExpression cronExpression, ILinkSource source, ILinkTracker tracker, IList<ILinkDestination> destinations, CancellationToken token, IServiceProvider serviceProvider, bool testing)
+        private static async Task GetLinks(CronExpression cronExpression, IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IList<ILinkDestination> destinations, CancellationToken token, IServiceProvider serviceProvider, bool testing)
         {
             do
             {
@@ -109,15 +122,17 @@ namespace Ae.LinkFinder
                 {
                     serviceProvider.GetRequiredService<ILogger<Program>>().LogInformation("Getting links with source {Source}", source);
 
-                    var links = await source.GetLinks(token);
+                    var content = await source.GetContent(token);
 
-                    var unseen = await tracker.GetUnseenLinks(links, token);
+                    var posts = await extractor.ExtractPosts(content);
 
-                    serviceProvider.GetRequiredService<ILogger<Program>>().LogInformation("Found {Unseen} unseen links of {Total} total", unseen.Count, links.Count);
+                    var unseen = await tracker.GetUnseenLinks(posts.Select(x => x.Permalink), token);
+
+                    serviceProvider.GetRequiredService<ILogger<Program>>().LogInformation("Found {Unseen} unseen links of {Total} total", unseen.Count(), posts.Count);
 
                     foreach (var destination in destinations)
                     {
-                        await destination.PostLinks(unseen);
+                        await destination.PostLinks(posts.Where(x => unseen.Contains(x.Permalink)));
                     }
 
                     await tracker.SetLinksSeen(unseen, token);

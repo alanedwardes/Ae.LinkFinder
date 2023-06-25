@@ -11,12 +11,12 @@
 
         public FileLinkTracker(Configuration configuration) => _configuration = configuration;
 
-        public async Task SetLinksSeen(ISet<Uri> links, CancellationToken token)
+        public async Task SetLinksSeen(IEnumerable<Uri> links, CancellationToken token)
         {
             await File.AppendAllLinesAsync(_configuration.File, links.Select(x => x.ToString()), token);
         }
 
-        public async Task<ISet<Uri>> GetUnseenLinks(ISet<Uri> links, CancellationToken token)
+        public async Task<IEnumerable<Uri>> GetUnseenLinks(IEnumerable<Uri> links, CancellationToken token)
         {
             if (!File.Exists(_configuration.File))
             {

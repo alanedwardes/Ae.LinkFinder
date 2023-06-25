@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Ae.LinkFinder.Extractors;
+using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
+using System.Text.Json.Serialization;
 
 namespace Ae.LinkFinder.Destinations
 {
@@ -16,7 +18,24 @@ namespace Ae.LinkFinder.Destinations
 
         public sealed class RocketChatPayload
         {
+            public sealed class RocketChatAttachment
+            {
+                [JsonPropertyName("title")]
+                public string Title { get; set; }
+                [JsonPropertyName("title_link")]
+                public string TitleLink { get; set; }
+                [JsonPropertyName("text")]
+                public string Text { get; set; }
+                [JsonPropertyName("image_url")]
+                public string ImageUrl { get; set; }
+                [JsonPropertyName("color")]
+                public string Color { get; set; }
+            }
+
+            [JsonPropertyName("text")]
             public string Text { get; set; }
+            [JsonPropertyName("attachments")]
+            public IList<RocketChatAttachment> Attachments { get; set; } = new List<RocketChatAttachment>();
         }
 
         public RocketChatWebhookDestination(ILogger<RocketChatWebhookDestination> logger, Configuration configuration)
@@ -25,29 +44,29 @@ namespace Ae.LinkFinder.Destinations
             _configuration = configuration;
         }
 
-        public async Task PostLinks(ISet<Uri> links)
+        public async Task PostLinks(IEnumerable<ExtractedPost> posts)
         {
-            var random = new Random();
-
             using (var httpClient = new HttpClient())
             {
-                foreach (var link in links)
+                foreach (var post in posts)
                 {
                     var payload = new RocketChatPayload
                     {
-                        Text = link.ToString()
+                        Text = post.Content
                     };
 
-                    _logger.LogInformation("Posting {Link} to Rocket Chat", link);
+                    foreach (var media in post.Media)
+                    {
+                        payload.Attachments.Add(new RocketChatPayload.RocketChatAttachment
+                        {
+                            ImageUrl = media.ToString()
+                        });
+                    }
+
+                    _logger.LogInformation("Posting {Link} to Rocket Chat", post.Permalink);
                     var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload);
 
                     response.EnsureSuccessStatusCode();
-
-                    if (links.Count > 0)
-                    {
-                        // To prevent spamming links (and causing a lot of requests to get previews etc)
-                        await Task.Delay(TimeSpan.FromSeconds(random.NextDouble() * _configuration.MaximumPostDelaySeconds));
-                    }
                 }
             }
         }

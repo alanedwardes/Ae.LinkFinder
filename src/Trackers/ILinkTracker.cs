@@ -2,7 +2,7 @@
 {
     public interface ILinkTracker
     {
-        Task<ISet<Uri>> GetUnseenLinks(ISet<Uri> links, CancellationToken token);
-        Task SetLinksSeen(ISet<Uri> links, CancellationToken token);
+        Task<IEnumerable<Uri>> GetUnseenLinks(IEnumerable<Uri> links, CancellationToken token);
+        Task SetLinksSeen(IEnumerable<Uri> links, CancellationToken token);
     }
 }

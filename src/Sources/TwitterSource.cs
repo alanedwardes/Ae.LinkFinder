@@ -3,11 +3,10 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
-using System.Text.RegularExpressions;
 
 namespace Ae.LinkFinder.Sources
 {
-    public sealed class TwitterSource : ILinkSource
+    public sealed class TwitterSource : IContentSource
     {
         public sealed class Configuration
         {
@@ -24,7 +23,7 @@ namespace Ae.LinkFinder.Sources
             _configuration = configuration;
         }
 
-        public async Task<ISet<Uri>> GetLinks(CancellationToken token)
+        public async Task<SourceDocument> GetContent(CancellationToken token)
         {
             _logger.LogInformation("Loading {Address}", _configuration.TwitterHandle);
 
@@ -64,19 +63,27 @@ namespace Ae.LinkFinder.Sources
 
             builder.Perform();
 
-            var regex = new Regex(_configuration.TwitterHandle + "\\/status\\/(?<id>[0-9]+)");
+            //var regex = new Regex(_configuration.TwitterHandle + "\\/status\\/(?<id>[0-9]+)");
 
             _logger.LogInformation("Exporting page source");
 
-            var matches = regex.Matches(driver.PageSource);
+            //var matches = regex.Matches(driver.PageSource);
+
+            var sourceDocument = new SourceDocument
+            {
+                Body = driver.PageSource,
+                Source = new Uri(driver.Url, UriKind.Absolute)
+            };
 
             driver.Quit();
 
-            var links = matches.Select(x => x.Groups["id"].ToString()).Select(x => new Uri($"{baseUri}/status/{x}")).ToHashSet();
+            return sourceDocument;
 
-            _logger.LogInformation("Found {Links} links out of {Matches} matches", links.Count, matches.Count);
+            //var links = matches.Select(x => x.Groups["id"].ToString()).Select(x => new Uri($"{baseUri}/status/{x}")).ToHashSet();
 
-            return links;
+            //_logger.LogInformation("Found {Links} links out of {Matches} matches", links.Count, matches.Count);
+
+            //return links;
         }
     }
 }
