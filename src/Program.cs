@@ -81,7 +81,7 @@ namespace Ae.LinkFinder
             }
         }
 
-        private static ILinkDestination GetDestination(LinkFinderType type, IServiceProvider serviceProvider)
+        private static IExtractedPostDestination GetDestination(LinkFinderType type, IServiceProvider serviceProvider)
         {
             switch (type.Type)
             {
@@ -103,7 +103,7 @@ namespace Ae.LinkFinder
             }
         }
 
-        private static async Task GetLinks(CronExpression cronExpression, IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IList<ILinkDestination> destinations, CancellationToken token, IServiceProvider serviceProvider, bool testing)
+        private static async Task GetLinks(CronExpression cronExpression, IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IList<IExtractedPostDestination> destinations, CancellationToken token, IServiceProvider serviceProvider, bool testing)
         {
             do
             {
@@ -132,7 +132,7 @@ namespace Ae.LinkFinder
 
                     foreach (var destination in destinations)
                     {
-                        await destination.PostLinks(posts.Where(x => unseen.Contains(x.Permalink)));
+                        await destination.ShareExtractedPosts(posts.Where(x => unseen.Contains(x.Permalink)));
                     }
 
                     await tracker.SetLinksSeen(unseen, token);

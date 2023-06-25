@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Ae.LinkFinder.Destinations
 {
-    public sealed class RocketChatWebhookDestination : ILinkDestination
+    public sealed class RocketChatWebhookDestination : IExtractedPostDestination
     {
         public sealed class Configuration
         {
@@ -44,7 +44,7 @@ namespace Ae.LinkFinder.Destinations
             _configuration = configuration;
         }
 
-        public async Task PostLinks(IEnumerable<ExtractedPost> posts)
+        public async Task ShareExtractedPosts(IEnumerable<ExtractedPost> posts)
         {
             using (var httpClient = new HttpClient())
             {
@@ -52,14 +52,16 @@ namespace Ae.LinkFinder.Destinations
                 {
                     var payload = new RocketChatPayload
                     {
-                        Text = post.Content
+                        Text = post.Author + ": " + post.Content,
                     };
 
                     foreach (var media in post.Media)
                     {
                         payload.Attachments.Add(new RocketChatPayload.RocketChatAttachment
                         {
-                            ImageUrl = media.ToString()
+                            ImageUrl = media.ToString(),
+                            Title = post.Author,
+                            TitleLink = media.ToString()
                         });
                     }
 
