@@ -4,7 +4,7 @@
   },
   "finders": [
     {
-      "testing": "true",
+      "testing": false,
       "cron": "* * * * *",
       "tracker": {
         "type": "File",
@@ -20,6 +20,30 @@
       },
       "extractor": {
         "type": "FacebookHtml"
+      },
+      "destinations": [
+        {
+          "type": "Console"
+        }
+      ]
+    },
+    {
+      "testing": true,
+      "cron": "* * * * *",
+      "tracker": {
+        "type": "File",
+        "configuration": {
+          "file": "seen.txt"
+        }
+      },
+      "source": {
+        "type": "Twitter",
+        "configuration": {
+          "profileAddress": "https://twitter.com/microsoft"
+        }
+      },
+      "extractor": {
+        "type": "TwitterHtml"
       },
       "destinations": [
         {

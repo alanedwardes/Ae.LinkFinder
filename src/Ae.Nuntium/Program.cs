@@ -91,7 +91,9 @@ namespace Ae.Nuntium
             switch (type.Type)
             {
                 case "FacebookHtml":
-                    return ActivatorUtilities.CreateInstance<FacebookGroupHtmlPostExtractor>(serviceProvider);
+                    return ActivatorUtilities.CreateInstance<FacebookGroupHtmlExtractor>(serviceProvider);
+                case "TwitterHtml":
+                    return ActivatorUtilities.CreateInstance<TwitterHtmlExtractor>(serviceProvider);
                 default:
                     throw new InvalidOperationException();
             }

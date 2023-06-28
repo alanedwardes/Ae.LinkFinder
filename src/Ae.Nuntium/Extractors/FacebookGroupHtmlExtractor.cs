@@ -5,11 +5,11 @@ using System.Web;
 
 namespace Ae.Nuntium.Extractors
 {
-    public sealed class FacebookGroupHtmlPostExtractor : IPostExtractor
+    public sealed class FacebookGroupHtmlExtractor : IPostExtractor
     {
-        private readonly ILogger<FacebookGroupHtmlPostExtractor> _logger;
+        private readonly ILogger<FacebookGroupHtmlExtractor> _logger;
 
-        public FacebookGroupHtmlPostExtractor(ILogger<FacebookGroupHtmlPostExtractor> logger)
+        public FacebookGroupHtmlExtractor(ILogger<FacebookGroupHtmlExtractor> logger)
         {
             _logger = logger;
         }

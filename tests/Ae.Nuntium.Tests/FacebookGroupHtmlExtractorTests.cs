@@ -7,12 +7,12 @@ using Xunit;
 
 namespace Ae.Nuntium.Tests;
 
-public class FacebookGroupHtmlPostExtractorTests
+public class FacebookGroupHtmlExtractorTests
 {
     [Fact]
     public async Task ExtractPosts()
     {
-        var extractor = new FacebookGroupHtmlPostExtractor(NullLogger<FacebookGroupHtmlPostExtractor>.Instance);
+        var extractor = new FacebookGroupHtmlExtractor(NullLogger<FacebookGroupHtmlExtractor>.Instance);
 
         var posts = await extractor.ExtractPosts(new SourceDocument { Body = File.ReadAllText("Files/group1.html") });
 

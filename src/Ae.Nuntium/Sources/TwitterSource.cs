@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Ae.Nuntium.Services;
+using Microsoft.Extensions.Logging;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Remote;
 
 namespace Ae.Nuntium.Sources
 {
@@ -10,28 +9,27 @@ namespace Ae.Nuntium.Sources
     {
         public sealed class Configuration
         {
-            public Uri SeleniumAddress { get; set; }
-            public Uri TwitterHandle { get; set; }
+            public Uri ProfileAddress { get; set; }
         }
 
         private readonly ILogger<TwitterSource> _logger;
+        private readonly ISeleniumDriverFactory _seleniumDriverFactory;
         private readonly Configuration _configuration;
 
-        public TwitterSource(ILogger<TwitterSource> logger, Configuration configuration)
+        public TwitterSource(ILogger<TwitterSource> logger, ISeleniumDriverFactory seleniumDriverFactory, Configuration configuration)
         {
             _logger = logger;
+            _seleniumDriverFactory = seleniumDriverFactory;
             _configuration = configuration;
         }
 
         public async Task<SourceDocument> GetContent(CancellationToken token)
         {
-            _logger.LogInformation("Loading {Address}", _configuration.TwitterHandle);
+            _logger.LogInformation("Loading {Address}", _configuration.ProfileAddress);
 
-            IWebDriver driver = new RemoteWebDriver(_configuration.SeleniumAddress, new ChromeOptions());
+            IWebDriver driver = _seleniumDriverFactory.CreateWebDriver();
 
-            var baseUri = "https://twitter.com/" + _configuration.TwitterHandle;
-
-            driver.Navigate().GoToUrl(baseUri);
+            driver.Navigate().GoToUrl(_configuration.ProfileAddress);
 
             Actions builder = new Actions(driver);
 
@@ -63,11 +61,7 @@ namespace Ae.Nuntium.Sources
 
             builder.Perform();
 
-            //var regex = new Regex(_configuration.TwitterHandle + "\\/status\\/(?<id>[0-9]+)");
-
             _logger.LogInformation("Exporting page source");
-
-            //var matches = regex.Matches(driver.PageSource);
 
             var sourceDocument = new SourceDocument
             {
@@ -78,12 +72,6 @@ namespace Ae.Nuntium.Sources
             driver.Quit();
 
             return sourceDocument;
-
-            //var links = matches.Select(x => x.Groups["id"].ToString()).Select(x => new Uri($"{baseUri}/status/{x}")).ToHashSet();
-
-            //_logger.LogInformation("Found {Links} links out of {Matches} matches", links.Count, matches.Count);
-
-            //return links;
         }
     }
 }
