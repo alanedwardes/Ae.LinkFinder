@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Ae.LinkFinder
+namespace Ae.Nuntium
 {
     public sealed class LinkFinderType
     {

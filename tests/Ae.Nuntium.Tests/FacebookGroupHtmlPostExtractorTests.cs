@@ -1,11 +1,11 @@
-using Ae.LinkFinder.Extractors;
-using Ae.LinkFinder.Sources;
+using Ae.Nuntium.Extractors;
+using Ae.Nuntium.Sources;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using Xunit;
 
-namespace Ae.LinkFinder.Tests;
+namespace Ae.Nuntium.Tests;
 
 public class FacebookGroupHtmlPostExtractorTests
 {

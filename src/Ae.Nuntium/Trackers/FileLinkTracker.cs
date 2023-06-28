@@ -1,4 +1,4 @@
-﻿namespace Ae.LinkFinder.Trackers
+﻿namespace Ae.Nuntium.Trackers
 {
     public sealed class FileLinkTracker : ILinkTracker
     {

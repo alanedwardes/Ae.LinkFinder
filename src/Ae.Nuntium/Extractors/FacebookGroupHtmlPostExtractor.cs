@@ -1,9 +1,9 @@
-﻿using Ae.LinkFinder.Sources;
+﻿using Ae.Nuntium.Sources;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using System.Web;
 
-namespace Ae.LinkFinder.Extractors
+namespace Ae.Nuntium.Extractors
 {
     public sealed class FacebookGroupHtmlPostExtractor : IPostExtractor
     {

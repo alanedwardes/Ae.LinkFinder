@@ -1,4 +1,4 @@
-﻿namespace Ae.LinkFinder.Sources
+﻿namespace Ae.Nuntium.Sources
 {
     public interface IContentSource
     {

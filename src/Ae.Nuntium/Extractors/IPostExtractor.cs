@@ -1,6 +1,6 @@
-﻿using Ae.LinkFinder.Sources;
+﻿using Ae.Nuntium.Sources;
 
-namespace Ae.LinkFinder.Extractors
+namespace Ae.Nuntium.Extractors
 {
     public interface IPostExtractor
     {

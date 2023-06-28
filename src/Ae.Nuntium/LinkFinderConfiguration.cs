@@ -1,4 +1,4 @@
-﻿namespace Ae.LinkFinder
+﻿namespace Ae.Nuntium
 {
     public sealed class LinkFinderConfiguration
     {

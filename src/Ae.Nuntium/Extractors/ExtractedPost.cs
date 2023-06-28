@@ -1,4 +1,4 @@
-﻿namespace Ae.LinkFinder.Extractors
+﻿namespace Ae.Nuntium.Extractors
 {
     public sealed class ExtractedPost
     {

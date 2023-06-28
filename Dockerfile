@@ -6,4 +6,4 @@ VOLUME ["/data"]
 
 WORKDIR /data
 
-ENTRYPOINT ["/opt/aelinkfinder/Ae.LinkFinder"]
+ENTRYPOINT ["/opt/aelinkfinder/Ae.Nuntium"]

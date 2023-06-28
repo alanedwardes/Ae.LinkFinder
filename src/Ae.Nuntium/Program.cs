@@ -1,13 +1,13 @@
-﻿using Ae.LinkFinder.Destinations;
-using Ae.LinkFinder.Extractors;
-using Ae.LinkFinder.Sources;
-using Ae.LinkFinder.Trackers;
+﻿using Ae.Nuntium.Destinations;
+using Ae.Nuntium.Extractors;
+using Ae.Nuntium.Sources;
+using Ae.Nuntium.Trackers;
 using Cronos;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Ae.LinkFinder
+namespace Ae.Nuntium
 {
     public class Program
     {

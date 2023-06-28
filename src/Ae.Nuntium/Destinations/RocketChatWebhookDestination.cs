@@ -1,9 +1,9 @@
-﻿using Ae.LinkFinder.Extractors;
+﻿using Ae.Nuntium.Extractors;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 
-namespace Ae.LinkFinder.Destinations
+namespace Ae.Nuntium.Destinations
 {
     public sealed class RocketChatWebhookDestination : IExtractedPostDestination
     {

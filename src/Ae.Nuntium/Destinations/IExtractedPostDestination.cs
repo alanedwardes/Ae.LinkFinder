@@ -1,6 +1,6 @@
-﻿using Ae.LinkFinder.Extractors;
+﻿using Ae.Nuntium.Extractors;
 
-namespace Ae.LinkFinder.Destinations
+namespace Ae.Nuntium.Destinations
 {
     public interface IExtractedPostDestination
     {

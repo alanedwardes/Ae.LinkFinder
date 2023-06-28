@@ -4,20 +4,20 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 
-namespace Ae.LinkFinder.Sources
+namespace Ae.Nuntium.Sources
 {
-    public sealed class TwitterSource : IContentSource
+    public sealed class FacebookGroupPostSource : IContentSource
     {
         public sealed class Configuration
         {
             public Uri SeleniumAddress { get; set; }
-            public Uri TwitterHandle { get; set; }
+            public Uri GroupAddress { get; set; }
         }
 
-        private readonly ILogger<TwitterSource> _logger;
+        private readonly ILogger<FacebookGroupPostSource> _logger;
         private readonly Configuration _configuration;
 
-        public TwitterSource(ILogger<TwitterSource> logger, Configuration configuration)
+        public FacebookGroupPostSource(ILogger<FacebookGroupPostSource> logger, Configuration configuration)
         {
             _logger = logger;
             _configuration = configuration;
@@ -25,13 +25,11 @@ namespace Ae.LinkFinder.Sources
 
         public async Task<SourceDocument> GetContent(CancellationToken token)
         {
-            _logger.LogInformation("Loading {Address}", _configuration.TwitterHandle);
+            _logger.LogInformation("Loading {Address}", _configuration.GroupAddress);
 
             var driver = new RemoteWebDriver(_configuration.SeleniumAddress, new ChromeOptions());
 
-            var baseUri = "https://twitter.com/" + _configuration.TwitterHandle;
-
-            driver.Navigate().GoToUrl(baseUri);
+            driver.Navigate().GoToUrl(_configuration.GroupAddress);
 
             Actions builder = new Actions(driver);
 
@@ -51,6 +49,12 @@ namespace Ae.LinkFinder.Sources
 
             await Task.Delay(RandomShortTimeSpan(), token);
 
+            // Accept cookies
+            builder.KeyDown(Keys.Shift);
+            PressKey(Keys.Tab);
+            builder.KeyUp(Keys.Shift);
+            PressKey(Keys.Enter);
+
             // Scroll down the page to load a few more posts
             PressKey(Keys.End);
             PressKey(Keys.End);
@@ -63,11 +67,7 @@ namespace Ae.LinkFinder.Sources
 
             builder.Perform();
 
-            //var regex = new Regex(_configuration.TwitterHandle + "\\/status\\/(?<id>[0-9]+)");
-
             _logger.LogInformation("Exporting page source");
-
-            //var matches = regex.Matches(driver.PageSource);
 
             var sourceDocument = new SourceDocument
             {
@@ -78,12 +78,6 @@ namespace Ae.LinkFinder.Sources
             driver.Quit();
 
             return sourceDocument;
-
-            //var links = matches.Select(x => x.Groups["id"].ToString()).Select(x => new Uri($"{baseUri}/status/{x}")).ToHashSet();
-
-            //_logger.LogInformation("Found {Links} links out of {Matches} matches", links.Count, matches.Count);
-
-            //return links;
         }
     }
 }

@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ae.LinkFinder.csproj" />
+    <ProjectReference Include="..\..\src\Ae.Nuntium\Ae.Nuntium.csproj" />
   </ItemGroup>
 
   <ItemGroup>
