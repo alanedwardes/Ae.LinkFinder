@@ -2,7 +2,7 @@
 
 namespace Ae.Nuntium
 {
-    public sealed class LinkFinderType
+    public sealed class ConfiguredType
     {
         public string Type { get; set; }
         public IConfigurationSection Configuration { get; set; }

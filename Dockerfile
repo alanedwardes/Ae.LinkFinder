@@ -1,9 +1,9 @@
 FROM mcr.microsoft.com/dotnet/runtime:6.0
 
-ADD build/output /opt/aelinkfinder
+ADD build/output /opt/nuntium
 
 VOLUME ["/data"]
 
 WORKDIR /data
 
-ENTRYPOINT ["/opt/aelinkfinder/Ae.Nuntium"]
+ENTRYPOINT ["/opt/nuntium/Ae.Nuntium"]

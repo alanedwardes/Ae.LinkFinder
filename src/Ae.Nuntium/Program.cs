@@ -1,5 +1,6 @@
 ﻿using Ae.Nuntium.Destinations;
 using Ae.Nuntium.Extractors;
+using Ae.Nuntium.Services;
 using Ae.Nuntium.Sources;
 using Ae.Nuntium.Trackers;
 using Cronos;
@@ -15,18 +16,20 @@ namespace Ae.Nuntium
         {
             Console.WriteLine("Bootstrapping");
 
-            var provider = new ServiceCollection()
-                .AddLogging(x => x.AddConsole())
-                .BuildServiceProvider();
-
-            var logger = provider.GetRequiredService<ILogger<Program>>();
-
             var rawConfiguration = new ConfigurationBuilder()
                 .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "config.json"))
                 .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "config.secret.json"), true)
                 .Build();
 
-            var configuration = GetConfiguration<LinkFinderConfiguration>(rawConfiguration);
+            var configuration = GetConfiguration<MainConfiguration>(rawConfiguration);
+
+            var provider = new ServiceCollection()
+                .AddLogging(x => x.AddConsole())
+                .AddHttpClient()
+                .AddSingleton(x => GetSeleniumDriver(configuration.SeleniumDriver, x))
+                .BuildServiceProvider();
+
+            var logger = provider.GetRequiredService<ILogger<Program>>();
 
             logger.LogInformation("Loaded configuration with {Finders} finders", configuration.Finders.Count);
 
@@ -57,46 +60,61 @@ namespace Ae.Nuntium
             return configuration;
         }
 
-        private static IContentSource GetSource(LinkFinderType type, IServiceProvider serviceProvider)
+        private static ISeleniumDriverFactory GetSeleniumDriver(ConfiguredType type, IServiceProvider serviceProvider)
         {
             switch (type.Type)
             {
-                case "facebook":
-                    return ActivatorUtilities.CreateInstance<FacebookGroupPostSource>(serviceProvider, GetConfiguration<FacebookGroupPostSource.Configuration>(type.Configuration));
-                case "twitter":
+                case "Remote":
+                    return ActivatorUtilities.CreateInstance<RemoteSeleniumDriverFactory>(serviceProvider, GetConfiguration<RemoteSeleniumDriverFactory.Configuration>(type.Configuration));
+                case "GoogleChrome":
+                    return ActivatorUtilities.CreateInstance<GoogleChromeSeleniumDriverFactory>(serviceProvider);
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        private static IContentSource GetSource(ConfiguredType type, IServiceProvider serviceProvider)
+        {
+            switch (type.Type)
+            {
+                case "Facebook":
+                    return ActivatorUtilities.CreateInstance<FacebookGroupSource>(serviceProvider, GetConfiguration<FacebookGroupSource.Configuration>(type.Configuration));
+                case "Twitter":
                     return ActivatorUtilities.CreateInstance<TwitterSource>(serviceProvider, GetConfiguration<TwitterSource.Configuration>(type.Configuration));
                 default:
                     throw new InvalidOperationException();
             }
         }
 
-        private static IPostExtractor GetExtractor(LinkFinderType type, IServiceProvider serviceProvider)
+        private static IPostExtractor GetExtractor(ConfiguredType type, IServiceProvider serviceProvider)
         {
             switch (type.Type)
             {
-                case "facebookhtml":
+                case "FacebookHtml":
                     return ActivatorUtilities.CreateInstance<FacebookGroupHtmlPostExtractor>(serviceProvider);
                 default:
                     throw new InvalidOperationException();
             }
         }
 
-        private static IExtractedPostDestination GetDestination(LinkFinderType type, IServiceProvider serviceProvider)
+        private static IExtractedPostDestination GetDestination(ConfiguredType type, IServiceProvider serviceProvider)
         {
             switch (type.Type)
             {
-                case "rocketchatwebhook":
+                case "RocketChatWebhook":
                     return ActivatorUtilities.CreateInstance<RocketChatWebhookDestination>(serviceProvider, GetConfiguration<RocketChatWebhookDestination.Configuration>(type.Configuration));
+                case "Console":
+                    return ActivatorUtilities.CreateInstance<ConsoleDestination>(serviceProvider);
                 default:
                     throw new InvalidOperationException();
             }
         }
 
-        private static ILinkTracker GetTracker(LinkFinderType type, IServiceProvider serviceProvider)
+        private static ILinkTracker GetTracker(ConfiguredType type, IServiceProvider serviceProvider)
         {
             switch (type.Type)
             {
-                case "file":
+                case "File":
                     return ActivatorUtilities.CreateInstance<FileLinkTracker>(serviceProvider, GetConfiguration<FileLinkTracker.Configuration>(type.Configuration));
                 default:
                     throw new InvalidOperationException();

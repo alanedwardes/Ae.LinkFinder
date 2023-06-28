@@ -27,7 +27,7 @@ namespace Ae.Nuntium.Sources
         {
             _logger.LogInformation("Loading {Address}", _configuration.TwitterHandle);
 
-            var driver = new RemoteWebDriver(_configuration.SeleniumAddress, new ChromeOptions());
+            IWebDriver driver = new RemoteWebDriver(_configuration.SeleniumAddress, new ChromeOptions());
 
             var baseUri = "https://twitter.com/" + _configuration.TwitterHandle;
 

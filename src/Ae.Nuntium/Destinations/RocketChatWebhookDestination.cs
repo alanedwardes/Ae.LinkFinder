@@ -10,10 +10,10 @@ namespace Ae.Nuntium.Destinations
         public sealed class Configuration
         {
             public Uri WebhookAddress { get; set; }
-            public int MaximumPostDelaySeconds { get; set; } = 20;
         }
 
         private readonly ILogger<RocketChatWebhookDestination> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly Configuration _configuration;
 
         public sealed class RocketChatPayload
@@ -38,38 +38,38 @@ namespace Ae.Nuntium.Destinations
             public IList<RocketChatAttachment> Attachments { get; set; } = new List<RocketChatAttachment>();
         }
 
-        public RocketChatWebhookDestination(ILogger<RocketChatWebhookDestination> logger, Configuration configuration)
+        public RocketChatWebhookDestination(ILogger<RocketChatWebhookDestination> logger, IHttpClientFactory httpClientFactory, Configuration configuration)
         {
             _logger = logger;
+            _httpClientFactory = httpClientFactory;
             _configuration = configuration;
         }
 
         public async Task ShareExtractedPosts(IEnumerable<ExtractedPost> posts)
         {
-            using (var httpClient = new HttpClient())
+            using var httpClient = _httpClientFactory.CreateClient();
+
+            foreach (var post in posts)
             {
-                foreach (var post in posts)
+                var payload = new RocketChatPayload
                 {
-                    var payload = new RocketChatPayload
+                    Text = post.Author + ": " + post.Content,
+                };
+
+                foreach (var media in post.Media)
+                {
+                    payload.Attachments.Add(new RocketChatPayload.RocketChatAttachment
                     {
-                        Text = post.Author + ": " + post.Content,
-                    };
-
-                    foreach (var media in post.Media)
-                    {
-                        payload.Attachments.Add(new RocketChatPayload.RocketChatAttachment
-                        {
-                            ImageUrl = media.ToString(),
-                            Title = post.Author,
-                            TitleLink = media.ToString()
-                        });
-                    }
-
-                    _logger.LogInformation("Posting {Link} to Rocket Chat", post.Permalink);
-                    var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload);
-
-                    response.EnsureSuccessStatusCode();
+                        ImageUrl = media.ToString(),
+                        Title = post.Author,
+                        TitleLink = media.ToString()
+                    });
                 }
+
+                _logger.LogInformation("Posting {Link} to Rocket Chat", post.Permalink);
+                using var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload);
+
+                response.EnsureSuccessStatusCode();
             }
         }
     }

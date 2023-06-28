@@ -1,25 +1,25 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Ae.Nuntium.Services;
+using Microsoft.Extensions.Logging;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Remote;
 
 namespace Ae.Nuntium.Sources
 {
-    public sealed class FacebookGroupPostSource : IContentSource
+    public sealed class FacebookGroupSource : IContentSource
     {
         public sealed class Configuration
         {
-            public Uri SeleniumAddress { get; set; }
             public Uri GroupAddress { get; set; }
         }
 
-        private readonly ILogger<FacebookGroupPostSource> _logger;
+        private readonly ILogger<FacebookGroupSource> _logger;
         private readonly Configuration _configuration;
+        private readonly ISeleniumDriverFactory _seleniumDriverFactory;
 
-        public FacebookGroupPostSource(ILogger<FacebookGroupPostSource> logger, Configuration configuration)
+        public FacebookGroupSource(ILogger<FacebookGroupSource> logger, ISeleniumDriverFactory seleniumDriverFactory, Configuration configuration)
         {
             _logger = logger;
+            _seleniumDriverFactory = seleniumDriverFactory;
             _configuration = configuration;
         }
 
@@ -27,11 +27,11 @@ namespace Ae.Nuntium.Sources
         {
             _logger.LogInformation("Loading {Address}", _configuration.GroupAddress);
 
-            var driver = new RemoteWebDriver(_configuration.SeleniumAddress, new ChromeOptions());
+            var driver = _seleniumDriverFactory.CreateWebDriver();
 
             driver.Navigate().GoToUrl(_configuration.GroupAddress);
 
-            Actions builder = new Actions(driver);
+            Actions builder = new(driver);
 
             TimeSpan RandomShortTimeSpan()
             {

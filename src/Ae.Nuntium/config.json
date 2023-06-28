@@ -1,2 +1,31 @@
 {
+  "seleniumDriver": {
+    "type": "GoogleChrome"
+  },
+  "finders": [
+    {
+      "testing": "true",
+      "cron": "* * * * *",
+      "tracker": {
+        "type": "File",
+        "configuration": {
+          "file": "seen.txt"
+        }
+      },
+      "source": {
+        "type": "Facebook",
+        "configuration": {
+          "groupAddress": "https://www.facebook.com/groups/dogspotting/"
+        }
+      },
+      "extractor": {
+        "type": "FacebookHtml"
+      },
+      "destinations": [
+        {
+          "type": "Console"
+        }
+      ]
+    }
+  ]
 }
