@@ -1,7 +1,5 @@
 using Ae.Nuntium.Extractors;
 using Ae.Nuntium.Sources;
-using System.Text.Encodings.Web;
-using System.Text.Json;
 using Xunit;
 
 namespace Ae.Nuntium.Tests;

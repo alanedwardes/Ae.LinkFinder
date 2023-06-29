@@ -98,6 +98,8 @@ namespace Ae.Nuntium
                     return ActivatorUtilities.CreateInstance<TwitterHtmlExtractor>(serviceProvider);
                 case "Rss":
                     return ActivatorUtilities.CreateInstance<RssExtractor>(serviceProvider);
+                case "Regex":
+                    return ActivatorUtilities.CreateInstance<RegexExtractor>(serviceProvider, GetConfiguration<RegexExtractor.Configuration>(type.Configuration));
                 default:
                     throw new InvalidOperationException();
             }
