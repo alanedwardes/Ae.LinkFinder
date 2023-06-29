@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/">
+    <channel>
+        <title>The Keyword</title>
+        <link>https://blog.google/</link>
+        <description>The Keyword</description>
+        <atom:link href="https://blog.google/rss/" rel="self"></atom:link>
+        <language>en-us</language>
+        <lastBuildDate>Thu, 29 Jun 2023 17:00:00 +0000</lastBuildDate>
+        <image>
+            <url>https://blog.google/static/blogv2/images/google.png</url>
+            <title>The Keyword</title>
+            <link>https://blog.google/</link>
+        </image>
+        <item>
+            <title>Our approach to news regulation</title>
+            <link>https://blog.google/products/news/google-news-regulation/</link>
+            <description>When efforts to support journalism conflict with the core principles of the
+                open web and undermine our products, we have to adjust how we operate.</description>
+            <pubDate>Thu, 29 Jun 2023 17:00:00 +0000</pubDate>
+            <guid>https://blog.google/products/news/google-news-regulation/</guid>
+            <category>News</category>
+            <category>Public Policy</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>Our approach to news regulation</title>
+                <description>When efforts to support journalism conflict with the core principles of
+                    the open web and undermine our products, we have to adjust how we operate.</description>
+                <site_name>Google</site_name>
+                <url>https://blog.google/products/news/google-news-regulation/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Cris Turner</name>
+                <title>VP, Government Affairs &amp; Public Policy</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>New features coming to Fact Check Explorer</title>
+            <link>https://blog.google/products/news/new-features-coming-to-fact-check-explorer/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/fact_check_explorer_hero2.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>This illustration shows drawings of a whale tail and other pictures
+                with check marks or x's next to them</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/fact_check_explorer_hero2.max-600x600.format-webp.webp"&gt;Google
+                is expanding tools for academics, fact checkers, journalists and people interested
+                in checking things for themselves.</description>
+            <pubDate>Thu, 29 Jun 2023 16:00:00 +0000</pubDate>
+            <guid>https://blog.google/products/news/new-features-coming-to-fact-check-explorer/</guid>
+            <category>News</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>New features coming to Fact Check Explorer</title>
+                <description>Google is expanding tools for academics, fact checkers, journalists and
+                    people interested in checking things for themselves.</description>
+                <site_name>Google</site_name>
+                <url>https://blog.google/products/news/new-features-coming-to-fact-check-explorer/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Mevan Babakar</name>
+                <title>News and Information Credibility Lead</title>
+                <department></department>
+                <company></company>
+            </author>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Avneesh Sud</name>
+                <title>Software Engineer</title>
+                <department>Google Research</department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>How I use Google products to experience Hajj and celebrate Eid</title>
+            <link>https://blog.google/outreach-initiatives/diversity/hajj-eid-el-adha-2023/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/horizontal_-_Masjid_al_Haram.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>Author's photo of pilgrims in Mecca</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/horizontal_-_Masjid_al_Haram.max-600x600.format-webp.webp"&gt;As
+                the Muslim community gets ready for Hajj and Eid al Adha this year, one Googler
+                shares how Google products helped him experience this special season.</description>
+            <pubDate>Wed, 28 Jun 2023 15:00:00 +0000</pubDate>
+            <guid>https://blog.google/outreach-initiatives/diversity/hajj-eid-el-adha-2023/</guid>
+            <category>Diversity and Inclusion</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>How I use Google products to experience Hajj and celebrate Eid</title>
+                <description>As the Muslim community gets ready for Hajj and Eid al Adha this year,
+                    one Googler shares how Google products helped him experience this special
+                    season.</description>
+                <site_name>Google</site_name>
+                <url>https://blog.google/outreach-initiatives/diversity/hajj-eid-el-adha-2023/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Adam Rahman</name>
+                <title>Global Head, Google Marketing Finance, Risk Management and Compliance</title>
+                <department>Interbelief Network Co-Lead</department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>How 5 apps were redesigned for foldable phones</title>
+            <link>https://blog.google/products/android/app-redesign-foldables/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_Keyword_blog_Header_Ima.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>A collection of three Pixel Fold’s show the Deezer app, Google
+                Weather experience, and SideChef app.</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Android_Keyword_blog_Header_Ima.max-600x600.format-webp.webp"&gt;See
+                how five different apps made the most of the extra screen space on Android foldable
+                phones.</description>
+            <pubDate>Tue, 27 Jun 2023 17:00:00 +0000</pubDate>
+            <guid>https://blog.google/products/android/app-redesign-foldables/</guid>
+            <category>Android</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>How 5 apps were redesigned for foldable phones</title>
+                <description>See how five different apps made the most of the extra screen space on
+                    Android foldable phones.</description>
+                <site_name>Google</site_name>
+                <url>https://blog.google/products/android/app-redesign-foldables/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Maru Ahues Bouza</name>
+                <title>Director, Android Developer and Partner Relations</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>Google for Brazil 2023: Technology at the service of Brazilians</title>
+            <link>https://blog.google/around-the-globe/google-latin-america/google-for-brazil-2023/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/fabiocoelho-g4br_credit_LuAith.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>Fabio Coelho, a white man wearing a black suit in onstage in front of
+                an audience. In the back, there’s a screen with a pink background and his name and
+                occupation title.</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/fabiocoelho-g4br_credit_LuAith.max-600x600.format-webp.webp"&gt;At
+                our fifth Google for Brazil event in São Paulo, we announced an Economic Impact
+                Report, a new Cloud office and a number of local partnerships.</description>
+            <pubDate>Tue, 27 Jun 2023 15:04:00 +0000</pubDate>
+            <guid>https://blog.google/around-the-globe/google-latin-america/google-for-brazil-2023/</guid>
+            <category>Google in Latin America</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>Google for Brazil 2023: Technology at the service of Brazilians</title>
+                <description>At our fifth Google for Brazil event in São Paulo, we announced an
+                    Economic Impact Report, a new Cloud office and a number of local partnerships.</description>
+                <site_name>Google</site_name>
+                <url>
+                    https://blog.google/around-the-globe/google-latin-america/google-for-brazil-2023/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Fabio Coelho</name>
+                <title>VP, Google and Country Director, Brazil</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>Transparency and brand safety on Google Video Partners</title>
+            <link>
+                https://blog.google/products/ads-commerce/transparency-and-brand-safety-on-google-video-partners/</link>
+            <description>Advertisers control where their content appears and publishers must follow
+                our clear policies.</description>
+            <pubDate>Tue, 27 Jun 2023 15:00:00 +0000</pubDate>
+            <guid>
+                https://blog.google/products/ads-commerce/transparency-and-brand-safety-on-google-video-partners/</guid>
+            <category>Google Ads</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>Transparency and brand safety on Google Video Partners</title>
+                <description>Advertisers control where their content appears and publishers must
+                    follow our clear policies.</description>
+                <site_name>Google</site_name>
+                <url>
+                    https://blog.google/products/ads-commerce/transparency-and-brand-safety-on-google-video-partners/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Marvin Renaud</name>
+                <title>Director, Global Video Solutions</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>4 shopping tools to help you avoid buyer's remorse</title>
+            <link>https://blog.google/products/shopping/google-search-tools-shop-smarter/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/buyers_remorse_hero_1.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>An illustration of a phone showing models wearing green shirts and
+                blue pants on its screen. Shopping-related icons float in the background, including
+                shopping carts and star reviews.</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/buyers_remorse_hero_1.max-600x600.format-webp.webp"&gt;Compare
+                prices, virtually try on clothes and research complex purchases before you buy.</description>
+            <pubDate>Tue, 27 Jun 2023 13:00:00 +0000</pubDate>
+            <guid>https://blog.google/products/shopping/google-search-tools-shop-smarter/</guid>
+            <category>Shopping</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>4 shopping tools to help you avoid buyer's remorse</title>
+                <description>Compare prices, virtually try on clothes and research complex purchases
+                    before you buy.</description>
+                <site_name>Google</site_name>
+                <url>https://blog.google/products/shopping/google-search-tools-shop-smarter/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Julie Black</name>
+                <title>Director of Product, Consumer Shopping</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>Bringing football fans closer to the game with Pixel and the FA</title>
+            <link>
+                https://blog.google/products/pixel/bringing-football-fans-closer-to-the-game-with-pixel-and-the-fa/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Pixel_UK_FA_Partnership_Announc.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>An image of a football field with a huddle of female football players
+                (the Lionesses) with an England football logo and Google Pixel logo over the
+                photograph</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Pixel_UK_FA_Partnership_Announc.max-600x600.format-webp.webp"&gt;Being
+                a football fan in 2023 is very different to what it was, even a few years ago. The
+                modern football fan today is streaming matches on the move, breaking down the ta…</description>
+            <pubDate>Mon, 26 Jun 2023 09:00:00 +0000</pubDate>
+            <guid>
+                https://blog.google/products/pixel/bringing-football-fans-closer-to-the-game-with-pixel-and-the-fa/</guid>
+            <category>UK</category>
+            <category>Google in Europe</category>
+            <category>Pixel</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>Bringing football fans closer to the game with Pixel and the FA</title>
+                <description></description>
+                <site_name>Google</site_name>
+                <url>
+                    https://blog.google/products/pixel/bringing-football-fans-closer-to-the-game-with-pixel-and-the-fa/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Eileen Mannion</name>
+                <title>VP, Marketing UKI</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>6 barriers to computer science education for girls in Europe</title>
+            <link>
+                https://blog.google/around-the-globe/google-europe/computer-science-education-girls-/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/CS_Edu_title_image.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>Three young girls are sitting down side by side, with a laptop on the
+                lap of the middle girl</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/CS_Edu_title_image.max-600x600.format-webp.webp"&gt;Google
+                and Canvas8 research on the barriers preventing girls in Europe from choosing
+                computer science as a career.</description>
+            <pubDate>Fri, 23 Jun 2023 06:00:00 +0000</pubDate>
+            <guid>
+                https://blog.google/around-the-globe/google-europe/computer-science-education-girls-/</guid>
+            <category>Google in Europe</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>6 barriers to computer science education for girls in Europe</title>
+                <description>Google and Canvas8 research on the barriers preventing girls in Europe
+                    from choosing computer science as a career.</description>
+                <site_name>Google</site_name>
+                <url>
+                    https://blog.google/around-the-globe/google-europe/computer-science-education-girls-/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Shanika Hope</name>
+                <title>Director of Education for Social Impact</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>Our support for early warning systems</title>
+            <link>
+                https://blog.google/outreach-initiatives/sustainability/early-warning-system-wmo-google/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/WMO.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>A wooden dock sits in a flooded area.</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/WMO.max-600x600.format-webp.webp"&gt;Google’s
+                Yossi Matias and WMO Director of Infrastructure Anthony Rea discuss the Early
+                Warnings For All Initiative.</description>
+            <pubDate>Thu, 22 Jun 2023 23:45:00 +0000</pubDate>
+            <guid>
+                https://blog.google/outreach-initiatives/sustainability/early-warning-system-wmo-google/</guid>
+            <category>Sustainability</category>
+            <category>AI</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>Our support for early warning systems</title>
+                <description>Google’s Yossi Matias and WMO Director of Infrastructure Anthony Rea
+                    discuss the Early Warnings For All Initiative.</description>
+                <site_name>Google</site_name>
+                <url>
+                    https://blog.google/outreach-initiatives/sustainability/early-warning-system-wmo-google/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Yossi Matias</name>
+                <title>VP, Engineering and Research</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>Explore our new Google for Education App Hub</title>
+            <link>https://blog.google/outreach-initiatives/education/google-education-hub-teachers/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/2108-GDU___ISTE_-_App_Catalog_B.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>Image of the Google for Education App Hub website, with app icons
+                swirling around text that reads “The power of great apps and Google”</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/2108-GDU___ISTE_-_App_Catalog_B.max-600x600.format-webp.webp"&gt;We’re
+                announcing new Google for Education updates at ISTE, North America’s biggest edtech
+                conference.</description>
+            <pubDate>Thu, 22 Jun 2023 15:00:00 +0000</pubDate>
+            <guid>https://blog.google/outreach-initiatives/education/google-education-hub-teachers/</guid>
+            <category>Chromebooks</category>
+            <category>Developers</category>
+            <category>Education</category>
+            <category>Google Workspace</category>
+            <category>Classroom</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>Explore our new Google for Education App Hub</title>
+                <description>We’re announcing new Google for Education updates at ISTE, North
+                    America’s biggest edtech conference.</description>
+                <site_name>Google</site_name>
+                <url>
+                    https://blog.google/outreach-initiatives/education/google-education-hub-teachers/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Alisa Sommer</name>
+                <title>Global Head of EdTech Partnerships</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>New education apps and accessible content for Chromebooks</title>
+            <link>https://blog.google/outreach-initiatives/education/chromebook-iste-2023/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/2106-GDU___ISTE_-_Chrome_Blog_H.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>A drawing of students with a Chromebook surrounded by colorful shapes</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/2106-GDU___ISTE_-_Chrome_Blog_H.max-600x600.format-webp.webp"&gt;We’re
+                announcing new features like image to text on Chrome browser and updated safety
+                controls for admins in Google Admin Console.</description>
+            <pubDate>Thu, 22 Jun 2023 15:00:00 +0000</pubDate>
+            <guid>https://blog.google/outreach-initiatives/education/chromebook-iste-2023/</guid>
+            <category>Chromebooks</category>
+            <category>Accessibility</category>
+            <category>Education</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>New education apps and accessible content for Chromebooks</title>
+                <description>We’re announcing new features like image to text on Chrome browser and
+                    updated safety controls for admins in Google Admin Console.</description>
+                <site_name>Google</site_name>
+                <url>https://blog.google/outreach-initiatives/education/chromebook-iste-2023/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Jonathan Bernal</name>
+                <title>Product Manager</title>
+                <department>ChromeOS</department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>New Google for Education tools for how you teach, learn and manage</title>
+            <link>https://blog.google/outreach-initiatives/education/google-for-education-iste-2023/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google_for_Education_ISTE_23_Up.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>Graphic of product launches with colorful drawings</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google_for_Education_ISTE_23_Up.max-600x600.format-webp.webp"&gt;Today
+                at ISTE, we’re introducing new tools in Google Workspace for Education and
+                Chromebooks.</description>
+            <pubDate>Thu, 22 Jun 2023 15:00:00 +0000</pubDate>
+            <guid>https://blog.google/outreach-initiatives/education/google-for-education-iste-2023/</guid>
+            <category>Chromebooks</category>
+            <category>Google Workspace</category>
+            <category>Education</category>
+            <category>Classroom</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>New Google for Education tools for how you teach, learn and manage</title>
+                <description>Today at ISTE, we’re introducing new tools in Google Workspace for
+                    Education and Chromebooks.</description>
+                <site_name>Google</site_name>
+                <url>
+                    https://blog.google/outreach-initiatives/education/google-for-education-iste-2023/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Shantanu Sinha</name>
+                <title>VP, Product Management, Google for Education</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>New teaching and learning features in Google Workspace for Education</title>
+            <link>https://blog.google/outreach-initiatives/education/workspace-edu-updates-2023/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/2107-GDU___ISTE_-_Workspace-Cla.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>Illustration of a teacher gesturing toward a laptop. Various
+                illustrations pop out of the laptop, including a graph and a check mark.</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/2107-GDU___ISTE_-_Workspace-Cla.max-600x600.format-webp.webp"&gt;Check
+                out Google Workspace for Education’s new teaching and learning features in Google
+                Classroom, Drive, Meet and more.</description>
+            <pubDate>Thu, 22 Jun 2023 15:00:00 +0000</pubDate>
+            <guid>https://blog.google/outreach-initiatives/education/workspace-edu-updates-2023/</guid>
+            <category>Education</category>
+            <category>Google Workspace</category>
+            <category>Classroom</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>New teaching and learning features in Google Workspace for Education</title>
+                <description>Check out Google Workspace for Education’s new teaching and learning
+                    features in Google Classroom, Drive, Meet and more.</description>
+                <site_name>Google</site_name>
+                <url>https://blog.google/outreach-initiatives/education/workspace-edu-updates-2023/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Brian Hendricks</name>
+                <title>Product Manager, Google Workspace for Education</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>Support for cybersecurity clinics across the U.S.</title>
+            <link>https://blog.google/inside-google/message-ceo/commitment-cybersecurity-workforce/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/691A6845_1.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>Students at rows of desk work on desktop computers while looking at
+                large screens at the front of the room showing maps and other data. The room is dark
+                with glowing red lights.</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/691A6845_1.max-600x600.format-webp.webp"&gt;Our
+                new $20 million collaboration with the Consortium of Cybersecurity Clinics will
+                expand and create cyber clinics across the US.</description>
+            <pubDate>Thu, 22 Jun 2023 13:30:00 +0000</pubDate>
+            <guid>https://blog.google/inside-google/message-ceo/commitment-cybersecurity-workforce/</guid>
+            <category>Google.org</category>
+            <category>A message from our CEO</category>
+            <category>Safety &amp; Security</category>
+            <category>Grow with Google</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>Support for cybersecurity clinics across the U.S.</title>
+                <description>Our new $20 million collaboration with the Consortium of Cybersecurity
+                    Clinics will expand and create cyber clinics across the US.</description>
+                <site_name>Google</site_name>
+                <url>
+                    https://blog.google/inside-google/message-ceo/commitment-cybersecurity-workforce/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Sundar Pichai</name>
+                <title>CEO of Google and Alphabet</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>Northern Stories: Building digital capacity in the cultural sector</title>
+            <link>
+                https://blog.google/outreach-initiatives/arts-culture/northern-stories-building-digital-capacity-in-the-cultural-sector/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Northern_Stories_header_design.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>Collage of four photographs representing the organisations involved
+                in the Northern Stories programme</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Northern_Stories_header_design.max-600x600.format-webp.webp"&gt;Discover
+                how Arts Council England and Google Arts &amp; Culture are collaborating to support
+                the development of digital skills in creativity and culture.</description>
+            <pubDate>Thu, 22 Jun 2023 09:00:00 +0000</pubDate>
+            <guid>
+                https://blog.google/outreach-initiatives/arts-culture/northern-stories-building-digital-capacity-in-the-cultural-sector/</guid>
+            <category>Arts &amp; Culture</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>Northern Stories: Building digital capacity in the cultural sector</title>
+                <description></description>
+                <site_name>Google</site_name>
+                <url>
+                    https://blog.google/outreach-initiatives/arts-culture/northern-stories-building-digital-capacity-in-the-cultural-sector/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Sir Nicholas Serota</name>
+                <title>Chair, Arts Council England</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>11 Google Docs tips I use every day to save time</title>
+            <link>https://blog.google/products/docs/google-docs-tips/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/google_docs_tips_hero.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>Illustrated figures of people working on laptops sitting on and next
+                to a large Google Docs icon</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/google_docs_tips_hero.max-600x600.format-webp.webp"&gt;These
+                Google Docs tips can help with work, school or play.</description>
+            <pubDate>Wed, 21 Jun 2023 17:15:00 +0000</pubDate>
+            <guid>https://blog.google/products/docs/google-docs-tips/</guid>
+            <category>Google Workspace</category>
+            <category>Docs</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>11 Google Docs tips I use every day to save time</title>
+                <description>These Google Docs tips can help with work, school or play.</description>
+                <site_name>Google</site_name>
+                <url>https://blog.google/products/docs/google-docs-tips/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Ivy Levine</name>
+                <title>Contributor, The Keyword</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>Journey to ancient Egypt in Return of the Cat Mummy</title>
+            <link>
+                https://blog.google/outreach-initiatives/arts-culture/journey-to-ancient-egypt-in-return-of-the-cat-mummy/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/cat_mummy_keyword_image_1.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>Game poster showing the title “Return of the Cat Mummy” and different
+                characters found in the game. In the center the cat mummy is extending its paw to
+                touch a canopic jar.</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/cat_mummy_keyword_image_1.max-600x600.format-webp.webp"&gt;Return
+                to life as a cat mummy and help save the pharaoh’s journey of eternity in a race
+                against time.</description>
+            <pubDate>Wed, 21 Jun 2023 13:00:00 +0000</pubDate>
+            <guid>
+                https://blog.google/outreach-initiatives/arts-culture/journey-to-ancient-egypt-in-return-of-the-cat-mummy/</guid>
+            <category>Arts &amp; Culture</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>Journey to ancient Egypt in Return of the Cat Mummy</title>
+                <description></description>
+                <site_name>Google</site_name>
+                <url>
+                    https://blog.google/outreach-initiatives/arts-culture/journey-to-ancient-egypt-in-return-of-the-cat-mummy/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Salima Ikram</name>
+                <title>Distinguished Professor of Egyptology at the American University in Cairo,
+                    American Research Center in Egypt Board Member</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>A new accelerator for AI-first startups in Europe and Israel</title>
+            <link>https://blog.google/outreach-initiatives/entrepreneurs/accelerator-ai-first/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Copy_of_GFS_CLIMACC23_2537.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>A man in a yellow shirt with a ponytail speaks to a woman with dark
+                curly hair in the center of a large group of people.</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Copy_of_GFS_CLIMACC23_2537.max-600x600.format-webp.webp"&gt;This
+                10-week program supports startups using AI in their core business through tailored
+                training and mentoring by making use of the best of Google and its network.</description>
+            <pubDate>Wed, 21 Jun 2023 11:00:00 +0000</pubDate>
+            <guid>https://blog.google/outreach-initiatives/entrepreneurs/accelerator-ai-first/</guid>
+            <category>Entrepreneurs</category>
+            <category>Google in Europe</category>
+            <category>AI</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>A new accelerator for AI-first startups in Europe and Israel</title>
+                <description>This 10-week program supports startups using AI in their core business
+                    through tailored training and mentoring by making use of the best of Google and
+                    its network.</description>
+                <site_name>Google</site_name>
+                <url>https://blog.google/outreach-initiatives/entrepreneurs/accelerator-ai-first/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>Joelle Barral</name>
+                <title>Director of AI Research</title>
+                <department>Google DeepMind</department>
+                <company></company>
+            </author>
+        </item>
+        <item>
+            <title>The creative and transformational possibilities of AI</title>
+            <link>https://blog.google/technology/ai/ai-creativity/</link>
+            <media:content height="540" medium="image"
+                url="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google_blog_visual_asset.max-600x600.format-webp.webp"
+                width="540"></media:content>
+            <media:description>The words “take a moment to imagine” on a background with smaller
+                images of mountains at sunset, a Help me write prompte, and some decorative shapes.</media:description>
+            <description>&lt;img
+                src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google_blog_visual_asset.max-600x600.format-webp.webp"&gt;James
+                Manyika spoke at the Cannes Lions Festival about AI and creativity. Read excerpts
+                from his remarks.</description>
+            <pubDate>Wed, 21 Jun 2023 09:00:00 +0000</pubDate>
+            <guid>https://blog.google/technology/ai/ai-creativity/</guid>
+            <category>AI</category>
+            <og xmlns:og="http://ogp.me/ns#">
+                <type>article</type>
+                <title>The creative and transformational possibilities of AI</title>
+                <description>James Manyika spoke at the Cannes Lions Festival about AI and
+                    creativity. Read excerpts from his remarks.</description>
+                <site_name>Google</site_name>
+                <url>https://blog.google/technology/ai/ai-creativity/</url>
+            </og>
+            <author xmlns:author="http://www.w3.org/2005/Atom">
+                <name>James Manyika</name>
+                <title>Senior Vice President, Research, Technology &amp; Society</title>
+                <department></department>
+                <company></company>
+            </author>
+        </item>
+    </channel>
+</rss>

@@ -81,6 +81,8 @@ namespace Ae.Nuntium
                     return ActivatorUtilities.CreateInstance<FacebookGroupSource>(serviceProvider, GetConfiguration<FacebookGroupSource.Configuration>(type.Configuration));
                 case "Twitter":
                     return ActivatorUtilities.CreateInstance<TwitterSource>(serviceProvider, GetConfiguration<TwitterSource.Configuration>(type.Configuration));
+                case "Http":
+                    return ActivatorUtilities.CreateInstance<HttpSource>(serviceProvider, GetConfiguration<HttpSource.Configuration>(type.Configuration));
                 default:
                     throw new InvalidOperationException();
             }
@@ -94,6 +96,8 @@ namespace Ae.Nuntium
                     return ActivatorUtilities.CreateInstance<FacebookGroupHtmlExtractor>(serviceProvider);
                 case "TwitterHtml":
                     return ActivatorUtilities.CreateInstance<TwitterHtmlExtractor>(serviceProvider);
+                case "Rss":
+                    return ActivatorUtilities.CreateInstance<RssExtractor>(serviceProvider);
                 default:
                     throw new InvalidOperationException();
             }
