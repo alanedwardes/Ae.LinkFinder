@@ -35,7 +35,9 @@ namespace Ae.Nuntium
 
             var tasks = new List<Task>();
 
-            foreach (var finder in configuration.Finders)
+            var testingFinders = configuration.Finders.Where(x => x.Testing);
+
+            foreach (var finder in testingFinders.Any() ? testingFinders : configuration.Finders)
             {
                 var cron = CronExpression.Parse(finder.Cron);
                 var source = GetSource(finder.Source, provider);
@@ -111,6 +113,8 @@ namespace Ae.Nuntium
             {
                 case "RocketChatWebhook":
                     return ActivatorUtilities.CreateInstance<RocketChatWebhookDestination>(serviceProvider, GetConfiguration<RocketChatWebhookDestination.Configuration>(type.Configuration));
+                case "DiscordWebhook":
+                    return ActivatorUtilities.CreateInstance<DiscordWebhookDestination>(serviceProvider, GetConfiguration<DiscordWebhookDestination.Configuration>(type.Configuration));
                 case "Console":
                     return ActivatorUtilities.CreateInstance<ConsoleDestination>(serviceProvider);
                 default:

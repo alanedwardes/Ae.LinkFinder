@@ -51,6 +51,7 @@ namespace Ae.Nuntium.Destinations
 
             foreach (var post in posts)
             {
+                // https://docs.rocket.chat/use-rocket.chat/workspace-administration/integrations
                 var payload = new RocketChatPayload
                 {
                     Text = post.Author + ": " + post.Content,
