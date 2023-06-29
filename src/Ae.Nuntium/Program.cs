@@ -102,6 +102,8 @@ namespace Ae.Nuntium
                     return ActivatorUtilities.CreateInstance<RssExtractor>(serviceProvider);
                 case "Regex":
                     return ActivatorUtilities.CreateInstance<RegexExtractor>(serviceProvider, GetConfiguration<RegexExtractor.Configuration>(type.Configuration));
+                case "Json":
+                    return ActivatorUtilities.CreateInstance<JsonExtractor>(serviceProvider, GetConfiguration<JsonExtractor.Configuration>(type.Configuration));
                 default:
                     throw new InvalidOperationException();
             }
