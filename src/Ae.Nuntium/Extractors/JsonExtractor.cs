@@ -32,8 +32,7 @@ namespace Ae.Nuntium.Extractors
                 // NewtonsoftJsonSource MUST be registered before ReflectionSource (which is not required here)
                 // We also need the ListFormatter to process arrays
                 .AddExtensions(new ListFormatter(), new NewtonsoftJsonSource(), new DefaultSource())
-                .AddExtensions(new ListFormatter(), new NullFormatter(), new DefaultFormatter())
-                .AddExtensions(new ChooseFormatter());
+                .AddExtensions(new NullFormatter(), new DefaultFormatter(), new ChooseFormatter());
             return smart;
         }
 
