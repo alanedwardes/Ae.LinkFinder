@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<atom:link href="https://alanedwardes.com/rss.xml" rel="self" type="application/rss+xml" />
+		<title>Alan Edwardes</title>
+		<description>Blog posts for Alan Edwardes' personal blog.</description>
+		<link>https://alanedwardes.com/</link>
+		<lastBuildDate>Fri, 16 Jun 2023 23:28:20 GMT</lastBuildDate>
+		<pubDate>Sat, 25 Mar 2023 22:36:44 GMT</pubDate>
+		<ttl>1440</ttl>
+		<item>
+			<title>Running Rocket Chat on an Intel Celron CPU in 2023</title>
+			<link>https://alanedwardes.com/blog/posts/running-rocket-chat-on-intel-celron-cpu-2023/</link>
+			<guid isPermaLink="false">running-rocket-chat-on-intel-celron-cpu-2023</guid>
+			<pubDate>Sat, 25 Mar 2023 22:36:44 GMT</pubDate>
+		</item>
+		<item>
+			<title>Running Rocket Chat on a Raspberry Pi in 2023</title>
+			<link>https://alanedwardes.com/blog/posts/running-rocket-chat-on-raspberry-pi-2023/</link>
+			<guid isPermaLink="false">running-rocket-chat-on-raspberry-pi-2023</guid>
+			<pubDate>Wed, 15 Mar 2023 22:52:37 GMT</pubDate>
+		</item>
+		<item>
+			<title>Fixing UE5 Actors Disappearing when Building Lighting</title>
+			<link>https://alanedwardes.com/blog/posts/fixing-ue5-actors-disappearing-when-building-lighting/</link>
+			<guid isPermaLink="false">fixing-ue5-actors-disappearing-when-building-lighting</guid>
+			<pubDate>Sun, 01 Jan 2023 13:08:14 GMT</pubDate>
+		</item>
+		<item>
+			<title>Fixing UE5 Level Sequence Assertion</title>
+			<link>https://alanedwardes.com/blog/posts/fixing-ue5-level-sequence-assertion/</link>
+			<guid isPermaLink="false">fixing-ue5-level-sequence-assertion</guid>
+			<pubDate>Sun, 01 Jan 2023 00:58:55 GMT</pubDate>
+		</item>
+		<item>
+			<title>Raspberry Pi 4 with Docker</title>
+			<link>https://alanedwardes.com/blog/posts/raspberry-pi-with-docker/</link>
+			<guid isPermaLink="false">raspberry-pi-with-docker</guid>
+			<pubDate>Fri, 30 Dec 2022 23:30:22 GMT</pubDate>
+		</item>
+		<item>
+			<title>Fixing UE5 Chaos Events at Runtime</title>
+			<link>https://alanedwardes.com/blog/posts/enabling-ue5-chaos-events/</link>
+			<guid isPermaLink="false">enabling-ue5-chaos-events</guid>
+			<pubDate>Tue, 27 Dec 2022 13:30:07 GMT</pubDate>
+		</item>
+		<item>
+			<title>Scam Warning</title>
+			<link>https://alanedwardes.com/blog/posts/scammer-warning/</link>
+			<guid isPermaLink="false">scammer-warning</guid>
+			<pubDate>Sat, 26 Nov 2022 13:32:49 GMT</pubDate>
+		</item>
+		<item>
+			<title>Casting Video to VLC via Home Assistant</title>
+			<link>https://alanedwardes.com/blog/posts/vlc-remote-control-home-assistant/</link>
+			<guid isPermaLink="false">vlc-remote-control-home-assistant</guid>
+			<pubDate>Sun, 20 Nov 2022 22:58:44 GMT</pubDate>
+		</item>
+		<item>
+			<title>Advanced Git LFS and Jenkins</title>
+			<link>https://alanedwardes.com/blog/posts/advanced-git-lfs-and-jenkins/</link>
+			<guid isPermaLink="false">advanced-git-lfs-and-jenkins</guid>
+			<pubDate>Wed, 16 Nov 2022 22:15:34 GMT</pubDate>
+		</item>
+		<item>
+			<title>Baking Ambient Occlusion using Blender</title>
+			<link>https://alanedwardes.com/blog/posts/baking-ambient-occlusion-using-blender/</link>
+			<guid isPermaLink="false">baking-ambient-occlusion-using-blender</guid>
+			<pubDate>Sun, 02 Oct 2022 20:56:52 GMT</pubDate>
+		</item>
+		<item>
+			<title>Live GivEnergy PV Inverter Data in Home Assistant</title>
+			<link>https://alanedwardes.com/blog/posts/live-givenergy-pv-inverter-data-in-home-assistant/</link>
+			<guid isPermaLink="false">live-givenergy-pv-inverter-data-in-home-assistant</guid>
+			<pubDate>Sun, 10 Apr 2022 22:16:06 GMT</pubDate>
+		</item>
+		<item>
+			<title>Useful ffmpeg Recipes</title>
+			<link>https://alanedwardes.com/blog/posts/useful-ffmpeg-recipes/</link>
+			<guid isPermaLink="false">useful-ffmpeg-recipes</guid>
+			<pubDate>Mon, 31 Jan 2022 22:47:24 GMT</pubDate>
+		</item>
+		<item>
+			<title>Force Refresh Rocket.Chat Snap SSL Certificate via Caddy</title>
+			<link>https://alanedwardes.com/blog/posts/force-refresh-rocket-chat-ssl-certificate/</link>
+			<guid isPermaLink="false">force-refresh-rocket-chat-ssl-certificate</guid>
+			<pubDate>Sat, 29 Jan 2022 10:31:04 GMT</pubDate>
+		</item>
+		<item>
+			<title>Pushing to Public AWS Container Registry with GitHub Actions</title>
+			<link>https://alanedwardes.com/blog/posts/pushing-to-public-aws-container-registry-with-github-actions/</link>
+			<guid isPermaLink="false">pushing-to-public-aws-container-registry-with-github-actions</guid>
+			<pubDate>Sun, 23 May 2021 22:06:18 GMT</pubDate>
+		</item>
+		<item>
+			<title>Graphing Sensor Data from a Raspberry Pi with Grafana</title>
+			<link>https://alanedwardes.com/blog/posts/graphing-sensor-data-from-raspberry-pi/</link>
+			<guid isPermaLink="false">graphing-sensor-data-from-raspberry-pi</guid>
+			<pubDate>Sat, 22 May 2021 12:30:18 GMT</pubDate>
+		</item>
+		<item>
+			<title>Create Meshes from Height Maps using Blender</title>
+			<link>https://alanedwardes.com/blog/posts/create-meshes-from-height-maps-using-blender/</link>
+			<guid isPermaLink="false">create-meshes-from-height-maps-using-blender</guid>
+			<pubDate>Sun, 16 May 2021 22:46:57 GMT</pubDate>
+		</item>
+		<item>
+			<title>Recording Camera Animations for UE4 with a Phone</title>
+			<link>https://alanedwardes.com/blog/posts/recording-camera-animations-for-ue4-with-a-phone/</link>
+			<guid isPermaLink="false">recording-camera-animations-for-ue4-with-a-phone</guid>
+			<pubDate>Sat, 15 May 2021 21:07:04 GMT</pubDate>
+		</item>
+		<item>
+			<title>The Art of Mirror's Edge</title>
+			<link>https://alanedwardes.com/blog/posts/the-art-of-mirrors-edge/</link>
+			<guid isPermaLink="false">the-art-of-mirrors-edge</guid>
+			<pubDate>Sun, 11 Apr 2021 17:55:10 GMT</pubDate>
+		</item>
+		<item>
+			<title>Serving Static Websites Using Lambda@Edge</title>
+			<link>https://alanedwardes.com/blog/posts/serving-static-websites-using-lambda-at-edge/</link>
+			<guid isPermaLink="false">serving-static-websites-using-lambda-at-edge</guid>
+			<pubDate>Sat, 20 Mar 2021 16:15:53 GMT</pubDate>
+		</item>
+		<item>
+			<title>Thread Safe Random in Câ™¯</title>
+			<link>https://alanedwardes.com/blog/posts/thread-safe-random-csharp/</link>
+			<guid isPermaLink="false">thread-safe-random-csharp</guid>
+			<pubDate>Tue, 16 Mar 2021 22:00:00 GMT</pubDate>
+		</item>
+		<item>
+			<title>Spotting Fake Indie Game Key Requests</title>
+			<link>https://alanedwardes.com/blog/posts/spotting-fake-game-key-requests/</link>
+			<guid isPermaLink="false">spotting-fake-game-key-requests</guid>
+			<pubDate>Thu, 11 Mar 2021 22:40:41 GMT</pubDate>
+		</item>
+		<item>
+			<title>Jenkins Library for Unreal Engine 4</title>
+			<link>https://alanedwardes.com/blog/posts/jenkins-library-for-unreal-engine-4/</link>
+			<guid isPermaLink="false">jenkins-library-for-unreal-engine-4</guid>
+			<pubDate>Sat, 13 Feb 2021 22:51:01 GMT</pubDate>
+		</item>
+		<item>
+			<title>Three Approaches to Readable Materials in First Person Games</title>
+			<link>https://alanedwardes.com/blog/posts/three-approaches-to-readable-materials-in-first-person-games/</link>
+			<guid isPermaLink="false">three-approaches-to-readable-materials-in-first-person-games</guid>
+			<pubDate>Sun, 07 Feb 2021 16:36:36 GMT</pubDate>
+		</item>
+		<item>
+			<title>Cheap Synthetic Monitoring with AWS Lambda</title>
+			<link>https://alanedwardes.com/blog/posts/cheap-synthetic-monitoring-with-aws-lambda/</link>
+			<guid isPermaLink="false">cheap-synthetic-monitoring-with-aws-lambda</guid>
+			<pubDate>Sun, 24 Jan 2021 16:50:47 GMT</pubDate>
+		</item>
+		<item>
+			<title>Generating Mipmaps for Render Targets in UE4</title>
+			<link>https://alanedwardes.com/blog/posts/generating-mipmaps-for-render-textures-ue4/</link>
+			<guid isPermaLink="false">generating-mipmaps-for-render-textures-ue4</guid>
+			<pubDate>Thu, 24 Dec 2020 01:11:37 GMT</pubDate>
+		</item>
+		<item>
+			<title>Routing DNS over HTTPS Using Raspberry Pi</title>
+			<link>https://alanedwardes.com/blog/posts/routing-dns-over-https-using-raspberry-pi/</link>
+			<guid isPermaLink="false">routing-dns-over-https-using-raspberry-pi</guid>
+			<pubDate>Tue, 06 Oct 2020 21:43:27 GMT</pubDate>
+		</item>
+		<item>
+			<title>Tips for Building Games with Unreal Engine 4</title>
+			<link>https://alanedwardes.com/blog/posts/tips-for-building-games-with-ue4/</link>
+			<guid isPermaLink="false">tips-for-building-games-with-ue4</guid>
+			<pubDate>Sat, 03 Oct 2020 12:26:16 GMT</pubDate>
+		</item>
+		<item>
+			<title>Serving Localised Assets from S3 Using Lambda@Edge</title>
+			<link>https://alanedwardes.com/blog/posts/serving-localised-assets-from-s3-using-lambda-at-edge/</link>
+			<guid isPermaLink="false">serving-localised-assets-from-s3-using-lambda-at-edge</guid>
+			<pubDate>Sun, 17 May 2020 12:51:53 GMT</pubDate>
+		</item>
+		<item>
+			<title>Automating macOS Notarization for UE4</title>
+			<link>https://alanedwardes.com/blog/posts/automating-macos-notarization-ue4/</link>
+			<guid isPermaLink="false">automating-macos-notarization-ue4</guid>
+			<pubDate>Sat, 23 Nov 2019 16:07:15 GMT</pubDate>
+		</item>
+		<item>
+			<title>ISO Country Code to Unicode Flag in Câ™¯ and JavaScript</title>
+			<link>https://alanedwardes.com/blog/posts/country-code-to-flag-emoji-csharp/</link>
+			<guid isPermaLink="false">country-code-to-flag-emoji-csharp</guid>
+			<pubDate>Sun, 22 Jul 2018 16:48:02 GMT</pubDate>
+		</item>
+		<item>
+			<title>Serverless Git LFS for Game Development</title>
+			<link>https://alanedwardes.com/blog/posts/serverless-git-lfs-for-game-dev/</link>
+			<guid isPermaLink="false">serverless-git-lfs-for-game-dev</guid>
+			<pubDate>Sat, 06 Jan 2018 00:00:00 GMT</pubDate>
+		</item>
+		<item>
+			<title>Adding Custom Map Checks in UE4</title>
+			<link>https://alanedwardes.com/blog/posts/custom-map-checker-ue4/</link>
+			<guid isPermaLink="false">custom-map-checker-ue4</guid>
+			<pubDate>Wed, 03 Jan 2018 00:00:00 GMT</pubDate>
+		</item>
+		<item>
+			<title>Building and Deploying a React App Using AWS Lambda</title>
+			<link>https://alanedwardes.com/blog/posts/react-ci-cd-using-aws-lambda/</link>
+			<guid isPermaLink="false">react-ci-cd-using-aws-lambda</guid>
+			<pubDate>Sun, 24 Dec 2017 00:00:00 GMT</pubDate>
+		</item>
+		<item>
+			<title>Git HTTP Username and Password in Environment Variables</title>
+			<link>https://alanedwardes.com/blog/posts/git-username-password-environment-variables/</link>
+			<guid isPermaLink="false">git-username-password-environment-variables</guid>
+			<pubDate>Fri, 22 Dec 2017 00:00:00 GMT</pubDate>
+		</item>
+		<item>
+			<title>Capturing and Uploading Screenshots in UE4</title>
+			<link>https://alanedwardes.com/blog/posts/capturing-compressing-and-uploading-screenshots-ue4/</link>
+			<guid isPermaLink="false">capturing-compressing-and-uploading-screenshots-ue4</guid>
+			<pubDate>Wed, 20 Dec 2017 00:21:28 GMT</pubDate>
+		</item>
+		<item>
+			<title>Using Capsule Shadows on Large Objects in UE4</title>
+			<link>https://alanedwardes.com/blog/posts/using-capsule-shadows-moving-set-pieces-ue4/</link>
+			<guid isPermaLink="false">using-capsule-shadows-moving-set-pieces-ue4</guid>
+			<pubDate>Fri, 08 Dec 2017 10:57:27 GMT</pubDate>
+		</item>
+	</channel>
+</rss>

@@ -74,5 +74,19 @@ namespace Ae.Nuntium.Tests
 
             posts.Compare("Files/feed5.json");
         }
+
+        [Fact]
+        public async Task RssExtractorFeed6()
+        {
+            var extractor = new RssExtractor();
+
+            var posts = await extractor.ExtractPosts(new Sources.SourceDocument
+            {
+                Body = File.ReadAllText("Files/feed6.xml"),
+                Source = new Uri("https://blog.google/rss/", UriKind.Absolute)
+            });
+
+            posts.Compare("Files/feed6.json");
+        }
     }
 }
