@@ -51,10 +51,12 @@ namespace Ae.Nuntium.Destinations
 
             foreach (var post in posts)
             {
+                var text = string.Join(": ", post.Author, post.TextSummary ?? post.Permalink?.ToString());
+
                 // https://docs.rocket.chat/use-rocket.chat/workspace-administration/integrations
                 var payload = new RocketChatPayload
                 {
-                    Text = string.Join(": ", post.Author, post.TextSummary ?? post.Permalink?.ToString())
+                    Text = post.Permalink == null ? text : text + "\n\n" + post.Permalink.ToString()
                 };
 
                 foreach (var media in post.Media)
