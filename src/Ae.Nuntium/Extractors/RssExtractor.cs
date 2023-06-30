@@ -45,10 +45,13 @@ namespace Ae.Nuntium.Extractors
 
             foreach (XmlElement author in xmldoc.GetElementsByTagName("author"))
             {
-                foreach (XmlElement name in author.GetElementsByTagName("name"))
+                if (author.ChildNodes.Count > 1)
                 {
-                    author.InnerText = name.InnerText;
-                    break;
+                    foreach (XmlElement name in author.GetElementsByTagName("name"))
+                    {
+                        author.InnerText = name.InnerText;
+                        break;
+                    }
                 }
             }
 
@@ -72,7 +75,7 @@ namespace Ae.Nuntium.Extractors
             foreach (SyndicationItem item in feed.Items)
             {
                 var permalink = item.Links.FirstOrDefault()?.Uri;
-                var content = item.ElementExtensions.ReadElementExtensions<string>("encoded", "http://purl.org/rss/1.0/modules/content/").FirstOrDefault();
+                var content = item.ElementExtensions.ReadElementExtensions<string>("encoded", "http://purl.org/rss/1.0/modules/content/").FirstOrDefault() ?? (item.Content as TextSyndicationContent)?.Text;
                 var author = item.ElementExtensions.ReadElementExtensions<string>("creator", "http://purl.org/dc/elements/1.1/").FirstOrDefault() ?? item.Authors.FirstOrDefault()?.Name ?? item.Authors.FirstOrDefault()?.Email;
 
                 var extractedPost = new ExtractedPost
