@@ -10,7 +10,7 @@ namespace Ae.Nuntium.Sources
 
         public sealed class Configuration
         {
-            public Uri FeedAddress { get; set; }
+            public Uri Address { get; set; }
         }
 
         public HttpSource(ILogger<HttpSource> logger, IHttpClientFactory httpClientFactory, Configuration configuration)
@@ -23,7 +23,7 @@ namespace Ae.Nuntium.Sources
         public async Task<SourceDocument> GetContent(CancellationToken token)
         {
             using var httpClient = _httpClientFactory.CreateClient();
-            using var response = await httpClient.GetAsync(_configuration.FeedAddress, token);
+            using var response = await httpClient.GetAsync(_configuration.Address, token);
             response.EnsureSuccessStatusCode();
 
             return new SourceDocument
