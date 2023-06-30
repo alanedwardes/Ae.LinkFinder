@@ -16,7 +16,7 @@ namespace Ae.Nuntium.Tests
                 Source = new Uri("https://github.blog/feed/", UriKind.Absolute)
             });
 
-            Assert.Equal(File.ReadAllText("Files/feed1.json"), posts.ToJson());
+            posts.Compare("Files/feed1.json");
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace Ae.Nuntium.Tests
                 Source = new Uri("https://devblogs.microsoft.com/dotnet/feed/", UriKind.Absolute)
             });
 
-            Assert.Equal(File.ReadAllText("Files/feed2.json"), posts.ToJson());
+            posts.Compare("Files/feed2.json");
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Ae.Nuntium.Tests
                 Source = new Uri("https://blog.google/rss/", UriKind.Absolute)
             });
 
-            Assert.Equal(File.ReadAllText("Files/feed3.json"), posts.ToJson());
+            posts.Compare("Files/feed3.json");
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace Ae.Nuntium.Tests
                 Source = new Uri("https://blog.google/rss/", UriKind.Absolute)
             });
 
-            Assert.Equal(File.ReadAllText("Files/feed4.json"), posts.ToJson());
+            posts.Compare("Files/feed4.json");
         }
     }
 }

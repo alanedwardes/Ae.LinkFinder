@@ -90,7 +90,8 @@ namespace Ae.Nuntium.Extractors
                 var content = article.SelectSingleNode(".//div[@data-ad-preview = 'message']");
                 if (content != null)
                 {
-                    extractedPost.Content = HttpUtility.HtmlDecode(content.InnerText);
+                    extractedPost.TextSummary = HttpUtility.HtmlDecode(content.InnerText);
+                    extractedPost.RawContent = content.InnerHtml;
                 }
 
                 var permalink = extractedPost.Links.FirstOrDefault(x => x.PathAndQuery.Contains("/posts/"));
@@ -105,7 +106,7 @@ namespace Ae.Nuntium.Extractors
                     extractedPost.Permalink = builder.Uri;
                 }
 
-                if (extractedPost.Content == null && !extractedPost.Media.Any())
+                if (extractedPost.TextSummary == null && !extractedPost.Media.Any())
                 {
                     _logger.LogWarning("Unable to find any content for {Permalink}, skipping", extractedPost.Permalink);
                     continue;

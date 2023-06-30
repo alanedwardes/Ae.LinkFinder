@@ -25,6 +25,11 @@ namespace Ae.Nuntium.Extractors
                 return null;
             }
 
+            if (htmlDoc.DocumentNode.ChildNodes.Count == 1 && htmlDoc.DocumentNode.ChildNodes[0].NodeType == HtmlNodeType.Text)
+            {
+                return null;
+            }
+
             return htmlDoc;
         }
 
@@ -74,24 +79,30 @@ namespace Ae.Nuntium.Extractors
                 {
                     Title = item.Title?.Text,
                     Permalink = permalink,
-                    Content = content,
                     Author = author
                 };
 
-                HtmlDocument? html;
-                if (content == null)
+                var summaryHtml = TryParseHtml(item.Summary?.Text);
+                if (summaryHtml == null)
                 {
-                    extractedPost.Content = item.Summary?.Text;
-                    html = TryParseHtml(item.Summary?.Text);
+                    extractedPost.TextSummary = item.Summary?.Text;
                 }
                 else
                 {
-                    extractedPost.Summary = item.Summary?.Text;
-                    extractedPost.Content = content;
-                    html = TryParseHtml(content);
+                    extractedPost.TextSummary = summaryHtml.DocumentNode.InnerText;
                 }
 
-                foreach (var node in GetChildrenAndSelf(html.DocumentNode))
+                var contentHtml = TryParseHtml(content);
+                if (contentHtml != null)
+                {
+                    extractedPost.RawContent = contentHtml.DocumentNode.InnerHtml;
+                }
+                else
+                {
+                    extractedPost.RawContent = content ?? summaryHtml?.DocumentNode.InnerHtml;
+                }
+
+                foreach (var node in GetChildrenAndSelf(contentHtml?.DocumentNode ?? summaryHtml?.DocumentNode ?? new HtmlDocument().DocumentNode))
                 {
                     if (node.Name == "a")
                     {

@@ -21,19 +21,19 @@ namespace Ae.Nuntium.Destinations
             public sealed class RocketChatAttachment
             {
                 [JsonPropertyName("title")]
-                public string Title { get; set; }
+                public string? Title { get; set; }
                 [JsonPropertyName("title_link")]
-                public string TitleLink { get; set; }
+                public string? TitleLink { get; set; }
                 [JsonPropertyName("text")]
-                public string Text { get; set; }
+                public string? Text { get; set; }
                 [JsonPropertyName("image_url")]
-                public string ImageUrl { get; set; }
+                public string? ImageUrl { get; set; }
                 [JsonPropertyName("color")]
-                public string Color { get; set; }
+                public string? Color { get; set; }
             }
 
             [JsonPropertyName("text")]
-            public string Text { get; set; }
+            public string? Text { get; set; }
             [JsonPropertyName("attachments")]
             public IList<RocketChatAttachment> Attachments { get; set; } = new List<RocketChatAttachment>();
         }
@@ -54,16 +54,14 @@ namespace Ae.Nuntium.Destinations
                 // https://docs.rocket.chat/use-rocket.chat/workspace-administration/integrations
                 var payload = new RocketChatPayload
                 {
-                    Text = post.Author + ": " + post.Content,
+                    Text = string.Join(": ", post.Author, post.TextSummary ?? post.Permalink?.ToString())
                 };
 
                 foreach (var media in post.Media)
                 {
                     payload.Attachments.Add(new RocketChatPayload.RocketChatAttachment
                     {
-                        ImageUrl = media.ToString(),
-                        Title = post.Author,
-                        TitleLink = media.ToString()
+                        ImageUrl = media.ToString()
                     });
                 }
 

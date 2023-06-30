@@ -14,6 +14,6 @@ public class FacebookGroupHtmlExtractorTests
 
         var posts = await extractor.ExtractPosts(new SourceDocument { Body = File.ReadAllText("Files/group1.html") });
 
-        Assert.Equal(File.ReadAllText("Files/group1.json"), posts.ToJson());
+        posts.Compare("Files/group1.json");
     }
 }

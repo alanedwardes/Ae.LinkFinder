@@ -12,7 +12,8 @@ namespace Ae.Nuntium.Tests
             {
                 ItemPath = "$.reviews[*]",
                 PermalinkFormat = "https://steamcommunity.com/profiles/{author.steamid}/recommended/582890",
-                ContentFormat = "Positive: {voted_up} Purchased: {steam_purchase}\n{review}",
+                TitleFormat = "{voted_up:choose(True|False):Recommended 👍|Not Recommended 👎}",
+                TextSummaryFormat = "{review}",
                 AuthorFormat = "{author.steamid}"
             });
 
@@ -22,7 +23,7 @@ namespace Ae.Nuntium.Tests
                 Source = new Uri("https://store.steampowered.com/appreviews/582890?json=1&filter=recent", UriKind.Absolute)
             });
 
-            Assert.Equal(File.ReadAllText("Files/json1_posts.json"), posts.ToJson());
+            posts.Compare("Files/json1_posts.json");
         }
     }
 }

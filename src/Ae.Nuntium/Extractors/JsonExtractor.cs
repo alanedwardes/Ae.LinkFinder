@@ -15,7 +15,9 @@ namespace Ae.Nuntium.Extractors
         {
             public string ItemPath { get; set; }
             public string PermalinkFormat { get; set; }
-            public string ContentFormat { get; set; }
+            public string TitleFormat { get; set; }
+            public string RawContentFormat { get; set; }
+            public string TextSummaryFormat { get; set; }
             public string AuthorFormat { get; set; }
         }
 
@@ -30,7 +32,8 @@ namespace Ae.Nuntium.Extractors
                 // NewtonsoftJsonSource MUST be registered before ReflectionSource (which is not required here)
                 // We also need the ListFormatter to process arrays
                 .AddExtensions(new ListFormatter(), new NewtonsoftJsonSource(), new DefaultSource())
-                .AddExtensions(new ListFormatter(), new NullFormatter(), new DefaultFormatter());
+                .AddExtensions(new ListFormatter(), new NullFormatter(), new DefaultFormatter())
+                .AddExtensions(new ChooseFormatter());
             return smart;
         }
 
@@ -48,10 +51,10 @@ namespace Ae.Nuntium.Extractors
                     permalink = formatter.Format(_configuration.PermalinkFormat, token);
                 }
                 
-                string? content = null;
-                if (_configuration.ContentFormat != null)
+                string? rawContent = null;
+                if (_configuration.RawContentFormat != null)
                 {
-                    content = formatter.Format(_configuration.ContentFormat, token);
+                    rawContent = formatter.Format(_configuration.RawContentFormat, token);
                 }
 
                 string? author = null;
@@ -60,10 +63,24 @@ namespace Ae.Nuntium.Extractors
                     author = formatter.Format(_configuration.AuthorFormat, token);
                 }
 
+                string? textSummary = null;
+                if (_configuration.TitleFormat != null)
+                {
+                    textSummary = formatter.Format(_configuration.TextSummaryFormat, token);
+                }
+
+                string? title = null;
+                if (_configuration.TitleFormat != null)
+                {
+                    title = formatter.Format(_configuration.TitleFormat, token);
+                }
+
                 extractedPosts.Add(new ExtractedPost
                 {
                     Permalink = permalink == null ? null : new Uri(permalink, UriKind.Absolute),
-                    Content = content,
+                    RawContent = rawContent,
+                    TextSummary = textSummary,
+                    Title = title,
                     Author = author,
                 });
             }

@@ -19,7 +19,7 @@ namespace Ae.Nuntium.Tests
                 Source = new Uri("https://steamcommunity.com/app/582890/screenshots/?browsefilter=mostrecent", UriKind.Absolute)
             });
 
-            Assert.Equal(File.ReadAllText("Files/regex1.json"), posts.ToJson());
+            posts.Compare("Files/regex1.json");
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace Ae.Nuntium.Tests
                 Source = new Uri("https://steamcommunity.com/app/582890/discussions/", UriKind.Absolute)
             });
 
-            Assert.Equal(File.ReadAllText("Files/regex2.json"), posts.ToJson());
+            posts.Compare("Files/regex2.json");
         }
     }
 }
