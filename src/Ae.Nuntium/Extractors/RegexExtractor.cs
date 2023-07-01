@@ -21,13 +21,20 @@ namespace Ae.Nuntium.Extractors
         {
             var regex = new Regex(_configuration.Pattern);
 
-            return Task.FromResult<IList<ExtractedPost>>(regex
-                .Matches(sourceDocument.Body)
-                .Select(x => new ExtractedPost
+            var posts = new List<ExtractedPost>();
+
+            foreach (Match match in regex.Matches(sourceDocument.Body))
+            {
+                if (UriExtensions.TryCreateAbsoluteUri(match.Value, sourceDocument.Source, out var absoluteUri))
                 {
-                    Permalink = new Uri(x.Value, UriKind.Absolute)
-                })
-                .ToList());
+                    posts.Add(new ExtractedPost
+                    {
+                        Permalink = absoluteUri,
+                    });
+                }
+            }
+
+            return Task.FromResult<IList<ExtractedPost>>(posts);
         }
     }
 }

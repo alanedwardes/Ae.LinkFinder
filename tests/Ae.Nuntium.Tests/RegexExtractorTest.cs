@@ -38,5 +38,22 @@ namespace Ae.Nuntium.Tests
 
             posts.Compare("Files/regex2.json");
         }
+
+        [Fact]
+        public async Task RegexExtractor3()
+        {
+            var extractor = new RegexExtractor(new RegexExtractor.Configuration
+            {
+                Pattern = @"\/en_us\/topics\/(.*)\/([0-9]*)\/([A-Za-z0-9-_]*)"
+            });
+
+            var posts = await extractor.ExtractPosts(new Sources.SourceDocument
+            {
+                Body = File.ReadAllText("Files/regex3.html"),
+                Source = new Uri("https://blog.twitter.com/", UriKind.Absolute)
+            });
+
+            posts.Compare("Files/regex3.json");
+        }
     }
 }
