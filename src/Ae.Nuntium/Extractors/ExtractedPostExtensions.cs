@@ -4,7 +4,7 @@
     {
         public static bool HasContent(this ExtractedPost post)
         {
-            return post.Title == null && post.Permalink == null && post.TextSummary == null && post.Media.Count == 0;
+            return post.Title != null || post.Permalink != null || post.TextSummary != null || post.Media.Count > 0;
         }
     }
 }
