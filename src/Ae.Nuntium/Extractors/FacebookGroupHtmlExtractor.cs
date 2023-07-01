@@ -46,7 +46,7 @@ namespace Ae.Nuntium.Extractors
 
                 var toRemove = new HashSet<HtmlNode>();
 
-                foreach (var node in GetChildrenAndSelf(article))
+                foreach (var node in article.GetChildrenAndSelf())
                 {
                     // Remove comments
                     if (node != article && node.GetAttributeValue<string>("role", null) == "article")
@@ -60,7 +60,7 @@ namespace Ae.Nuntium.Extractors
                     node.ParentNode.RemoveChild(node);
                 }
 
-                foreach (var node in GetChildrenAndSelf(article))
+                foreach (var node in article.GetChildrenAndSelf())
                 {
                     if (node.Name == "a")
                     {
@@ -116,16 +116,6 @@ namespace Ae.Nuntium.Extractors
             }
 
             return Task.FromResult<IList<ExtractedPost>>(posts);
-        }
-
-        private IList<HtmlNode> GetChildrenAndSelf(HtmlNode node)
-        {
-            List<HtmlNode> list = new() { node };
-            foreach (var child in node.ChildNodes)
-            {
-                list.AddRange(GetChildrenAndSelf(child));
-            }
-            return list;
         }
     }
 }

@@ -105,7 +105,7 @@ namespace Ae.Nuntium.Extractors
                     extractedPost.RawContent = content ?? summaryHtml?.DocumentNode.InnerHtml;
                 }
 
-                foreach (var node in GetChildrenAndSelf(contentHtml?.DocumentNode ?? summaryHtml?.DocumentNode ?? new HtmlDocument().DocumentNode))
+                foreach (var node in (contentHtml?.DocumentNode ?? summaryHtml?.DocumentNode ?? new HtmlDocument().DocumentNode).GetChildrenAndSelf())
                 {
                     if (node.Name == "a")
                     {
@@ -130,16 +130,6 @@ namespace Ae.Nuntium.Extractors
             }
 
             return Task.FromResult<IList<ExtractedPost>>(extractedPosts);
-        }
-
-        private IList<HtmlNode> GetChildrenAndSelf(HtmlNode node)
-        {
-            List<HtmlNode> list = new() { node };
-            foreach (var child in node.ChildNodes)
-            {
-                list.AddRange(GetChildrenAndSelf(child));
-            }
-            return list;
         }
     }
 }

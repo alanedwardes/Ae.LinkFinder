@@ -36,7 +36,7 @@ namespace Ae.Nuntium.Extractors
                     }
                 }
 
-                foreach (var node in GetChildrenAndSelf(tweet))
+                foreach (var node in tweet.GetChildrenAndSelf())
                 {
                     if (node.Name == "a")
                     {
@@ -67,16 +67,6 @@ namespace Ae.Nuntium.Extractors
             }
 
             return Task.FromResult<IList<ExtractedPost>>(extractedPosts);
-        }
-
-        private IList<HtmlNode> GetChildrenAndSelf(HtmlNode node)
-        {
-            List<HtmlNode> list = new() { node };
-            foreach (var child in node.ChildNodes)
-            {
-                list.AddRange(GetChildrenAndSelf(child));
-            }
-            return list;
         }
     }
 }
