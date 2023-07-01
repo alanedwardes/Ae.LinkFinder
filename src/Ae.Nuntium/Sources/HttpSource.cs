@@ -32,5 +32,7 @@ namespace Ae.Nuntium.Sources
                 Source = response.RequestMessage.RequestUri
             };
         }
+
+        public override string ToString() => _configuration.Address.ToString();
     }
 }

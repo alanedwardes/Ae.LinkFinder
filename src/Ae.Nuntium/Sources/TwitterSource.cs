@@ -73,5 +73,7 @@ namespace Ae.Nuntium.Sources
 
             return sourceDocument;
         }
+
+        public override string ToString() => _configuration.ProfileAddress.ToString();
     }
 }

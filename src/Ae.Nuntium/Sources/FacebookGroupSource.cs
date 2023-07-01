@@ -79,5 +79,7 @@ namespace Ae.Nuntium.Sources
 
             return sourceDocument;
         }
+
+        public override string ToString() => _configuration.GroupAddress.ToString();
     }
 }

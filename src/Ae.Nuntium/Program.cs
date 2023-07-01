@@ -158,6 +158,12 @@ namespace Ae.Nuntium
 
                     var posts = await extractor.ExtractPosts(content);
 
+                    if (posts.Count == 0)
+                    {
+                        serviceProvider.GetRequiredService<ILogger<Program>>().LogWarning("Found no posts from source: {Source}", source);
+                        continue;
+                    }
+
                     var unseen = await tracker.GetUnseenLinks(posts.Select(x => x.Permalink), token);
 
                     serviceProvider.GetRequiredService<ILogger<Program>>().LogInformation("Found {Unseen} unseen links of {Total} total", unseen.Count(), posts.Count);
