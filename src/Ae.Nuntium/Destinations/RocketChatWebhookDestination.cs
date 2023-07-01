@@ -1,6 +1,7 @@
 ﻿using Ae.Nuntium.Extractors;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Ae.Nuntium.Destinations
@@ -35,7 +36,7 @@ namespace Ae.Nuntium.Destinations
             [JsonPropertyName("text")]
             public string? Text { get; set; }
             [JsonPropertyName("attachments")]
-            public IList<RocketChatAttachment> Attachments { get; set; } = new List<RocketChatAttachment>();
+            public IList<RocketChatAttachment>? Attachments { get; set; } = new List<RocketChatAttachment>();
         }
 
         public RocketChatWebhookDestination(ILogger<RocketChatWebhookDestination> logger, IHttpClientFactory httpClientFactory, Configuration configuration)
@@ -51,24 +52,44 @@ namespace Ae.Nuntium.Destinations
 
             foreach (var post in posts)
             {
-                var text = string.Join(": ", post.Author, post.TextSummary ?? post.Permalink?.ToString());
+                string? header = string.Join(": ", post.Author, post.TextSummary);
+                if (post.Author == null)
+                {
+                    header = post.TextSummary;
+                }
+
+                string? footer = null;
+                if (post.Permalink != null)
+                {
+                    footer = post.Permalink.ToString();
+                }
+
+                var parts = new[] { header, footer }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
                 // https://docs.rocket.chat/use-rocket.chat/workspace-administration/integrations
                 var payload = new RocketChatPayload
                 {
-                    Text = post.Permalink == null ? text : text + "\n\n" + post.Permalink.ToString()
+                    Text = parts.Length == 0 ? null : string.Join("\n\n", parts)
                 };
 
                 foreach (var media in post.Media)
                 {
-                    payload.Attachments.Add(new RocketChatPayload.RocketChatAttachment
+                    payload.Attachments?.Add(new RocketChatPayload.RocketChatAttachment
                     {
                         ImageUrl = media.ToString()
                     });
                 }
 
+                if (payload.Attachments?.Count == 0)
+                {
+                    payload.Attachments = null;
+                }
+
                 _logger.LogInformation("Posting {Link} to Rocket Chat", post.Permalink);
-                using var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload, cancellation);
+                using var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload, new JsonSerializerOptions
+                {
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+                }, cancellation);
 
                 response.EnsureSuccessStatusCode();
             }

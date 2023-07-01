@@ -1,5 +1,4 @@
 ﻿using Ae.Nuntium.Sources;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using SmartFormat;
 using SmartFormat.Core.Settings;

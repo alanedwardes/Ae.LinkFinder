@@ -1,11 +1,6 @@
 ﻿using Ae.Nuntium.Destinations;
 using Ae.Nuntium.Extractors;
 using Microsoft.Extensions.Logging.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Ae.Nuntium.Tests
