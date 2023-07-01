@@ -7,6 +7,10 @@
         /// </summary>
         public string? Title { get; set; }
         /// <summary>
+        /// An optional created date/time in UTC.
+        /// </summary>
+        public DateTime? Published { get; set; }
+        /// <summary>
         /// An optional author.
         /// </summary>
         public string? Author { get; set; }

@@ -36,6 +36,16 @@ namespace Ae.Nuntium.Extractors
                     }
                 }
 
+                var time = tweet.SelectSingleNode(".//time");
+                if (time != null)
+                {
+                    var datetime = time.GetAttributeValue<string>("datetime", null);
+                    if (datetime != null && DateTimeOffset.TryParse(datetime, out var resultingDateTime))
+                    {
+                        extractedPost.Published = resultingDateTime.UtcDateTime;
+                    }
+                }
+
                 foreach (var node in tweet.GetChildrenAndSelf())
                 {
                     if (node.Name == "a")

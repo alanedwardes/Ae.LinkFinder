@@ -82,7 +82,8 @@ namespace Ae.Nuntium.Extractors
                 {
                     Title = item.Title?.Text,
                     Permalink = permalink,
-                    Author = author
+                    Author = author,
+                    Published = item.PublishDate.UtcDateTime
                 };
 
                 var summaryHtml = TryParseHtml(item.Summary?.Text);
