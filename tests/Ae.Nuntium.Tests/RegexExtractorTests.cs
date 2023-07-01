@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Ae.Nuntium.Tests
 {
-    public sealed class RegexExtractorTest
+    public sealed class RegexExtractorTests
     {
         [Fact]
         public async Task RegexExtractor1()

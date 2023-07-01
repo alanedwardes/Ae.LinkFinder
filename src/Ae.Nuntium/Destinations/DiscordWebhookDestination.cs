@@ -1,6 +1,8 @@
 ﻿using Ae.Nuntium.Extractors;
+using Humanizer;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Ae.Nuntium.Destinations
@@ -63,14 +65,19 @@ namespace Ae.Nuntium.Destinations
                     Username = post.Author
                 };
 
-                payload.Embeds.Add(new DiscordPayload.DiscordEmbed
+                if (post.Title != null || post.TextSummary != null || post.Permalink != null)
                 {
-                    Title = post.Title,
-                    Description = post.TextSummary,
-                    Url = post.Permalink?.ToString()
-                });
+                    // Limits: https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
+                    payload.Embeds.Add(new DiscordPayload.DiscordEmbed
+                    {
+                        Title = post.Title.Truncate(256),
+                        Description = post.TextSummary.Truncate(4096),
+                        Url = post.Permalink?.ToString()
+                    });
+                }
 
-                foreach (var media in post.Media)
+                // Limits: https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
+                foreach (var media in post.Media.Take(10))
                 {
                     payload.Embeds.Add(new DiscordPayload.DiscordEmbed
                     {
@@ -82,7 +89,10 @@ namespace Ae.Nuntium.Destinations
                 }
 
                 _logger.LogInformation("Posting {Link} to Discord", post.Permalink);
-                using var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload);
+                using var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload, new JsonSerializerOptions
+                {
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+                });
 
                 response.EnsureSuccessStatusCode();
             }

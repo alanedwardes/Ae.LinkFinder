@@ -156,7 +156,7 @@ namespace Ae.Nuntium
 
                     var content = await source.GetContent(token);
 
-                    var posts = await extractor.ExtractPosts(content);
+                    var posts = (await extractor.ExtractPosts(content)).Where(x => x.HasContent()).ToList();
 
                     if (posts.Count == 0)
                     {

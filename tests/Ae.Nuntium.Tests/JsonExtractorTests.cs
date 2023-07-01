@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Ae.Nuntium.Tests
 {
-    public sealed class JsonExtractorTest
+    public sealed class JsonExtractorTests
     {
         [Fact]
         public async Task JsonExtractorTest1()
