@@ -45,7 +45,7 @@ namespace Ae.Nuntium.Destinations
             _configuration = configuration;
         }
 
-        public async Task ShareExtractedPosts(IEnumerable<ExtractedPost> posts)
+        public async Task ShareExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
         {
             using var httpClient = _httpClientFactory.CreateClient();
 
@@ -68,7 +68,7 @@ namespace Ae.Nuntium.Destinations
                 }
 
                 _logger.LogInformation("Posting {Link} to Rocket Chat", post.Permalink);
-                using var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload);
+                using var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload, cancellation);
 
                 response.EnsureSuccessStatusCode();
             }

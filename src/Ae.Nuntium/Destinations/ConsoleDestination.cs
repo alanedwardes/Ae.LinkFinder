@@ -12,7 +12,7 @@ namespace Ae.Nuntium.Destinations
             _logger = logger;
         }
 
-        public Task ShareExtractedPosts(IEnumerable<ExtractedPost> posts)
+        public Task ShareExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
         {
             foreach (var post in posts)
             {

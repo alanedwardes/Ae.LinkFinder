@@ -170,7 +170,7 @@ namespace Ae.Nuntium
 
                     foreach (var destination in destinations)
                     {
-                        await destination.ShareExtractedPosts(posts.Where(x => unseen.Contains(x.Permalink)));
+                        await destination.ShareExtractedPosts(posts.Where(x => unseen.Contains(x.Permalink)), token);
                     }
 
                     await tracker.SetLinksSeen(unseen, token);

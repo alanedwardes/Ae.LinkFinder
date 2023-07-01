@@ -53,49 +53,54 @@ namespace Ae.Nuntium.Destinations
             _configuration = configuration;
         }
 
-        public async Task ShareExtractedPosts(IEnumerable<ExtractedPost> posts)
+        public async Task ShareExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
         {
             using var httpClient = _httpClientFactory.CreateClient();
 
             foreach (var post in posts)
             {
-                // https://discord.com/developers/docs/resources/webhook#execute-webhook
-                var payload = new DiscordPayload
-                {
-                    Username = post.Author
-                };
-
-                if (post.Title != null || post.TextSummary != null || post.Permalink != null)
-                {
-                    // Limits: https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
-                    payload.Embeds.Add(new DiscordPayload.DiscordEmbed
-                    {
-                        Title = post.Title.Truncate(256),
-                        Description = post.TextSummary.Truncate(4096),
-                        Url = post.Permalink?.ToString()
-                    });
-                }
-
-                // Limits: https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
-                foreach (var media in post.Media.Take(10))
-                {
-                    payload.Embeds.Add(new DiscordPayload.DiscordEmbed
-                    {
-                        Image = new DiscordPayload.DiscordMedia
-                        {
-                            Url = media.ToString()
-                        }
-                    });
-                }
-
-                _logger.LogInformation("Posting {Link} to Discord", post.Permalink);
-                using var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload, new JsonSerializerOptions
-                {
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                });
-
-                response.EnsureSuccessStatusCode();
+                await SharePost(httpClient, post, cancellation);
             }
+        }
+
+        private async Task SharePost(HttpClient httpClient, ExtractedPost post, CancellationToken cancellation)
+        {
+            // https://discord.com/developers/docs/resources/webhook#execute-webhook
+            var payload = new DiscordPayload
+            {
+                Username = post.Author
+            };
+
+            if (post.Title != null || post.TextSummary != null || post.Permalink != null)
+            {
+                // Limits: https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
+                payload.Embeds.Add(new DiscordPayload.DiscordEmbed
+                {
+                    Title = post.Title.Truncate(256),
+                    Description = post.TextSummary.Truncate(4096),
+                    Url = post.Permalink?.ToString()
+                });
+            }
+
+            // Limits: https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
+            foreach (var media in post.Media.Take(10))
+            {
+                payload.Embeds.Add(new DiscordPayload.DiscordEmbed
+                {
+                    Image = new DiscordPayload.DiscordMedia
+                    {
+                        Url = media.ToString()
+                    }
+                });
+            }
+
+            _logger.LogInformation("Posting {Link} to Discord", post.Permalink);
+            var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload, new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+            }, cancellation);
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }
