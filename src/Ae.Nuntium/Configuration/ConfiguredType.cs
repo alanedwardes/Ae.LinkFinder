@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Ae.Nuntium
+namespace Ae.Nuntium.Configuration
 {
     public sealed class ConfiguredType
     {

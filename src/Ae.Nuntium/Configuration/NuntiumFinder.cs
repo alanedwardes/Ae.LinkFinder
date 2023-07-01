@@ -1,6 +1,6 @@
-﻿namespace Ae.Nuntium
+﻿namespace Ae.Nuntium.Configuration
 {
-    public sealed class ConfigurationItem
+    public sealed class NuntiumFinder
     {
         public bool Testing { get; set; }
         public string Cron { get; set; }
