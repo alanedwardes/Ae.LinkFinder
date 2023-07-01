@@ -74,7 +74,7 @@ namespace Ae.Nuntium.Extractors
                     if (node.Name == "img")
                     {
                         var src = node.GetAttributeValue<string>("src", null);
-                        if (!src.Contains("emoji") && !src.StartsWith("data") && Uri.TryCreate(HttpUtility.HtmlDecode(src), UriKind.Absolute, out var srcUri))
+                        if (!src.Contains("emoji") && !src.StartsWith("data") && !src.Contains("rsrc.php") && Uri.TryCreate(HttpUtility.HtmlDecode(src), UriKind.Absolute, out var srcUri))
                         {
                             extractedPost.Media.Add(srcUri);
                         }
