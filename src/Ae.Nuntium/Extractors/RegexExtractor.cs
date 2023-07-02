@@ -27,10 +27,7 @@ namespace Ae.Nuntium.Extractors
             {
                 if (UriExtensions.TryCreateAbsoluteUri(match.Value, sourceDocument.Source, out var absoluteUri))
                 {
-                    posts.Add(new ExtractedPost
-                    {
-                        Permalink = absoluteUri,
-                    });
+                    posts.Add(new ExtractedPost(absoluteUri));
                 }
             }
 

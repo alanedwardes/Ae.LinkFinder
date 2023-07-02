@@ -78,10 +78,9 @@ namespace Ae.Nuntium.Extractors
                 var content = item.ElementExtensions.ReadElementExtensions<string>("encoded", "http://purl.org/rss/1.0/modules/content/").FirstOrDefault() ?? (item.Content as TextSyndicationContent)?.Text;
                 var author = item.ElementExtensions.ReadElementExtensions<string>("creator", "http://purl.org/dc/elements/1.1/").FirstOrDefault() ?? item.Authors.FirstOrDefault()?.Name ?? item.Authors.FirstOrDefault()?.Email;
 
-                var extractedPost = new ExtractedPost
+                var extractedPost = new ExtractedPost(permalink)
                 {
                     Title = item.Title?.Text,
-                    Permalink = permalink,
                     Author = author,
                     Published = item.PublishDate.UtcDateTime
                 };

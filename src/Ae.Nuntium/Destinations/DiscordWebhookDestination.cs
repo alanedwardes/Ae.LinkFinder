@@ -71,16 +71,13 @@ namespace Ae.Nuntium.Destinations
                 Username = post.Author
             };
 
-            if (post.Title != null || post.TextSummary != null || post.Permalink != null)
+            // Limits: https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
+            payload.Embeds.Add(new DiscordPayload.DiscordEmbed
             {
-                // Limits: https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
-                payload.Embeds.Add(new DiscordPayload.DiscordEmbed
-                {
-                    Title = post.Title.Truncate(256),
-                    Description = post.TextSummary.Truncate(4096),
-                    Url = post.Permalink?.ToString()
-                });
-            }
+                Title = post.Title.Truncate(256),
+                Description = post.TextSummary.Truncate(4096),
+                Url = post.Permalink.ToString()
+            });
 
             // Limits: https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
             foreach (var media in post.Media.Take(10))

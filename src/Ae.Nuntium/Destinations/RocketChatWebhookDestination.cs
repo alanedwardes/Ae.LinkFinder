@@ -58,11 +58,7 @@ namespace Ae.Nuntium.Destinations
                     header = post.TextSummary;
                 }
 
-                string? footer = null;
-                if (post.Permalink != null)
-                {
-                    footer = post.Permalink.ToString();
-                }
+                string? footer = post.Permalink.ToString();
 
                 var parts = new[] { header, footer }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 

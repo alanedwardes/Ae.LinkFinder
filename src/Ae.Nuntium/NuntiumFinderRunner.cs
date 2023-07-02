@@ -22,24 +22,24 @@ namespace Ae.Nuntium
 
             var content = await source.GetContent(cancellation);
 
-            var posts = (await extractor.ExtractPosts(content)).Where(x => x.HasContent()).ToList();
-
+            var posts = (await extractor.ExtractPosts(content)).Select((Post, Index) => (Post, Index)).ToList();
             if (posts.Count == 0)
             {
-                _logger.LogWarning("Found no posts from source: {Source}", source);
+                _logger.LogWarning("Found no valid posts from source: {Source}", source);
                 return;
             }
 
-            var unseen = await tracker.GetUnseenLinks(posts.Select(x => x.Permalink), cancellation);
+            IList<Uri> unseenLinks = (await tracker.GetUnseenLinks(posts.Select(x => x.Post.Permalink), cancellation)).ToList();
+            IList<ExtractedPost> unseenPosts = posts.Where(x => unseenLinks.Contains(x.Post.Permalink)).OrderByDescending(x => x.Index).Select(x => x.Post).ToList();
 
-            _logger.LogInformation("Found {Unseen} unseen links of {Total} total", unseen.Count(), posts.Count);
+            _logger.LogInformation("Found {Unseen} unseen links of {Total} total", unseenLinks.Count, posts.Count);
 
             foreach (var destination in destinations)
             {
-                await destination.ShareExtractedPosts(posts.Where(x => unseen.Contains(x.Permalink)), cancellation);
+                await destination.ShareExtractedPosts(unseenPosts, cancellation);
             }
 
-            await tracker.SetLinksSeen(unseen, cancellation);
+            await tracker.SetLinksSeen(unseenLinks, cancellation);
         }
 
         public async Task RunContinuously(CronExpression cronExpression, IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)

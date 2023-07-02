@@ -2,6 +2,8 @@
 {
     public sealed class ExtractedPost
     {
+        public ExtractedPost(Uri permalink) => Permalink = permalink;
+
         /// <summary>
         /// An optional title.
         /// </summary>
@@ -24,9 +26,9 @@
         /// </summary>
         public string? RawContent { get; set; }
         /// <summary>
-        /// An optional link to the post.
+        /// A required link to the post. This can also be a URN, for non-HTTP sources (just must be a non-null <see cref="Uri"/>).
         /// </summary>
-        public Uri? Permalink { get; set; }
+        public Uri Permalink { get; set; }
         /// <summary>
         /// An optional set of links contained within the post.
         /// </summary>

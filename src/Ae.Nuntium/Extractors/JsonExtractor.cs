@@ -73,9 +73,8 @@ namespace Ae.Nuntium.Extractors
                     title = formatter.Format(_configuration.TitleFormat, token);
                 }
 
-                extractedPosts.Add(new ExtractedPost
+                extractedPosts.Add(new ExtractedPost(new Uri(permalink, UriKind.Absolute))
                 {
-                    Permalink = permalink == null ? null : new Uri(permalink, UriKind.Absolute),
                     RawContent = rawContent,
                     TextSummary = textSummary,
                     Title = title,

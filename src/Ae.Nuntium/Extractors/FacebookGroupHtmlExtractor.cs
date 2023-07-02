@@ -38,12 +38,6 @@ namespace Ae.Nuntium.Extractors
                     continue;
                 }
 
-                var extractedPost = new ExtractedPost
-                {
-                    Links = new HashSet<Uri>(),
-                    Media = new HashSet<Uri>()
-                };
-
                 var toRemove = new HashSet<HtmlNode>();
 
                 foreach (var node in article.GetChildrenAndSelf())
@@ -60,6 +54,9 @@ namespace Ae.Nuntium.Extractors
                     node.ParentNode.RemoveChild(node);
                 }
 
+                var links = new HashSet<Uri>();
+                var media = new HashSet<Uri>();
+
                 foreach (var node in article.GetChildrenAndSelf())
                 {
                     if (node.Name == "a")
@@ -67,7 +64,7 @@ namespace Ae.Nuntium.Extractors
                         var href = node.GetAttributeValue<string>("href", null);
                         if (href != "#" && Uri.TryCreate(HttpUtility.HtmlDecode(href), UriKind.Absolute, out var hrefUri))
                         {
-                            extractedPost.Links.Add(hrefUri);
+                            links.Add(hrefUri);
                         }
                     }
 
@@ -76,10 +73,30 @@ namespace Ae.Nuntium.Extractors
                         var src = node.GetAttributeValue<string>("src", null);
                         if (!src.Contains("emoji") && !src.StartsWith("data") && !src.Contains("rsrc.php") && Uri.TryCreate(HttpUtility.HtmlDecode(src), UriKind.Absolute, out var srcUri))
                         {
-                            extractedPost.Media.Add(srcUri);
+                            media.Add(srcUri);
                         }
                     }
                 }
+
+                var permalink = links.FirstOrDefault(x => x.PathAndQuery.Contains("/posts/"));
+                if (permalink == null)
+                {
+                    // If there is no permalink, this is an invalid post
+                    continue;
+                }
+
+                // Strip the query string / fragment
+                var builder = new UriBuilder(permalink)
+                {
+                    Query = null,
+                    Fragment = null
+                };
+
+                var extractedPost = new ExtractedPost(builder.Uri)
+                {
+                    Links = links,
+                    Media = media,
+                };
 
                 var author = article.SelectSingleNode(".//h2");
                 if (author != null)
@@ -92,18 +109,6 @@ namespace Ae.Nuntium.Extractors
                 {
                     extractedPost.TextSummary = HttpUtility.HtmlDecode(content.InnerText);
                     extractedPost.RawContent = content.InnerHtml;
-                }
-
-                var permalink = extractedPost.Links.FirstOrDefault(x => x.PathAndQuery.Contains("/posts/"));
-                if (permalink != null)
-                {
-                    // Strip the query string / fragment
-                    var builder = new UriBuilder(permalink)
-                    {
-                        Query = null,
-                        Fragment = null
-                    };
-                    extractedPost.Permalink = builder.Uri;
                 }
 
                 if (extractedPost.TextSummary == null && !extractedPost.Media.Any())
