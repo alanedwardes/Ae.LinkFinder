@@ -8,14 +8,14 @@ namespace Ae.Nuntium.Extractors
     {
         public Task<IList<ExtractedPost>> ExtractPosts(SourceDocument sourceDocument)
         {
+            var extractedPosts = new List<ExtractedPost>();
+
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(sourceDocument.Body);
 
             var tweets = htmlDoc.DocumentNode.SelectNodes(".//article[@data-testid = 'tweet']");
 
-            var extractedPosts = new List<ExtractedPost>();
-
-            foreach (var tweet in tweets)
+            foreach (var tweet in tweets ?? Enumerable.Empty<HtmlNode>())
             {
                 var links = new HashSet<Uri>();
                 var media = new HashSet<Uri>();
