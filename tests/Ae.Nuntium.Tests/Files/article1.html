@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        html {
+    background: #2E2372FF;
+    height: 100%;
+    font-family: sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(90deg, #2E2372FF 0%, #483D8BFF 50%, #2E2372FF 100%);
+    line-height: 1.5em;
+    height: 100%;
+    overflow-y: scroll;
+    text-shadow: 0px 0px 7.5px black;
+    font-size: 1.2em;
+}
+
+hr {
+    color: #483D8BFF;
+    background-color: #483D8BFF;
+    height: 2px;
+    border: 0;
+}
+
+textarea, button, input, select {
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    background: #333;
+    border: 1px solid #333;
+}
+
+input, textarea {
+    padding: 2.5px 5px;
+}
+
+input[type=text] {
+    min-width:100%;
+}
+
+button, select {
+    padding: 5px 10px;
+    border: 0;
+    width: 100%;
+}
+
+    button:hover {
+        background: #444;
+    }
+
+h1, h2, h3, h4, h5 {
+    font-family: "Georgia", sans-serif;
+}
+
+body, a {
+    color: #ccc;
+}
+
+a {
+    color: #eee;
+    border-bottom: 2px solid #483D8BFF;
+}
+
+    a:hover {
+        border-bottom: 2px solid #6257A5FF;
+    }
+
+.slideshow {
+    line-height:0;
+}
+
+.slideshow a {
+    border-width:0;
+    display:inline-block;
+}
+
+.slideshow .slide.preview + .slide.preview {
+    padding-left:5px;
+}
+
+.slide {
+    transition:opacity 0.3s;
+}
+
+.slide.loading {
+    opacity:0.5;
+}
+
+.slides {
+    padding-top:5px;
+    padding-bottom:5px;
+    text-align:center;
+    white-space:nowrap;
+    overflow-x:scroll;
+}
+
+.slides a {
+    transition:opacity 0.3s;
+}
+
+.slides a:hover {
+    opacity:0.75;
+}
+
+main {
+    background: #222;
+}
+
+section {
+    padding: 20px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.content {
+    max-width: 730px;
+}
+
+@media (max-width: 1060px) {
+    .desktoponly {
+        display: none;
+    }
+
+    .content {
+        float:none !important;
+        max-width:inherit !important;
+    }
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+a {
+    text-decoration: none;
+}
+
+.clear {
+    clear: both;
+}
+
+h1, h2, h3, h4, h5 {
+    line-height: 1.4em;
+    font-weight: normal;
+    color: white;
+    margin: 0;
+}
+
+article h3 {
+    background: #111;
+    display: inline-block;
+    padding: 5px 10px;
+}
+
+header {
+    font-size:1.1em;
+}
+
+    header .left {
+        float: left;
+    }
+
+    header h1, header p {
+        margin: 0
+    }
+
+    header ul {
+        float: right;
+        list-style-type: none;
+        margin: 1.1em 0 0 0;
+        padding: 0;
+    }
+
+    header li {
+        padding: 0 10px;
+        float: left;
+    }
+
+    header a {
+        border: 0;
+    }
+
+    header li.selected a {
+        border-bottom: 2px solid #6257A5FF;
+    }
+
+footer {
+
+}
+
+    footer, footer a {
+        color: white;
+    }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer .ligature {
+            float: right;
+        }
+
+.home {
+    font-size: 1.25em;
+    line-height: 1.75em;
+}
+        
+blockquote {
+    margin: 20px 0;
+    padding: 0 20px;
+}
+        
+p.highlight {
+    text-align: center;
+    padding: 5px;
+}
+
+p.highlight, blockquote {
+    background: #2E2372FF;
+    background: linear-gradient(90deg, #2E2372FF 0%, #483D8BFF 50%, #2E2372FF 100%);
+    border: 2px solid #483D8BFF;
+    color: white;
+}
+        
+p.highlight a, blockquote a {
+    border-bottom: 2px solid #6257A5FF;
+}
+
+@media (max-width: 1024px) {
+    .project.small {
+        max-width: 100% !important;
+        float:none !important;
+    }
+}
+
+.featured {
+    margin-bottom:15px;
+}
+
+.home .featured .post {
+    width:300px;
+    height:150px;
+}
+
+.featured .post {
+    text-shadow:1px 1px 2.5px black,
+                -1px -1px 2.5px black,
+                1px -1px 2.5px black,
+                -1px 1px 2.5px black;
+    cursor:pointer;
+    width:210px;
+    height:120px;
+    background-size:cover;
+    background-position:center center;
+    padding:10px;
+    float:left;
+    box-shadow:0px 0px 5px black;
+    margin-right:10px;
+}
+
+.featured .post:hover a {
+    border-bottom:0px;
+}
+
+.project.small {
+    background:#111;
+    padding:10px;
+    margin:10px;
+    box-shadow:0 0 10px #111;
+    max-width: 440px;
+    float:left;
+}
+
+.project.small p {
+    margin:0;
+}
+
+article pre, article code, article a {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+article pre, article code {
+    line-height: 1.5em;
+    font-family: 'Consolas', monospace;
+}
+
+article pre {
+    font-size: .9em;
+}
+
+    article pre code {
+        display: block;
+    }
+
+        article pre code:not(.hljs) {
+            padding: .5em;
+            background: #282b2e;
+            color: #e0e2e4;
+        }
+
+article p code, article ul code {
+    padding: 2.5px 5px;
+}
+
+article img {
+  display:block;
+  margin:0 auto;
+}
+
+.meta {
+    color: #757575;
+}
+
+main video {
+    height: 100%;
+    width: 100%;
+    background:#111;
+}
+
+main iframe {
+    width:100%;
+    border:0;
+}
+
+main img {
+    max-width: 100%;
+}
+
+.sidebar {
+    font-size:.9em;
+    line-height: 1.5em;
+    max-width: 220px;
+}
+
+    .sidebar ul {
+        padding-left: 20px;
+    }
+
+    .sidebar .meta {
+        color: #757575;
+    }
+
+    .sidebar .icons {
+        text-align:center;
+    }
+
+    .sidebar .icons a {
+        border:0;
+        padding:0px 7.5px;
+    }
+
+.callout {
+    padding: 10px 15px;
+    background: #252525;
+    border: 2px solid #333;
+    margin-bottom: 20px;
+}
+
+textarea {
+    width: 100%;
+    height: 512px;
+    display: block;
+}
+
+#disqus_thread {
+    min-height:400px;
+}
+
+ul.cloud {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+ul.cloud li.weight1 { font-size: 0.5em; }
+ul.cloud li.weight2 { font-size: 0.7em; }
+ul.cloud li.weight3 { font-size: 0.9em; }
+ul.cloud li.weight4 { font-size: 1.1em; }
+ul.cloud li.weight5 { font-size: 1.3em; }
+ul.cloud li.weight6 { font-size: 1.5em; }
+ul.cloud li.weight7 { font-size: 1.7em; }
+ul.cloud li.weight8 { font-size: 1.9em; }
+ul.cloud li.weight9 { font-size: 2.1em; }
+
+ul.cloud a {
+  display: block;
+  margin: 0.125rem 0.25rem;
+  border:0;
+  position: relative;
+}
+
+    </style>
+    <link rel="alternate" type="application/rss+xml" href="/rss.xml" />
+        <meta name="description" content="Home Assistant offers an integration with VLC via Telnet. It uses VLC&#x27;s telnet capabilities to control it. However, the integration is geared towards VLC being run on the command line in headless mode, for audio only applications.">
+        <meta property="og:image" content="https://alan.gdn/0c13dab9-20eb-4787-bdd3-a9ec9755d422.png">
+    <title>Casting Video to VLC via Home Assistant - Alan Edwardes</title>
+</head>
+<body>
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Person",
+            "name": "Alan Edwardes",
+            "url": "https://alanedwardes.com/",
+            "sameAs": [
+                "https://www.linkedin.com/in/alanedwardes/",
+                "https://twitter.com/AlanEdwardes",
+                "https://www.youtube.com/AlanEdwardes"
+            ]
+        }
+    </script>
+    <header>
+        <section>
+    <div class="left">
+        <h1><a href="/">Alan Edwardes</a></h1>
+        <small><a href="/blog/categories/cloud-software/">Cloud Software</a> &amp; <a href="/blog/categories/game-development/">Game Development</a></small>
+    </div>
+    <ul>
+        <li class="unselected">
+            <a title="About me, an introduction to what I do" href="/">About</a>
+        </li>
+        <li class="unselected">
+            <a title="A list of things I have made" href="/projects/">Projects</a>
+        </li>
+        <li class="selected">
+            <a title="Posts about cloud software and game development" href="/blog/">Blog</a>
+        </li>
+    </ul>
+    <div class="clear"></div>
+</section>
+    </header>
+    <main>
+        
+<script>
+    function showSlide(element) {
+        let largeImage = element.getAttribute('data-image-large');
+        let smallImage = element.getAttribute('data-image-small');
+        let originalImage = element.getAttribute('data-image-original');
+
+        let slides = element.parentElement;
+        let slideshow = slides.parentElement;
+
+        let slideLink = slideshow.querySelector('.current.slide');
+        let slideImage = slideLink.querySelector('img');
+
+        slideLink.href = originalImage;
+        slideLink.classList.add('loading');
+        slideImage.src = largeImage;
+    }
+</script>
+
+<section>
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                    "@id": "https://alanedwardes.com/blog/",
+                    "name": "Blog"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                    "@id": "https://alanedwardes.com/blog/posts/vlc-remote-control-home-assistant/",
+                    "name": "Casting Video to VLC via Home Assistant"
+                }
+            }
+        ]
+    }
+    </script>
+    <article>
+        <h2>Casting Video to VLC via Home Assistant</h2>
+
+    <p class="meta">
+            <span><time datetime="2022-11-20T22:58:44.7615859&#x2B;00:00" title="11/20/2022 10:58:44 PM">📅 November 20th, 2022</time>, updated January 4th, 2023</span>
+
+        <span> 🔖 <a href="/blog/categories/iot/">iot</a></span>
+
+        <span> ⏲️ 2 minutes to read</span>
+
+        <span id="dynamic-comment-count"></span>
+    </p>
+
+            <script>
+                fetch("https://alanedwardes.com/api/commentcount.json?slug=vlc-remote-control-home-assistant")
+                    .then(data => data.json())
+                    .then(data => {
+                        let commentsCount = data.count;
+                        if (commentsCount > 0)
+                        {
+                            let commentsInfo = document.getElementById('dynamic-comment-count');
+                            commentsInfo.innerHTML = ' 💬 <a href="#comments">' + commentsCount + ' ' + (commentsCount === 1 ? 'comment' : 'comments') + '</a>';
+                        }
+                    });
+            </script>
+
+
+
+        <p>Home Assistant offers an integration with <a href="https://www.home-assistant.io/integrations/vlc_telnet/">VLC via Telnet</a>. It uses VLC's telnet capabilities to control it. However, the integration is geared towards VLC being run on the command line in headless mode, for audio only applications.</p>
+<p><img src="https://alan.gdn/0c13dab9-20eb-4787-bdd3-a9ec9755d422.png" alt="" /></p>
+<p>I had a different problem to solve: I have a Raspberry Pi running the VLC GUI on a full blown desktop, and want to be able to &quot;cast&quot; videos to it using the <a href="https://www.home-assistant.io/integrations/media_player/">Media Player built into Home Assistant</a>.</p>
+<p>This essentially allows you to make the device running VLC with a screen attached a Chromecast-like media player, with the most powerful media player out there as its driver.</p>
+<h3 id="enabling-telnet-via-the-vlc-gui">Enabling Telnet via the VLC GUI</h3>
+<p>First, head over to the VLC preferences:</p>
+<p><img src="https://alan.gdn/ce602f0e-1f75-4c21-ab0a-fcc2f6e45cb3.png" alt="" /></p>
+<p>At the bottom of the settings pane, select all preferences:</p>
+<p><img src="https://alan.gdn/e9bb3592-560b-43e0-88ba-e346907ccf35.png" alt="" /></p>
+<p>In the sidebar, head to Interface &gt; Main Interfaces:</p>
+<p><img src="https://alan.gdn/83c99872-80c9-4de3-ae13-99f59e608fec.png" alt="" /></p>
+<p>Enable the <code>telnet</code> underneath &quot;Extra Interface Modules&quot; (do NOT change the Interface module from default).</p>
+<p><img src="https://alan.gdn/549e5143-9fc8-4c23-8ec4-080b958cac8e.png" alt="" /></p>
+<p>In the sidebar, now head to Interface &gt; Main Interfaces &gt; Lua:</p>
+<p><img src="https://alan.gdn/5ae8fb19-a2e0-43df-ab5b-e18229fcc84f.png" alt="" /></p>
+<p>In this menu, you must configure telnet - enter <code>telnet</code> into the Lua interface option at the top:</p>
+<p><img src="https://alan.gdn/bf2b9b4f-529b-4cc0-8754-9a2046e49c0f.png" alt="" /></p>
+<p>Underneath &quot;Lua Telnet&quot;, enter a password - this is not required by VLC, but <em>is</em> required by Home Assistant and cannot be left empty:</p>
+<p><img src="https://alan.gdn/c8343ace-16d6-4e72-bd8e-cc63c19fe9e5.png" alt="" /></p>
+<p>That's it! Hit Save on the Advanced Preferences window, and VLC should now respond to telnet on this host.</p>
+<h3 id="home-assistant-vlc-telnet-integration">Home Assistant VLC Telnet Integration</h3>
+<p>Follow the instructions on this page, entering the address + password for the VLC machine: <a href="https://www.home-assistant.io/integrations/vlc_telnet/">https://www.home-assistant.io/integrations/vlc_telnet/</a>.</p>
+<p>The device will show up in Home Assistant as a normal media player.</p>
+<h3 id="playing-media">Playing Media</h3>
+<p>You can now use the &quot;Play media&quot; service in Home Assistant to control media on the machine running VLC, a bit like a normal TV. See this example, where I tell VLC to start streaming a TV channel stream URL:</p>
+<p><img src="https://alan.gdn/aac16bee-e18a-4500-a84b-67a131dc3178.png" alt="" /></p>
+<p>You MUST specify that the Content type is <em>music</em>. I think the author of this integration didn't appreciate the GUI + video use case (the intention was probably to use it only as a headless audio server).</p>
+<p>However, VLC doesn't seem to care about the media type hint and will play videos fine. 😊</p>
+
+
+
+            <p class="highlight">
+                <span>🏷️ </span>
+
+                    <a href="/blog/words/vlc/">vlc</a>
+                    <a href="/blog/words/media/">media</a>
+                    <a href="/blog/words/assistant/">assistant</a>
+                    <a href="/blog/words/telnet/">telnet</a>
+                    <a href="/blog/words/interface/">interface</a>
+                    <a href="/blog/words/video/">video</a>
+                    <a href="/blog/words/integration/">integration</a>
+                    <a href="/blog/words/player/">player</a>
+                    <a href="/blog/words/gui/">gui</a>
+                    <a href="/blog/words/lua/">lua</a>
+                    <a href="/blog/words/headless/">headless</a>
+                    <a href="/blog/words/audio/">audio</a>
+                    <a href="/blog/words/device/">device</a>
+                    <a href="/blog/words/sidebar/">sidebar</a>
+                    <a href="/blog/words/password/">password</a>
+            </p>
+    </article>
+
+            <p>⬅️ Previous post: <a href="/blog/posts/advanced-git-lfs-and-jenkins/">Advanced Git LFS and Jenkins</a></p>
+            <p>➡️ Next post: <a href="/blog/posts/scammer-warning/">Scam Warning</a></p>
+            <p>🎲 Random post: <a href="/blog/posts/three-approaches-to-readable-materials-in-first-person-games/">Three Approaches to Readable Materials in First Person Games</a></p>
+
+    <h2 id="comments">Comments</h2>
+    <div id="disqus_thread">
+        <p>Please <a href="#comments" onclick="fetchComments()">click here</a> to load comments.</p>
+    </div>
+    <script>
+    var commentsElement = document.getElementById("disqus_thread");
+
+    if (document.location.hash.startsWith('#comment')) {
+        fetchComments();
+    } else {
+        var observer = new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) {
+                fetchComments();
+            }
+        });
+        observer.observe(commentsElement);
+    }
+
+    var commentsLoaded = false;
+    function fetchComments() {
+        if (commentsLoaded) {
+            return;
+        }
+
+        commentsLoaded = true;
+        commentsElement.innerHTML = 'Loading comments...';
+
+        // Configure Disqus
+        window.disqus_config = function () {
+            this.page.url = "https://alanedwardes.com" + "/blog/posts/vlc-remote-control-home-assistant/";
+            this.page.identifier = "vlc-remote-control-home-assistant";
+        };
+
+        // Load Disqus
+        var d = document, s = d.createElement('script');
+        s.src = 'https://alanedwardes.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    }
+    </script>
+</section>
+
+    </main>
+    <footer>
+        <section>
+    <p class="ligature">&AElig;</p>
+    <p>&copy; 2023 Alan Edwardes</p>
+</section>
+    </footer>
+</body>
+</html>

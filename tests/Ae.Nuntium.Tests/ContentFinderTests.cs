@@ -1,4 +1,5 @@
 ﻿using Ae.Nuntium.Destinations;
+using Ae.Nuntium.Enrichers;
 using Ae.Nuntium.Extractors;
 using Ae.Nuntium.Sources;
 using Ae.Nuntium.Trackers;
@@ -31,7 +32,7 @@ namespace Ae.Nuntium.Tests
             extractor.Setup(x => x.ExtractPosts(sourceDocument))
                 .ReturnsAsync(new List<ExtractedPost>());
 
-            await finder.FindContent(source.Object, extractor.Object, tracker.Object, new[] { destination.Object }, CancellationToken.None);
+            await finder.FindContent(source.Object, extractor.Object, tracker.Object, null, new[] { destination.Object }, CancellationToken.None);
         }
 
         [Fact]
@@ -43,6 +44,7 @@ namespace Ae.Nuntium.Tests
             var extractor = _repository.Create<IPostExtractor>();
             var tracker = _repository.Create<ILinkTracker>();
             var destination = _repository.Create<IExtractedPostDestination>();
+            var enricher = _repository.Create<IExtractedPostEnricher>();
 
             var sourceDocument = new SourceDocument();
             source.Setup(x => x.GetContent(CancellationToken.None))
@@ -59,6 +61,9 @@ namespace Ae.Nuntium.Tests
             tracker.Setup(x => x.GetUnseenLinks(new[] { post1.Permalink, post2.Permalink, post3.Permalink }, CancellationToken.None))
                    .ReturnsAsync(new[] { post3.Permalink, post1.Permalink }); // post 2 was seen
 
+            enricher.Setup(x => x.EnrichExtractedPosts(new[] { post3, post1 }, CancellationToken.None))
+                    .Returns(Task.CompletedTask);
+
             // Ensure posts are shared in descending order to which they were receieved from the source
             destination.Setup(x => x.ShareExtractedPosts(new[] { post3, post1 }, CancellationToken.None))
                        .Returns(Task.CompletedTask);
@@ -66,7 +71,7 @@ namespace Ae.Nuntium.Tests
             tracker.Setup(x => x.SetLinksSeen(new[] { post3.Permalink, post1.Permalink }, CancellationToken.None))
                    .Returns(Task.CompletedTask);
 
-            await finder.FindContent(source.Object, extractor.Object, tracker.Object, new[] { destination.Object }, CancellationToken.None);
+            await finder.FindContent(source.Object, extractor.Object, tracker.Object, enricher.Object, new[] { destination.Object }, CancellationToken.None);
         }
 
         [Fact]
@@ -78,6 +83,7 @@ namespace Ae.Nuntium.Tests
             var extractor = _repository.Create<IPostExtractor>();
             var tracker = _repository.Create<ILinkTracker>();
             var destination = _repository.Create<IExtractedPostDestination>();
+            var enricher = _repository.Create<IExtractedPostEnricher>();
 
             var sourceDocument = new SourceDocument();
             source.Setup(x => x.GetContent(CancellationToken.None))
@@ -93,7 +99,7 @@ namespace Ae.Nuntium.Tests
             tracker.Setup(x => x.GetUnseenLinks(new[] { post1.Permalink, post2.Permalink, post3.Permalink }, CancellationToken.None))
                    .ReturnsAsync(Enumerable.Empty<Uri>());
 
-            await finder.FindContent(source.Object, extractor.Object, tracker.Object, new[] { destination.Object }, CancellationToken.None);
+            await finder.FindContent(source.Object, extractor.Object, tracker.Object, enricher.Object, new[] { destination.Object }, CancellationToken.None);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Ae.Nuntium.Configuration;
 using Ae.Nuntium.Destinations;
+using Ae.Nuntium.Enrichers;
 using Ae.Nuntium.Extractors;
 using Ae.Nuntium.Sources;
 using Ae.Nuntium.Trackers;
@@ -31,16 +32,17 @@ namespace Ae.Nuntium
                 var source = _nuntiumServiceFactory.GetSource(finder.Source);
                 var extractor = _nuntiumServiceFactory.GetExtractor(finder.Extractor);
                 var tracker = _nuntiumServiceFactory.GetTracker(finder.Tracker);
+                var enricher = finder.Enricher == null ? null : _nuntiumServiceFactory.GetEnricher(finder.Enricher);
                 var destinations = finder.Destinations.Select(x => _nuntiumServiceFactory.GetDestination(x)).ToList();
 
                 if (finder.Testing)
                 {
                     _logger.LogInformation("Running {Source} in test mode", source);
-                    await _nuntiumFinderRunner.FindContent(source, extractor, tracker, destinations, cancellation);
+                    await _nuntiumFinderRunner.FindContent(source, extractor, tracker, enricher, destinations, cancellation);
                 }
                 else
                 {
-                    tasks.Add(RunContinuously(cron, source, extractor, tracker, destinations, cancellation));
+                    tasks.Add(RunContinuously(cron, source, extractor, tracker, enricher, destinations, cancellation));
                 }
             }
 
@@ -49,7 +51,7 @@ namespace Ae.Nuntium
             await Task.WhenAll(tasks);
         }
 
-        public async Task RunContinuously(CronExpression cronExpression, IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task RunContinuously(CronExpression cronExpression, IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
             do
             {
@@ -63,7 +65,7 @@ namespace Ae.Nuntium
 
                 try
                 {
-                    await _nuntiumFinderRunner.FindContent(source, extractor, tracker, destinations, cancellation);
+                    await _nuntiumFinderRunner.FindContent(source, extractor, tracker, enricher, destinations, cancellation);
                 }
                 catch (Exception ex) when (!cancellation.IsCancellationRequested)
                 {

@@ -1,5 +1,6 @@
 ﻿using Ae.Nuntium.Configuration;
 using Ae.Nuntium.Destinations;
+using Ae.Nuntium.Enrichers;
 using Ae.Nuntium.Extractors;
 using Ae.Nuntium.Services;
 using Ae.Nuntium.Sources;
@@ -93,6 +94,17 @@ namespace Ae.Nuntium
             {
                 case "File":
                     return ActivatorUtilities.CreateInstance<FileLinkTracker>(_serviceProvider, GetConfiguration<FileLinkTracker.Configuration>(type.Configuration));
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        public IExtractedPostEnricher GetEnricher(ConfiguredType type)
+        {
+            switch (type.Type)
+            {
+                case "SnartReader":
+                    return ActivatorUtilities.CreateInstance<SmartReaderArticleEnricher>(_serviceProvider);
                 default:
                     throw new InvalidOperationException();
             }

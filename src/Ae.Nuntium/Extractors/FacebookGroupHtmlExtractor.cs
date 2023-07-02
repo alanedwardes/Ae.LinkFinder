@@ -57,26 +57,13 @@ namespace Ae.Nuntium.Extractors
                 var links = new HashSet<Uri>();
                 var media = new HashSet<Uri>();
 
-                foreach (var node in article.GetChildrenAndSelf())
+                article.GetLinksAndMedia(sourceDocument.Source, link => links.Add(link), mediaUri =>
                 {
-                    if (node.Name == "a")
+                    if (!mediaUri.PathAndQuery.Contains("rsrc.php") && !mediaUri.PathAndQuery.Contains("emoji"))
                     {
-                        var href = node.GetAttributeValue<string>("href", null);
-                        if (href != "#" && Uri.TryCreate(HttpUtility.HtmlDecode(href), UriKind.Absolute, out var hrefUri))
-                        {
-                            links.Add(hrefUri);
-                        }
+                        media.Add(mediaUri);
                     }
-
-                    if (node.Name == "img")
-                    {
-                        var src = node.GetAttributeValue<string>("src", null);
-                        if (!src.Contains("emoji") && !src.StartsWith("data") && !src.Contains("rsrc.php") && Uri.TryCreate(HttpUtility.HtmlDecode(src), UriKind.Absolute, out var srcUri))
-                        {
-                            media.Add(srcUri);
-                        }
-                    }
-                }
+                });
 
                 var permalink = links.FirstOrDefault(x => x.PathAndQuery.Contains("/posts/"));
                 if (permalink == null)

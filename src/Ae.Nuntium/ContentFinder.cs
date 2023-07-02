@@ -1,4 +1,5 @@
 ﻿using Ae.Nuntium.Destinations;
+using Ae.Nuntium.Enrichers;
 using Ae.Nuntium.Extractors;
 using Ae.Nuntium.Sources;
 using Ae.Nuntium.Trackers;
@@ -12,7 +13,7 @@ namespace Ae.Nuntium
 
         public ContentFinder(ILogger<ContentFinder> logger) => _logger = logger;
 
-        public async Task FindContent(IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task FindContent(IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
             _logger.LogInformation("Getting links with source {Source}", source);
 
@@ -32,6 +33,9 @@ namespace Ae.Nuntium
                 _logger.LogInformation("All {Total} posts from {Source} were seen before", posts.Count, source);
                 return;
             }
+
+            // Enrich the posts, if an enricher was supplied
+            await (enricher?.EnrichExtractedPosts(unseenPosts, cancellation) ?? Task.CompletedTask);
 
             _logger.LogInformation("Found {Unseen} unseen links of {Total} total from source {Source}", unseenLinks.Count, posts.Count, source);
 

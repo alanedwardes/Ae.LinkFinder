@@ -1,5 +1,6 @@
 ﻿using Ae.Nuntium.Sources;
 using HtmlAgilityPack;
+using SmartReader;
 using System.Web;
 
 namespace Ae.Nuntium.Extractors
@@ -19,26 +20,16 @@ namespace Ae.Nuntium.Extractors
             {
                 var links = new HashSet<Uri>();
                 var media = new HashSet<Uri>();
-                foreach (var node in tweet.GetChildrenAndSelf())
-                {
-                    if (node.Name == "a")
-                    {
-                        var href = node.GetAttributeValue<string>("href", null);
-                        if (href != "#" && UriExtensions.TryCreateAbsoluteUri(HttpUtility.HtmlDecode(href), sourceDocument.Source, out var hrefUri))
-                        {
-                            links.Add(hrefUri);
-                        }
-                    }
 
-                    if (node.Name == "img")
+                tweet.GetLinksAndMedia(sourceDocument.Source, link => links.Add(link), mediaUri =>
+                {
+                    if (!mediaUri.PathAndQuery.Contains("/profile_images/", StringComparison.InvariantCultureIgnoreCase) &&
+                        !mediaUri.PathAndQuery.Contains("/hashflags/", StringComparison.InvariantCultureIgnoreCase) &&
+                        !mediaUri.PathAndQuery.Contains("/emoji/", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        var src = node.GetAttributeValue<string>("src", null);
-                        if (!src.Contains("/profile_images/") && !src.StartsWith("data") && !src.Contains("/hashflags/") && !src.Contains("/emoji/") && UriExtensions.TryCreateAbsoluteUri(HttpUtility.HtmlDecode(src), sourceDocument.Source, out var srcUri))
-                        {
-                            media.Add(srcUri);
-                        }
+                        media.Add(mediaUri);
                     }
-                }
+                });
 
                 var permalinks = links.Where(x => sourceDocument.Source.IsBaseOf(x) && x.PathAndQuery.Contains("/status/") && !x.PathAndQuery.EndsWith("/analytics"));
                 if (!permalinks.Any())

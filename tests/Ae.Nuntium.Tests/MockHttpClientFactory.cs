@@ -2,7 +2,7 @@
 {
     public sealed class MockHttpClientFactory : IHttpClientFactory
     {
-        private readonly MockDelegatingHandler _mockHandler;
+        public DelegatingHandler MockHandler { get; private set; }
 
         private sealed class MockDelegatingHandler : DelegatingHandler
         {
@@ -13,8 +13,8 @@
             protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => Task.FromResult(_mockResponder(request));
         }
 
-        public MockHttpClientFactory(Func<HttpRequestMessage, HttpResponseMessage> mockResponder) => _mockHandler = new MockDelegatingHandler(mockResponder);
+        public MockHttpClientFactory(Func<HttpRequestMessage, HttpResponseMessage> mockResponder) => MockHandler = new MockDelegatingHandler(mockResponder);
 
-        public HttpClient CreateClient(string name) => new(_mockHandler);
+        public HttpClient CreateClient(string name) => new(MockHandler);
     }
 }

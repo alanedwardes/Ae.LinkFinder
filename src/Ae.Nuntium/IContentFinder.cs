@@ -1,4 +1,5 @@
 ﻿using Ae.Nuntium.Destinations;
+using Ae.Nuntium.Enrichers;
 using Ae.Nuntium.Extractors;
 using Ae.Nuntium.Sources;
 using Ae.Nuntium.Trackers;
@@ -8,6 +9,6 @@ namespace Ae.Nuntium
 {
     public interface IContentFinder
     {
-        Task FindContent(IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IList<IExtractedPostDestination> destinations, CancellationToken cancellation);
+        Task FindContent(IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation);
     }
 }
