@@ -8,7 +8,7 @@
         public ConfiguredType Source { get; set; } = new ConfiguredType();
         public ConfiguredType Extractor { get; set; } = new ConfiguredType();
         public ConfiguredType Tracker { get; set; } = new ConfiguredType();
-        public ConfiguredType? Enricher { get; set; } = new ConfiguredType();
+        public ConfiguredType? Enricher { get; set; }
         public IList<ConfiguredType> Destinations { get; set; } = new List<ConfiguredType>();
     }
 }

@@ -103,7 +103,7 @@ namespace Ae.Nuntium
         {
             switch (type.Type)
             {
-                case "SnartReader":
+                case "SmartReader":
                     return ActivatorUtilities.CreateInstance<SmartReaderArticleEnricher>(_serviceProvider);
                 default:
                     throw new InvalidOperationException();
