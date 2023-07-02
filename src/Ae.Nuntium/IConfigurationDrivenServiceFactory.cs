@@ -7,7 +7,7 @@ using Ae.Nuntium.Trackers;
 
 namespace Ae.Nuntium
 {
-    public interface INuntiumServiceFactory
+    public interface IConfigurationDrivenServiceFactory
     {
         IExtractedPostDestination GetDestination(ConfiguredType type);
         IPostExtractor GetExtractor(ConfiguredType type);

@@ -2,6 +2,7 @@
 {
     public sealed class NuntiumFinder
     {
+        public bool Skip { get; set; }
         public bool Testing { get; set; }
         public string Cron { get; set; }
         public ConfiguredType Source { get; set; } = new ConfiguredType();

@@ -40,7 +40,7 @@ namespace Ae.Nuntium.Extractors
                 return rssXml;
             }
 
-            XmlDocument xmldoc = new XmlDocument();
+            XmlDocument xmldoc = new();
             xmldoc.LoadXml(rssXml);
 
             foreach (XmlElement author in xmldoc.GetElementsByTagName("author"))

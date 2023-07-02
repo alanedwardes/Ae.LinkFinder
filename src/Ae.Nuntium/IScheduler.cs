@@ -2,7 +2,7 @@
 
 namespace Ae.Nuntium
 {
-    public interface INuntiumFinderScheduler
+    public interface IScheduler
     {
         Task Schedule(NuntiumConfiguration configuration, CancellationToken cancellation);
     }

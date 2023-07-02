@@ -15,6 +15,6 @@
 
         public MockHttpClientFactory(Func<HttpRequestMessage, HttpResponseMessage> mockResponder) => _mockHandler = new MockDelegatingHandler(mockResponder);
 
-        public HttpClient CreateClient(string name) => new HttpClient(_mockHandler);
+        public HttpClient CreateClient(string name) => new(_mockHandler);
     }
 }

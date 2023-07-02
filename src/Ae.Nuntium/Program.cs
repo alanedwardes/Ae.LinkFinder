@@ -35,10 +35,10 @@ namespace Ae.Nuntium
             return new ServiceCollection()
                 .AddLogging(x => x.AddConsole())
                 .AddHttpClient()
-                .AddSingleton(x => x.GetRequiredService<INuntiumServiceFactory>().GetSeleniumDriver(configuration.SeleniumDriver))
-                .AddSingleton<INuntiumFinderRunner, NuntiumFinderRunner>()
-                .AddSingleton<INuntiumServiceFactory, NuntiumServiceFactory>()
-                .AddSingleton<INuntiumFinderScheduler, NuntiumFinderScheduler>()
+                .AddSingleton(x => x.GetRequiredService<IConfigurationDrivenServiceFactory>().GetSeleniumDriver(configuration.SeleniumDriver))
+                .AddSingleton<IContentFinder, ContentFinder>()
+                .AddSingleton<IConfigurationDrivenServiceFactory, ConfigurationDrivenServiceFactory>()
+                .AddSingleton<IScheduler, Scheduler>()
                 .BuildServiceProvider();
         }
 
@@ -61,7 +61,7 @@ namespace Ae.Nuntium
 
             try
             {
-                await provider.GetRequiredService<INuntiumFinderScheduler>().Schedule(configuration, cts.Token);
+                await provider.GetRequiredService<IScheduler>().Schedule(configuration, cts.Token);
             }
             catch when (!cts.IsCancellationRequested)
             {

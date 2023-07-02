@@ -31,7 +31,7 @@ namespace Ae.Nuntium.Sources
 
             driver.Navigate().GoToUrl(_configuration.ProfileAddress);
 
-            Actions builder = new Actions(driver);
+            Actions builder = new(driver);
 
             TimeSpan RandomShortTimeSpan()
             {
