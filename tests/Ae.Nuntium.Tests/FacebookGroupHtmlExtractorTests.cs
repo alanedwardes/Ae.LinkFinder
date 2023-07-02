@@ -16,4 +16,14 @@ public class FacebookGroupHtmlExtractorTests
 
         posts.Compare("Files/group1.json");
     }
+
+    [Fact]
+    public async Task ExtractPostsInvalidHtml()
+    {
+        var extractor = new FacebookGroupHtmlExtractor(NullLogger<FacebookGroupHtmlExtractor>.Instance);
+
+        var posts = await extractor.ExtractPosts(new SourceDocument { Body = File.ReadAllText("Files/tweets1.html") });
+
+        Assert.Empty(posts);
+    }
 }

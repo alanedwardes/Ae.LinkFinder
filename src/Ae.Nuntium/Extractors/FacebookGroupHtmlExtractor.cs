@@ -16,16 +16,16 @@ namespace Ae.Nuntium.Extractors
 
         public Task<IList<ExtractedPost>> ExtractPosts(SourceDocument sourceDocument)
         {
+            var posts = new List<ExtractedPost>();
+
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(sourceDocument.Body);
 
             var feed = htmlDoc.DocumentNode.SelectSingleNode(".//div[@role = 'feed']");
 
-            var articles = feed.SelectNodes(".//div[@role = 'article'][not(ancestor::div[@role = 'article'])]");
+            var articles = feed?.SelectNodes(".//div[@role = 'article'][not(ancestor::div[@role = 'article'])]");
 
-            var posts = new List<ExtractedPost>();
-
-            foreach (var article in articles)
+            foreach (var article in articles ?? Enumerable.Empty<HtmlNode>())
             {
                 if (!article.ChildNodes.Any())
                 {
