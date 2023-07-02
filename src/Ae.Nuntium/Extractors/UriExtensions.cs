@@ -4,9 +4,9 @@
     {
         public static bool TryCreateAbsoluteUri(string url, Uri baseAddress, out Uri newUri)
         {
-            if (Uri.TryCreate(url, UriKind.Absolute, out var uri))
+            if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
-                newUri = uri;
+                newUri = new Uri(url);
                 return true;
             }
 

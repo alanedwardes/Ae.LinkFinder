@@ -28,7 +28,7 @@
       ]
     },
     {
-      "testing": true,
+      "testing": false,
       "cron": "* * * * *",
       "tracker": {
         "type": "File",
