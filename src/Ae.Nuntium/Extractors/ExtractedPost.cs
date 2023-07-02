@@ -2,7 +2,7 @@
 {
     public sealed class ExtractedPost
     {
-        public ExtractedPost(Uri permalink) => Permalink = permalink;
+        public ExtractedPost(Uri permalink) => Permalink = permalink ?? throw new ArgumentNullException(nameof(permalink));
 
         /// <summary>
         /// An optional title.
