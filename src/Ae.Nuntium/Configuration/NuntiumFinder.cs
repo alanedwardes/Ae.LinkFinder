@@ -5,6 +5,7 @@
         public bool Skip { get; set; }
         public bool Testing { get; set; }
         public string Cron { get; set; }
+        public int JitterSeconds { get; set; }
         public ConfiguredType Source { get; set; } = new ConfiguredType();
         public ConfiguredType Extractor { get; set; } = new ConfiguredType();
         public ConfiguredType Tracker { get; set; } = new ConfiguredType();

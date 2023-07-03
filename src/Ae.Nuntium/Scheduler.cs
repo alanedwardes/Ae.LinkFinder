@@ -28,7 +28,6 @@ namespace Ae.Nuntium
 
             foreach (var finder in configuration.Finders.Where(x => !x.Skip))
             {
-                var cron = CronExpression.Parse(finder.Cron);
                 var source = _nuntiumServiceFactory.GetSource(finder.Source);
                 var extractor = _nuntiumServiceFactory.GetExtractor(finder.Extractor);
                 var tracker = _nuntiumServiceFactory.GetTracker(finder.Tracker);
@@ -42,7 +41,7 @@ namespace Ae.Nuntium
                 }
                 else
                 {
-                    tasks.Add(RunContinuously(cron, source, extractor, tracker, enricher, destinations, cancellation));
+                    tasks.Add(RunContinuously(finder, source, extractor, tracker, enricher, destinations, cancellation));
                 }
             }
 
@@ -51,15 +50,20 @@ namespace Ae.Nuntium
             await Task.WhenAll(tasks);
         }
 
-        public async Task RunContinuously(CronExpression cronExpression, IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task RunContinuously(NuntiumFinder finder, IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
+            var cron = CronExpression.Parse(finder.Cron);
+            var random = new Random();
+
             do
             {
-                DateTime nextUtc = cronExpression.GetNextOccurrence(DateTime.UtcNow) ?? throw new InvalidOperationException($"Unable to get next occurance of {cronExpression}");
+                DateTime nextUtc = cron.GetNextOccurrence(DateTime.UtcNow) ?? throw new InvalidOperationException($"Unable to get next occurance of {cron}");
 
-                var delay = nextUtc - DateTime.UtcNow;
+                var jitter = TimeSpan.FromSeconds(random.Next(finder.JitterSeconds));
 
-                _logger.LogInformation("Next occurance is {NextUtc}, waiting {Delay}", nextUtc, delay);
+                var delay = nextUtc - DateTime.UtcNow + jitter;
+
+                _logger.LogInformation("Next occurrence is {NextUtc}, waiting {Delay} ({JitterSeconds}s jitter)", nextUtc, delay, jitter.TotalSeconds);
 
                 await Task.Delay(delay, cancellation);
 

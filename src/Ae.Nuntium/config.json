@@ -6,6 +6,7 @@
     {
       "testing": false,
       "cron": "* * * * *",
+      "jitterSeconds": 300,
       "tracker": {
         "type": "File",
         "configuration": {
@@ -30,6 +31,7 @@
     {
       "testing": false,
       "cron": "* * * * *",
+      "jitterSeconds": 300,
       "tracker": {
         "type": "File",
         "configuration": {
