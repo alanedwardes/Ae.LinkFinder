@@ -63,7 +63,7 @@ namespace Ae.Nuntium
 
                 var delay = nextUtc - DateTime.UtcNow + jitter;
 
-                _logger.LogInformation("Next occurrence is {NextUtc}, waiting {Delay} ({JitterSeconds}s jitter)", nextUtc, delay, jitter.TotalSeconds);
+                _logger.LogInformation("Next occurrence of {Source} is {NextUtc}, waiting {DelaySeconds}s ({JitterSeconds}s jitter)", source, nextUtc, delay.TotalSeconds, jitter.TotalSeconds);
 
                 await Task.Delay(delay, cancellation);
 
