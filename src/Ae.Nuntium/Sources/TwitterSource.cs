@@ -10,6 +10,7 @@ namespace Ae.Nuntium.Sources
         public sealed class Configuration
         {
             public Uri ProfileAddress { get; set; }
+            public string AuthToken { get; set; }
         }
 
         private readonly ILogger<TwitterSource> _logger;
@@ -29,6 +30,16 @@ namespace Ae.Nuntium.Sources
 
             IWebDriver driver = _seleniumDriverFactory.CreateWebDriver();
 
+            if (_configuration.AuthToken != null)
+            {
+                // Load the login page first, so that Chrome allows us to set cookies
+                driver.Navigate().GoToUrl("https://twitter.com/i/flow/login");
+                driver.Manage().Cookies.AddCookie(CreateAuthCookie());
+
+                // Wait a little while
+                await Task.Delay(RandomShortTimeSpan(), token);
+            }
+
             driver.Navigate().GoToUrl(_configuration.ProfileAddress);
 
             Actions builder = new(driver);
@@ -42,7 +53,6 @@ namespace Ae.Nuntium.Sources
             void PressKey(string key)
             {
                 builder.Pause(RandomShortTimeSpan());
-
                 builder.KeyDown(key);
                 builder.KeyUp(key);
             }
@@ -72,6 +82,11 @@ namespace Ae.Nuntium.Sources
             driver.Quit();
 
             return sourceDocument;
+        }
+
+        private Cookie CreateAuthCookie()
+        {
+            return new Cookie("auth_token", _configuration.AuthToken, ".twitter.com", "/", DateTime.UtcNow.AddYears(1), true, true, "None");
         }
 
         public override string ToString() => _configuration.ProfileAddress.ToString();
