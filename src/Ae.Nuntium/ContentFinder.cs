@@ -26,6 +26,12 @@ namespace Ae.Nuntium
                 return;
             }
 
+            var duplicatedPosts = posts.GroupBy(x => x.Post.Permalink).Where(x => x.Count() > 1).Select(x => x.Key).ToList();
+            if (duplicatedPosts.Count > 0)
+            {
+                _logger.LogWarning("Source {Source} found duplicated posts with the same set of URIs: {DuplicatedPermalinks} (all will be posted)", source, string.Join(", ", duplicatedPosts));
+            }
+
             IList<Uri> unseenLinks = (await tracker.GetUnseenLinks(posts.Select(x => x.Post.Permalink), cancellation)).ToList();
             IList<ExtractedPost> unseenPosts = posts.Where(x => unseenLinks.Contains(x.Post.Permalink)).OrderByDescending(x => x.Index).Select(x => x.Post).ToList();
             if (unseenPosts.Count == 0)

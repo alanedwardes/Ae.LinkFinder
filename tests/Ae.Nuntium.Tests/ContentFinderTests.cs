@@ -53,19 +53,20 @@ namespace Ae.Nuntium.Tests
             var post1 = new ExtractedPost(new Uri("https://www.example.com/"));
             var post2 = new ExtractedPost(new Uri("https://www.example.org/"));
             var post3 = new ExtractedPost(new Uri("https://www.example.net/"));
+            var post4 = new ExtractedPost(new Uri("https://www.example.net/"));
 
             extractor.Setup(x => x.ExtractPosts(sourceDocument))
-                     .ReturnsAsync(new[] { post1, post2, post3 });
+                     .ReturnsAsync(new[] { post1, post2, post3, post4 });
 
             // Get unseen links - treat result as a set, order not guaranteed
-            tracker.Setup(x => x.GetUnseenLinks(new[] { post1.Permalink, post2.Permalink, post3.Permalink }, CancellationToken.None))
+            tracker.Setup(x => x.GetUnseenLinks(new[] { post1.Permalink, post2.Permalink, post3.Permalink, post4.Permalink }, CancellationToken.None))
                    .ReturnsAsync(new[] { post3.Permalink, post1.Permalink }); // post 2 was seen
 
-            enricher.Setup(x => x.EnrichExtractedPosts(new[] { post3, post1 }, CancellationToken.None))
+            enricher.Setup(x => x.EnrichExtractedPosts(new[] { post4, post3, post1 }, CancellationToken.None))
                     .Returns(Task.CompletedTask);
 
             // Ensure posts are shared in descending order to which they were receieved from the source
-            destination.Setup(x => x.ShareExtractedPosts(new[] { post3, post1 }, CancellationToken.None))
+            destination.Setup(x => x.ShareExtractedPosts(new[] { post4, post3, post1 }, CancellationToken.None))
                        .Returns(Task.CompletedTask);
 
             tracker.Setup(x => x.SetLinksSeen(new[] { post3.Permalink, post1.Permalink }, CancellationToken.None))
