@@ -10,11 +10,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Ae.Nuntium
 {
-    public sealed class ConfigurationDrivenServiceFactory : IConfigurationDrivenServiceFactory
+    public sealed class PipelineServiceFactory : IPipelineServiceFactory
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public ConfigurationDrivenServiceFactory(IServiceProvider serviceProvider)
+        public PipelineServiceFactory(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }

@@ -2,7 +2,7 @@
   "seleniumDriver": {
     "type": "GoogleChrome"
   },
-  "finders": [
+  "pipelines": [
     {
       "testing": false,
       "cron": "* * * * *",

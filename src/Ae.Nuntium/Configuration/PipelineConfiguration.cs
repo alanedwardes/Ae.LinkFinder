@@ -1,6 +1,6 @@
 ﻿namespace Ae.Nuntium.Configuration
 {
-    public sealed class NuntiumFinder
+    public sealed class PipelineConfiguration
     {
         public bool Skip { get; set; }
         public bool Testing { get; set; }

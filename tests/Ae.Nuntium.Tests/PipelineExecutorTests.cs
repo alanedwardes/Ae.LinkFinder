@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Ae.Nuntium.Tests
 {
-    public sealed class ContentFinderTests : IDisposable
+    public sealed class PipelineExecutorTests : IDisposable
     {
         private readonly MockRepository _repository = new(MockBehavior.Strict);
 
@@ -18,7 +18,7 @@ namespace Ae.Nuntium.Tests
         [Fact]
         public async Task FindContentNoPosts()
         {
-            var finder = new ContentFinder(NullLogger<ContentFinder>.Instance);
+            var executor = new PipelineExecutor(NullLogger<PipelineExecutor>.Instance);
 
             var source = _repository.Create<IContentSource>();
             var extractor = _repository.Create<IPostExtractor>();
@@ -32,13 +32,13 @@ namespace Ae.Nuntium.Tests
             extractor.Setup(x => x.ExtractPosts(sourceDocument))
                 .ReturnsAsync(new List<ExtractedPost>());
 
-            await finder.FindContent(source.Object, extractor.Object, tracker.Object, null, new[] { destination.Object }, CancellationToken.None);
+            await executor.RunPipeline(source.Object, extractor.Object, tracker.Object, null, new[] { destination.Object }, CancellationToken.None);
         }
 
         [Fact]
         public async Task FindContent()
         {
-            var finder = new ContentFinder(NullLogger<ContentFinder>.Instance);
+            var executor = new PipelineExecutor(NullLogger<PipelineExecutor>.Instance);
 
             var source = _repository.Create<IContentSource>();
             var extractor = _repository.Create<IPostExtractor>();
@@ -72,13 +72,13 @@ namespace Ae.Nuntium.Tests
             tracker.Setup(x => x.SetLinksSeen(new[] { post3.Permalink, post1.Permalink }, CancellationToken.None))
                    .Returns(Task.CompletedTask);
 
-            await finder.FindContent(source.Object, extractor.Object, tracker.Object, enricher.Object, new[] { destination.Object }, CancellationToken.None);
+            await executor.RunPipeline(source.Object, extractor.Object, tracker.Object, enricher.Object, new[] { destination.Object }, CancellationToken.None);
         }
 
         [Fact]
         public async Task FindContentAllSeen()
         {
-            var finder = new ContentFinder(NullLogger<ContentFinder>.Instance);
+            var executor = new PipelineExecutor(NullLogger<PipelineExecutor>.Instance);
 
             var source = _repository.Create<IContentSource>();
             var extractor = _repository.Create<IPostExtractor>();
@@ -100,7 +100,7 @@ namespace Ae.Nuntium.Tests
             tracker.Setup(x => x.GetUnseenLinks(new[] { post1.Permalink, post2.Permalink, post3.Permalink }, CancellationToken.None))
                    .ReturnsAsync(Enumerable.Empty<Uri>());
 
-            await finder.FindContent(source.Object, extractor.Object, tracker.Object, enricher.Object, new[] { destination.Object }, CancellationToken.None);
+            await executor.RunPipeline(source.Object, extractor.Object, tracker.Object, enricher.Object, new[] { destination.Object }, CancellationToken.None);
         }
     }
 }

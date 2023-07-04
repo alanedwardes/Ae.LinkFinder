@@ -7,13 +7,13 @@ using Microsoft.Extensions.Logging;
 
 namespace Ae.Nuntium
 {
-    public sealed class ContentFinder : IContentFinder
+    public sealed class PipelineExecutor : IPipelineExecutor
     {
-        private readonly ILogger<ContentFinder> _logger;
+        private readonly ILogger<PipelineExecutor> _logger;
 
-        public ContentFinder(ILogger<ContentFinder> logger) => _logger = logger;
+        public PipelineExecutor(ILogger<PipelineExecutor> logger) => _logger = logger;
 
-        public async Task FindContent(IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task RunPipeline(IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
             _logger.LogInformation("Getting links with source {Source}", source);
 
