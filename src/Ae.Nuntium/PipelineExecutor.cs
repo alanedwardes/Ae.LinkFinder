@@ -13,7 +13,7 @@ namespace Ae.Nuntium
 
         public PipelineExecutor(ILogger<PipelineExecutor> logger) => _logger = logger;
 
-        public async Task RunPipeline(IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task RunPipeline(IContentSource source, IPostExtractor extractor, IPostTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
             _logger.LogInformation("Getting links with source {Source}", source);
 
@@ -32,8 +32,8 @@ namespace Ae.Nuntium
                 _logger.LogWarning("Source {Source} found duplicated posts with the same set of URIs: {DuplicatedPermalinks} (all will be posted)", source, string.Join(", ", duplicatedPosts));
             }
 
-            IList<Uri> unseenLinks = (await tracker.GetUnseenLinks(posts.Select(x => x.Post.Permalink), cancellation)).ToList();
-            IList<ExtractedPost> unseenPosts = posts.Where(x => unseenLinks.Contains(x.Post.Permalink)).OrderByDescending(x => x.Index).Select(x => x.Post).ToList();
+            IList<ExtractedPost> unseenLinks = (await tracker.GetUnseenPosts(posts.Select(x => x.Post), cancellation)).ToList();
+            IList<ExtractedPost> unseenPosts = posts.Where(x => unseenLinks.Contains(x.Post)).OrderByDescending(x => x.Index).Select(x => x.Post).ToList();
             if (unseenPosts.Count == 0)
             {
                 _logger.LogInformation("All {Total} posts from {Source} were seen before", posts.Count, source);
@@ -50,7 +50,7 @@ namespace Ae.Nuntium
                 await destination.ShareExtractedPosts(unseenPosts, cancellation);
             }
 
-            await tracker.SetLinksSeen(unseenLinks, cancellation);
+            await tracker.SetSeenPosts(unseenLinks, cancellation);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Ae.Nuntium
         IPostExtractor GetExtractor(ConfiguredType type);
         ISeleniumDriverFactory GetSeleniumDriver(ConfiguredType type);
         IContentSource GetSource(ConfiguredType type);
-        ILinkTracker GetTracker(ConfiguredType type);
+        IPostTracker GetTracker(ConfiguredType type);
         IExtractedPostEnricher GetEnricher(ConfiguredType type);
     }
 }

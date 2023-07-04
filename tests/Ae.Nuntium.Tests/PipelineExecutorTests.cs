@@ -22,7 +22,7 @@ namespace Ae.Nuntium.Tests
 
             var source = _repository.Create<IContentSource>();
             var extractor = _repository.Create<IPostExtractor>();
-            var tracker = _repository.Create<ILinkTracker>();
+            var tracker = _repository.Create<IPostTracker>();
             var destination = _repository.Create<IExtractedPostDestination>();
 
             var sourceDocument = new SourceDocument();
@@ -42,7 +42,7 @@ namespace Ae.Nuntium.Tests
 
             var source = _repository.Create<IContentSource>();
             var extractor = _repository.Create<IPostExtractor>();
-            var tracker = _repository.Create<ILinkTracker>();
+            var tracker = _repository.Create<IPostTracker>();
             var destination = _repository.Create<IExtractedPostDestination>();
             var enricher = _repository.Create<IExtractedPostEnricher>();
 
@@ -59,17 +59,17 @@ namespace Ae.Nuntium.Tests
                      .ReturnsAsync(new[] { post1, post2, post3, post4 });
 
             // Get unseen links - treat result as a set, order not guaranteed
-            tracker.Setup(x => x.GetUnseenLinks(new[] { post1.Permalink, post2.Permalink, post3.Permalink, post4.Permalink }, CancellationToken.None))
-                   .ReturnsAsync(new[] { post3.Permalink, post1.Permalink }); // post 2 was seen
+            tracker.Setup(x => x.GetUnseenPosts(new[] { post1, post2, post3, post4 }, CancellationToken.None))
+                   .ReturnsAsync(new[] { post3, post1 }); // post 2 was seen
 
-            enricher.Setup(x => x.EnrichExtractedPosts(new[] { post4, post3, post1 }, CancellationToken.None))
+            enricher.Setup(x => x.EnrichExtractedPosts(new[] { post3, post1 }, CancellationToken.None))
                     .Returns(Task.CompletedTask);
 
             // Ensure posts are shared in descending order to which they were receieved from the source
-            destination.Setup(x => x.ShareExtractedPosts(new[] { post4, post3, post1 }, CancellationToken.None))
+            destination.Setup(x => x.ShareExtractedPosts(new[] { post3, post1 }, CancellationToken.None))
                        .Returns(Task.CompletedTask);
 
-            tracker.Setup(x => x.SetLinksSeen(new[] { post3.Permalink, post1.Permalink }, CancellationToken.None))
+            tracker.Setup(x => x.SetSeenPosts(new[] { post3, post1 }, CancellationToken.None))
                    .Returns(Task.CompletedTask);
 
             await executor.RunPipeline(source.Object, extractor.Object, tracker.Object, enricher.Object, new[] { destination.Object }, CancellationToken.None);
@@ -82,7 +82,7 @@ namespace Ae.Nuntium.Tests
 
             var source = _repository.Create<IContentSource>();
             var extractor = _repository.Create<IPostExtractor>();
-            var tracker = _repository.Create<ILinkTracker>();
+            var tracker = _repository.Create<IPostTracker>();
             var destination = _repository.Create<IExtractedPostDestination>();
             var enricher = _repository.Create<IExtractedPostEnricher>();
 
@@ -97,8 +97,8 @@ namespace Ae.Nuntium.Tests
             extractor.Setup(x => x.ExtractPosts(sourceDocument))
                      .ReturnsAsync(new[] { post1, post2, post3 });
 
-            tracker.Setup(x => x.GetUnseenLinks(new[] { post1.Permalink, post2.Permalink, post3.Permalink }, CancellationToken.None))
-                   .ReturnsAsync(Enumerable.Empty<Uri>());
+            tracker.Setup(x => x.GetUnseenPosts(new[] { post1, post2, post3 }, CancellationToken.None))
+                   .ReturnsAsync(Enumerable.Empty<ExtractedPost>());
 
             await executor.RunPipeline(source.Object, extractor.Object, tracker.Object, enricher.Object, new[] { destination.Object }, CancellationToken.None);
         }

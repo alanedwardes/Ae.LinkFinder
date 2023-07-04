@@ -88,12 +88,12 @@ namespace Ae.Nuntium
             }
         }
 
-        public ILinkTracker GetTracker(ConfiguredType type)
+        public IPostTracker GetTracker(ConfiguredType type)
         {
             switch (type.Type)
             {
                 case "File":
-                    return ActivatorUtilities.CreateInstance<FileLinkTracker>(_serviceProvider, GetConfiguration<FileLinkTracker.Configuration>(type.Configuration));
+                    return ActivatorUtilities.CreateInstance<FilePostTracker>(_serviceProvider, GetConfiguration<FilePostTracker.Configuration>(type.Configuration));
                 default:
                     throw new InvalidOperationException();
             }

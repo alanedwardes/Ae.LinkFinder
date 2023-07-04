@@ -50,7 +50,7 @@ namespace Ae.Nuntium
             await Task.WhenAll(tasks);
         }
 
-        public async Task RunContinuously(PipelineConfiguration pipelineConfiguration, IContentSource source, IPostExtractor extractor, ILinkTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task RunContinuously(PipelineConfiguration pipelineConfiguration, IContentSource source, IPostExtractor extractor, IPostTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
             var cron = CronExpression.Parse(pipelineConfiguration.Cron);
             var random = new Random();
