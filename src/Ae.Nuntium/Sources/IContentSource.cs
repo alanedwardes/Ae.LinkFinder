@@ -2,6 +2,6 @@
 {
     public interface IContentSource
     {
-        Task<SourceDocument> GetContent(CancellationToken token);
+        Task<SourceDocument> GetContent(CancellationToken cancellation);
     }
 }

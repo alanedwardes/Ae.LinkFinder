@@ -80,29 +80,29 @@ namespace Ae.Nuntium.Extractors
 
                 var extractedPost = new ExtractedPost(permalink)
                 {
-                    Title = item.Title?.Text,
-                    Author = author,
+                    Title = item.Title?.Text?.Trim(),
+                    Author = author?.Trim(),
                     Published = item.PublishDate.UtcDateTime
                 };
 
                 var summaryHtml = TryParseHtml(item.Summary?.Text);
                 if (summaryHtml == null)
                 {
-                    extractedPost.TextSummary = item.Summary?.Text;
+                    extractedPost.TextSummary = item.Summary?.Text?.Trim();
                 }
                 else
                 {
-                    extractedPost.TextSummary = summaryHtml.DocumentNode.InnerText;
+                    extractedPost.TextSummary = summaryHtml.DocumentNode.InnerText?.Trim();
                 }
 
                 var contentHtml = TryParseHtml(content);
                 if (contentHtml != null)
                 {
-                    extractedPost.RawContent = contentHtml.DocumentNode.InnerHtml;
+                    extractedPost.RawContent = contentHtml.DocumentNode.InnerHtml?.Trim();
                 }
                 else
                 {
-                    extractedPost.RawContent = content ?? summaryHtml?.DocumentNode.InnerHtml;
+                    extractedPost.RawContent = (content ?? summaryHtml?.DocumentNode.InnerHtml)?.Trim();
                 }
 
                 foreach (var node in (contentHtml?.DocumentNode ?? summaryHtml?.DocumentNode ?? new HtmlDocument().DocumentNode).GetChildrenAndSelf())

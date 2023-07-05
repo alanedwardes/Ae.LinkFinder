@@ -20,15 +20,15 @@ namespace Ae.Nuntium.Sources
             _configuration = configuration;
         }
 
-        public async Task<SourceDocument> GetContent(CancellationToken token)
+        public async Task<SourceDocument> GetContent(CancellationToken cancellation)
         {
             using var httpClient = _httpClientFactory.CreateClient();
-            using var response = await httpClient.GetAsync(_configuration.Address, token);
+            using var response = await httpClient.GetAsync(_configuration.Address, cancellation);
             response.EnsureSuccessStatusCode();
 
             return new SourceDocument
             {
-                Body = await response.Content.ReadAsStringAsync(token),
+                Body = await response.Content.ReadAsStringAsync(cancellation),
                 Source = response.RequestMessage.RequestUri
             };
         }

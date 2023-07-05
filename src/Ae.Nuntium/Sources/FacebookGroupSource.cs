@@ -23,7 +23,7 @@ namespace Ae.Nuntium.Sources
             _configuration = configuration;
         }
 
-        public async Task<SourceDocument> GetContent(CancellationToken token)
+        public async Task<SourceDocument> GetContent(CancellationToken cancellation)
         {
             _logger.LogInformation("Loading {Address}", _configuration.GroupAddress);
 
@@ -47,7 +47,7 @@ namespace Ae.Nuntium.Sources
                 builder.KeyUp(key);
             }
 
-            await Task.Delay(RandomShortTimeSpan(), token);
+            await Task.Delay(RandomShortTimeSpan(), cancellation);
 
             // Accept cookies
             builder.KeyDown(Keys.Shift);

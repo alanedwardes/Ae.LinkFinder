@@ -8,9 +8,21 @@ namespace Ae.Nuntium.Tests;
 
 public static class ExtractedPostTestExtensions
 {
+    private static readonly JsonSerializerOptions _options = new()
+    {
+        WriteIndented = true,
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+    };
+
     public static string ToJson(this IEnumerable<ExtractedPost> posts)
     {
-        return JsonSerializer.Serialize(posts, new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault });
+        return JsonSerializer.Serialize(posts, _options);
+    }
+
+    public static IEnumerable<ExtractedPost> FromJson(string json)
+    {
+        return JsonSerializer.Deserialize<IEnumerable<ExtractedPost>>(json, _options);
     }
 
     public static void Compare(this IEnumerable<ExtractedPost> posts, string fileName)

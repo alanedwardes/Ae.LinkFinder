@@ -24,7 +24,7 @@ namespace Ae.Nuntium.Sources
             _configuration = configuration;
         }
 
-        public async Task<SourceDocument> GetContent(CancellationToken token)
+        public async Task<SourceDocument> GetContent(CancellationToken cancellation)
         {
             _logger.LogInformation("Loading {Address}", _configuration.ProfileAddress);
 
@@ -37,7 +37,7 @@ namespace Ae.Nuntium.Sources
                 driver.Manage().Cookies.AddCookie(CreateAuthCookie());
 
                 // Wait a little while
-                await Task.Delay(RandomShortTimeSpan(), token);
+                await Task.Delay(RandomShortTimeSpan(), cancellation);
             }
 
             driver.Navigate().GoToUrl(_configuration.ProfileAddress);
@@ -57,7 +57,7 @@ namespace Ae.Nuntium.Sources
                 builder.KeyUp(key);
             }
 
-            await Task.Delay(RandomShortTimeSpan(), token);
+            await Task.Delay(RandomShortTimeSpan(), cancellation);
 
             // Scroll down the page to load a few more posts
             PressKey(Keys.End);
