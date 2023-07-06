@@ -1,7 +1,5 @@
 ﻿using Ae.Nuntium.Sources;
 using HtmlAgilityPack;
-using SmartReader;
-using System.Web;
 
 namespace Ae.Nuntium.Extractors
 {

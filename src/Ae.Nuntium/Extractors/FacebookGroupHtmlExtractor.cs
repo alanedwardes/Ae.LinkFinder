@@ -76,7 +76,8 @@ namespace Ae.Nuntium.Extractors
                 var builder = new UriBuilder(permalink)
                 {
                     Query = null,
-                    Fragment = null
+                    Fragment = null,
+                    Port = -1
                 };
 
                 var extractedPost = new ExtractedPost(builder.Uri)

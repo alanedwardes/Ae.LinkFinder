@@ -21,12 +21,7 @@
       },
       "extractor": {
         "type": "FacebookHtml"
-      },
-      "destinations": [
-        {
-          "type": "Console"
-        }
-      ]
+      }
     },
     {
       "testing": false,
@@ -46,12 +41,7 @@
       },
       "extractor": {
         "type": "TwitterHtml"
-      },
-      "destinations": [
-        {
-          "type": "Console"
-        }
-      ]
+      }
     }
   ]
 }
