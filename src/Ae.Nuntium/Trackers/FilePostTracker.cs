@@ -25,13 +25,28 @@ namespace Ae.Nuntium.Trackers
                 return posts;
             }
 
-            var seen = (await File.ReadAllLinesAsync(_configuration.File, cancellation)).Select(x => new Uri(x));
+            var seen = await ReadUris(cancellation);
             return posts.ExceptBy(seen, x => x.Permalink);
         }
 
-        public Task RemoveSeenPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
+        public async Task RemoveSeenPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
         {
-            throw new NotImplementedException();
+            var items = new List<Uri>();
+
+            foreach (var permalink in await ReadUris(cancellation))
+            {
+                if (!posts.Select(x => x.Permalink).Contains(permalink))
+                {
+                    items.Add(permalink);
+                }
+            }
+
+            await File.WriteAllLinesAsync(_configuration.File, items.Select(x => x.ToString()), cancellation);
+        }
+
+        private async Task<IEnumerable<Uri>> ReadUris(CancellationToken cancellation)
+        {
+            return (await File.ReadAllLinesAsync(_configuration.File, cancellation)).Select(x => new Uri(x));
         }
     }
 }

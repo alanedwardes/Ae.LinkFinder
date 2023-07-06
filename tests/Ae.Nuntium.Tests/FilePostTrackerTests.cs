@@ -35,6 +35,10 @@ namespace Ae.Nuntium.Tests
                 await tracker.SetSeenPosts(posts.Skip(2).Take(1), CancellationToken.None);
 
                 Assert.Empty(await tracker.GetUnseenPosts(posts, CancellationToken.None));
+
+                await tracker.RemoveSeenPosts(posts, CancellationToken.None);
+
+                Assert.Equal(posts, await tracker.GetUnseenPosts(posts, CancellationToken.None));
             }
             finally
             {
