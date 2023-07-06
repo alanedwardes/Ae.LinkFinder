@@ -72,7 +72,7 @@ namespace Ae.Nuntium.Tests
             tracker.Setup(x => x.SetSeenPosts(new[] { post3, post1 }, CancellationToken.None))
                    .Returns(Task.CompletedTask);
 
-            await executor.RunPipeline(source.Object, extractor.Object, tracker.Object, enricher.Object, new[] { destination.Object }, CancellationToken.None);
+            await executor.RunPipeline(source.Object, extractor.Object, tracker.Object, new[] { enricher.Object }, new[] { destination.Object }, CancellationToken.None);
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Ae.Nuntium.Tests
             tracker.Setup(x => x.GetUnseenPosts(new[] { post1, post2, post3 }, CancellationToken.None))
                    .ReturnsAsync(Enumerable.Empty<ExtractedPost>());
 
-            await executor.RunPipeline(source.Object, extractor.Object, tracker.Object, enricher.Object, new[] { destination.Object }, CancellationToken.None);
+            await executor.RunPipeline(source.Object, extractor.Object, tracker.Object, new[] { enricher.Object }, new[] { destination.Object }, CancellationToken.None);
         }
     }
 }

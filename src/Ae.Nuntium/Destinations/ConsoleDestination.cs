@@ -16,7 +16,7 @@ namespace Ae.Nuntium.Destinations
         {
             foreach (var post in posts)
             {
-                _logger.LogInformation("{Author}: {TextSummary} {Permalink}", post.Author, post.TextSummary, post.Permalink);
+                _logger.LogInformation(post.ToString());
             }
 
             return Task.CompletedTask;

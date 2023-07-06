@@ -105,6 +105,8 @@ namespace Ae.Nuntium
             {
                 case "SmartReader":
                     return ActivatorUtilities.CreateInstance<SmartReaderArticleEnricher>(_serviceProvider);
+                case "WhitespaceRemoval":
+                    return ActivatorUtilities.CreateInstance<WhitespaceRemovalEnricher>(_serviceProvider);
                 default:
                     throw new InvalidOperationException();
             }

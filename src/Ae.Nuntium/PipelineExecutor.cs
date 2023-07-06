@@ -13,7 +13,7 @@ namespace Ae.Nuntium
 
         public PipelineExecutor(ILogger<PipelineExecutor> logger) => _logger = logger;
 
-        public async Task RunPipeline(IContentSource source, IPostExtractor extractor, IPostTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task RunPipeline(IContentSource source, IPostExtractor extractor, IPostTracker tracker, IList<IExtractedPostEnricher> enrichers, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
             _logger.LogInformation("Getting links with source {Source}", source);
 
@@ -41,7 +41,10 @@ namespace Ae.Nuntium
             }
 
             // Enrich the posts, if an enricher was supplied
-            await (enricher?.EnrichExtractedPosts(unseenPosts, cancellation) ?? Task.CompletedTask);
+            foreach (var enricher in enrichers)
+            {
+                await enricher.EnrichExtractedPosts(unseenPosts, cancellation);
+            }
 
             _logger.LogInformation("Found {Unseen} unseen links of {Total} total from source {Source}", unseenLinks.Count, posts.Count, source);
 

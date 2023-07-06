@@ -28,20 +28,20 @@ namespace Ae.Nuntium
 
             foreach (var pipeline in configuration.Pipelines.Where(x => !x.Skip))
             {
-                var source = _serviceFactory.GetSource(pipeline.Source);
-                var extractor = _serviceFactory.GetExtractor(pipeline.Extractor);
-                var tracker = _serviceFactory.GetTracker(pipeline.Tracker);
-                var enricher = pipeline.Enricher == null ? null : _serviceFactory.GetEnricher(pipeline.Enricher);
-                var destinations = pipeline.Destinations.Select(x => _serviceFactory.GetDestination(x)).ToList();
+                var source = _serviceFactory.GetSource(pipeline.Source ?? new());
+                var extractor = _serviceFactory.GetExtractor(pipeline.Extractor ?? new());
+                var tracker = _serviceFactory.GetTracker(pipeline.Tracker ?? new());
+                var enrichers = pipeline.EnrichersMarshaled.Select(x => _serviceFactory.GetEnricher(x)).ToList();
+                var destinations = pipeline.DestinationsMarshaled.Select(x => _serviceFactory.GetDestination(x)).ToList();
 
                 if (pipeline.Testing)
                 {
                     _logger.LogInformation("Running {Source} in test mode", source);
-                    await _pipelineExecutor.RunPipeline(source, extractor, tracker, enricher, destinations, cancellation);
+                    await _pipelineExecutor.RunPipeline(source, extractor, tracker, enrichers, destinations, cancellation);
                 }
                 else
                 {
-                    tasks.Add(RunContinuously(pipeline, source, extractor, tracker, enricher, destinations, cancellation));
+                    tasks.Add(RunContinuously(pipeline, source, extractor, tracker, enrichers, destinations, cancellation));
                 }
             }
 
@@ -50,7 +50,7 @@ namespace Ae.Nuntium
             await Task.WhenAll(tasks);
         }
 
-        public async Task RunContinuously(PipelineConfiguration pipelineConfiguration, IContentSource source, IPostExtractor extractor, IPostTracker tracker, IExtractedPostEnricher? enricher, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task RunContinuously(PipelineConfiguration pipelineConfiguration, IContentSource source, IPostExtractor extractor, IPostTracker tracker, IList<IExtractedPostEnricher> enrichers, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
             var cron = CronExpression.Parse(pipelineConfiguration.Cron);
             var random = new Random();
@@ -69,7 +69,7 @@ namespace Ae.Nuntium
 
                 try
                 {
-                    await _pipelineExecutor.RunPipeline(source, extractor, tracker, enricher, destinations, cancellation);
+                    await _pipelineExecutor.RunPipeline(source, extractor, tracker, enrichers, destinations, cancellation);
                 }
                 catch (Exception ex) when (!cancellation.IsCancellationRequested)
                 {
