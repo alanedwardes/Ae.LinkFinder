@@ -88,11 +88,11 @@ namespace Ae.Nuntium.Extractors
                 var summaryHtml = TryParseHtml(item.Summary?.Text);
                 if (summaryHtml == null)
                 {
-                    extractedPost.TextSummary = item.Summary?.Text?.Trim();
+                    extractedPost.TextSummary = HttpUtility.HtmlDecode(item.Summary?.Text?.Trim());
                 }
                 else
                 {
-                    extractedPost.TextSummary = summaryHtml.DocumentNode.InnerText?.Trim();
+                    extractedPost.TextSummary = HttpUtility.HtmlDecode(summaryHtml.DocumentNode.InnerText?.Trim());
                 }
 
                 var contentHtml = TryParseHtml(content);
