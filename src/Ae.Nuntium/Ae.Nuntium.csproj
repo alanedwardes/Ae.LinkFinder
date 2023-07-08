@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.105.1" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.107.5" />
     <PackageReference Include="Cronos" Version="0.7.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.48" />
     <PackageReference Include="Humanizer.Core" Version="2.14.1" />
