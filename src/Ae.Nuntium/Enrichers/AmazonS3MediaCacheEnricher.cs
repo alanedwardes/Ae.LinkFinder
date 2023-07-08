@@ -1,4 +1,5 @@
 ﻿using Ae.Nuntium.Extractors;
+using Ae.Nuntium.Services;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.Extensions.Logging;
@@ -69,7 +70,7 @@ namespace Ae.Nuntium.Enrichers
             // but strip the crypto from the query parameters
             var preSignedUrl = _storage.GeneratePreSignedURL(_configuration.BucketName, objectKey, DateTime.UtcNow.AddDays(1), null);
 
-            return new UriBuilder(preSignedUrl) { Query = null, Port = -1 }.Uri;
+            return new Uri(preSignedUrl).RemoveFragmentAndQueryString();
         }
     }
 }

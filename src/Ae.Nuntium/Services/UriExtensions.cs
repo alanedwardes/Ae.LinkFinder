@@ -1,6 +1,6 @@
-﻿namespace Ae.Nuntium.Extractors
+﻿namespace Ae.Nuntium.Services
 {
-    public sealed class UriExtensions
+    public static class UriExtensions
     {
         public static bool TryCreateAbsoluteUri(string url, Uri baseAddress, out Uri newUri)
         {
@@ -18,6 +18,16 @@
 
             newUri = null;
             return false;
+        }
+
+        public static Uri RemoveFragmentAndQueryString(this Uri uri)
+        {
+            return new UriBuilder(uri)
+            {
+                Fragment = null,
+                Query = null,
+                Port = -1
+            }.Uri;
         }
     }
 }

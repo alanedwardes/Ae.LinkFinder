@@ -1,4 +1,5 @@
-﻿using Ae.Nuntium.Sources;
+﻿using Ae.Nuntium.Services;
+using Ae.Nuntium.Sources;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using System.Web;
@@ -72,15 +73,7 @@ namespace Ae.Nuntium.Extractors
                     continue;
                 }
 
-                // Strip the query string / fragment
-                var builder = new UriBuilder(permalink)
-                {
-                    Query = null,
-                    Fragment = null,
-                    Port = -1
-                };
-
-                var extractedPost = new ExtractedPost(builder.Uri)
+                var extractedPost = new ExtractedPost(permalink.RemoveFragmentAndQueryString())
                 {
                     Links = links,
                     Media = media,

@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using Ae.Nuntium.Services;
+using HtmlAgilityPack;
 using System.Web;
 
 namespace Ae.Nuntium.Extractors
