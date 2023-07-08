@@ -43,9 +43,7 @@ namespace Ae.Nuntium.Enrichers
 
         private async Task<Uri> CacheMedia(Uri mediaUri, CancellationToken cancellation)
         {
-            var extension = new FileInfo(mediaUri.AbsoluteUri).Extension;
-
-            var objectKey = Guid.NewGuid() + extension;
+            var objectKey = Guid.NewGuid().ToString();
 
             using var httpClient = _clientFactory.CreateClient();
 

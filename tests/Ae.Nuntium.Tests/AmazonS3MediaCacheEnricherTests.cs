@@ -57,7 +57,7 @@ namespace Ae.Nuntium.Tests
                     ms.Position = 0;
 
                     Assert.Equal("image/jpeg", request.ContentType);
-                    Assert.EndsWith(".jpeg", request.Key);
+                    Guid.Parse(request.Key); // Ensure guid
                     Assert.Equal(new byte[] { 1, 2, 3 }, ms.ToArray());
                 })
                 .ReturnsAsync(new PutObjectResponse());
