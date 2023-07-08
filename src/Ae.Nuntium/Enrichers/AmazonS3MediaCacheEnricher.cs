@@ -67,6 +67,8 @@ namespace Ae.Nuntium.Enrichers
                 Key = objectKey
             }, cancellation);
 
+            // Generate a signed URL to easily resolve a full URL for the object,
+            // but strip the crypto from the query parameters
             var preSignedUrl = _storage.GeneratePreSignedURL(_configuration.BucketName, objectKey, DateTime.UtcNow.AddDays(1), null);
 
             return new UriBuilder(preSignedUrl) { Query = null, Port = -1 }.Uri;

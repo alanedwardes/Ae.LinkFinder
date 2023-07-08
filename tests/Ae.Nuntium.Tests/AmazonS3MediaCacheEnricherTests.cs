@@ -62,10 +62,8 @@ namespace Ae.Nuntium.Tests
                 })
                 .ReturnsAsync(new PutObjectResponse());
 
-            var replacedMedia1 = new Uri("https://www.example.com/replaced");
-
             mockStorage.Setup(x => x.GeneratePreSignedURL("bucketName", It.IsAny<string>(), It.IsAny<DateTime>(), null))
-                       .Returns(replacedMedia1.ToString());
+                       .Returns("https://www.example.com/replaced?signedurlstuff=true&wibble=false");
 
             var posts = new List<ExtractedPost>
             {
@@ -78,7 +76,7 @@ namespace Ae.Nuntium.Tests
             await enricher.EnrichExtractedPosts(posts, CancellationToken.None);
 
             // This media got replaced
-            Assert.Equal(replacedMedia1, posts[0].Media.First());
+            Assert.Equal(new Uri("https://www.example.com/replaced"), posts[0].Media.First());
 
             // This errored and didn't
             Assert.Equal(media2, posts[0].Media.Last());
