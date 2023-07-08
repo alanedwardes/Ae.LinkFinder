@@ -1,4 +1,6 @@
 ﻿using Ae.Nuntium.Configuration;
+using Amazon.DynamoDBv2;
+using Amazon.S3;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -39,6 +41,8 @@ namespace Ae.Nuntium
                 .AddSingleton<IPipelineExecutor, PipelineExecutor>()
                 .AddSingleton<IPipelineServiceFactory, PipelineServiceFactory>()
                 .AddSingleton<IPipelineScheduler, PipelineScheduler>()
+                .AddSingleton<IAmazonDynamoDB, AmazonDynamoDBClient>()
+                .AddSingleton<IAmazonS3, AmazonS3Client>()
                 .BuildServiceProvider();
         }
 
