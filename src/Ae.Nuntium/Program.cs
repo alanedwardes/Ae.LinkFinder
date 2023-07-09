@@ -17,7 +17,7 @@ namespace Ae.Nuntium
 
             ServiceProvider provider = BuildProvider(configuration);
 
-            await RunPipelines(configuration, provider);
+            await Run(configuration, provider);
         }
 
         private static MainConfiguration BuildConfig()
@@ -46,7 +46,7 @@ namespace Ae.Nuntium
                 .BuildServiceProvider();
         }
 
-        private static async Task RunPipelines(MainConfiguration configuration, IServiceProvider provider)
+        private static async Task Run(MainConfiguration configuration, IServiceProvider provider)
         {
             var logger = provider.GetRequiredService<ILogger<Program>>();
 
@@ -63,9 +63,30 @@ namespace Ae.Nuntium
             Console.CancelKeyPress += (s, e) => HandleCancel();
             AppDomain.CurrentDomain.ProcessExit += (e, s) => HandleCancel();
 
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseStartup<Startup>()
+                .ConfigureServices(services =>
+                {
+                    services.AddLogging(x => x.AddConsole());
+                    services.AddSingleton(configuration);
+                    // Delegate any services requried to ASP.NET from the main container
+                    services.AddSingleton(provider.GetRequiredService<IPipelineServiceFactory>());
+                })
+                .Build();
+
+            var pipelinesTask = RunWrapped(provider.GetRequiredService<IPipelineScheduler>().Schedule(configuration, cts.Token), cts);
+            var serverTask = RunWrapped(host.RunAsync(cts.Token), cts);
+
+            // Await one of the tasks to report an exit, crash etc
+            await Task.WhenAny(pipelinesTask, serverTask);
+        }
+
+        private static async Task RunWrapped(Task task, CancellationTokenSource cts)
+        {
             try
             {
-                await provider.GetRequiredService<IPipelineScheduler>().Schedule(configuration, cts.Token);
+                await task;
             }
             catch when (!cts.IsCancellationRequested)
             {
