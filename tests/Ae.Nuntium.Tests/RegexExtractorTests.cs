@@ -10,7 +10,7 @@ namespace Ae.Nuntium.Tests
         {
             var extractor = new RegexExtractor(new RegexExtractor.Configuration
             {
-                Pattern = @"https://steamcommunity.com/sharedfiles/filedetails/\?id=([0-9]*)"
+                Pattern = @"https:\/\/steamcommunity.com\/sharedfiles\/filedetails\/\?id=([0-9]*)"
             });
 
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument

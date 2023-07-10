@@ -1,4 +1,5 @@
 ﻿using Ae.Nuntium.Extractors;
+using Ae.Nuntium.Services;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -82,12 +83,10 @@ namespace Ae.Nuntium.Destinations
                 }
 
                 _logger.LogInformation("Posting {Link} to Rocket Chat", post.Permalink);
-                using var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload, new JsonSerializerOptions
+                using var response = await HttpClientExtensions.SendWrapped(httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload, new JsonSerializerOptions
                 {
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                }, cancellation);
-
-                response.EnsureSuccessStatusCode();
+                }, cancellation));
             }
         }
     }

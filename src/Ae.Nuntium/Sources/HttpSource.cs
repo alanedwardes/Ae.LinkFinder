@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Ae.Nuntium.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Ae.Nuntium.Sources
 {
@@ -23,8 +24,7 @@ namespace Ae.Nuntium.Sources
         public async Task<SourceDocument> GetContent(CancellationToken cancellation)
         {
             using var httpClient = _httpClientFactory.CreateClient();
-            using var response = await httpClient.GetAsync(_configuration.Address, cancellation);
-            response.EnsureSuccessStatusCode();
+            using var response = await HttpClientExtensions.SendWrapped(httpClient.GetAsync(_configuration.Address, cancellation));
 
             return new SourceDocument
             {
