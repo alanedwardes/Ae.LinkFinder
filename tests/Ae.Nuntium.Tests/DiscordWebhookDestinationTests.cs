@@ -31,7 +31,7 @@ namespace Ae.Nuntium.Tests
             }, CancellationToken.None);
 
             Assert.Equal("https://www.example.com/", _requestMessage.RequestUri.ToString());
-            Assert.Equal("{\"embeds\":[{\"url\":\"https://www.example.com/\"}]}", await _requestMessage.Content.ReadAsStringAsync());
+            Assert.Equal("{\"content\":\"https://www.example.com/\",\"embeds\":[]}", await _requestMessage.Content.ReadAsStringAsync());
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace Ae.Nuntium.Tests
             }, CancellationToken.None);
 
             Assert.Equal("https://www.example.com/", _requestMessage.RequestUri.ToString());
-            Assert.Equal("{\"embeds\":[{\"url\":\"https://www.example.com/\"},{\"image\":{\"url\":\"https://www.example.com/test.jpg\"}}]}", await _requestMessage.Content.ReadAsStringAsync());
+            Assert.Equal("{\"content\":\"https://www.example.com/\",\"embeds\":[{\"image\":{\"url\":\"https://www.example.com/test.jpg\"}}]}", await _requestMessage.Content.ReadAsStringAsync());
         }
 
         [Fact]

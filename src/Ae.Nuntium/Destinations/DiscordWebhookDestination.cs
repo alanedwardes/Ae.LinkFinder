@@ -75,13 +75,22 @@ namespace Ae.Nuntium.Destinations
                 AvatarUrl = post.Avatar
             };
 
-            // Limits: https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
-            payload.Embeds.Add(new DiscordPayload.DiscordEmbed
+            // An embed must have either a "title" or a "description"
+            // If one is not present, we can't use embeds
+            if (post.Title == null && post.TextSummary == null)
             {
-                Title = post.Title.Truncate(256),
-                Description = post.TextSummary.Truncate(4096),
-                Url = post.Permalink.ToString()
-            });
+                payload.Content = post.Permalink.ToString();
+            }
+            else
+            {
+                // Limits: https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
+                payload.Embeds.Add(new DiscordPayload.DiscordEmbed
+                {
+                    Title = post.Title.Truncate(256),
+                    Description = post.TextSummary.Truncate(4096),
+                    Url = post.Permalink.ToString()
+                });
+            }
 
             // Limits: https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
             foreach (var media in post.Media.Take(10))
