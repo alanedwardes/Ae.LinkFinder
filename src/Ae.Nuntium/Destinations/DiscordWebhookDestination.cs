@@ -43,6 +43,8 @@ namespace Ae.Nuntium.Destinations
             public string? Username { get; set; }
             [JsonPropertyName("content")]
             public string? Content { get; set; }
+            [JsonPropertyName("avatar_url")]
+            public Uri? AvatarUrl { get; set; }
             [JsonPropertyName("embeds")]
             public IList<DiscordEmbed> Embeds { get; set; } = new List<DiscordEmbed>();
         }
@@ -69,7 +71,8 @@ namespace Ae.Nuntium.Destinations
             // https://discord.com/developers/docs/resources/webhook#execute-webhook
             var payload = new DiscordPayload
             {
-                Username = post.Author
+                Username = post.Author,
+                AvatarUrl = post.Avatar
             };
 
             // Limits: https://discord.com/developers/docs/resources/channel#embed-object-embed-limits

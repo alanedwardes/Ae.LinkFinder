@@ -26,11 +26,24 @@ namespace Ae.Nuntium.Enrichers
             _configuration = configuration;
         }
 
+        private IEnumerable<Uri> ExtractMediaFromPost(ExtractedPost post)
+        {
+            if (post.Avatar != null)
+            {
+                yield return post.Avatar;
+            }
+
+            foreach (var mediaUri in post.Media)
+            {
+                yield return mediaUri;
+            }
+        }
+
         public async Task EnrichExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
         {
             var uriMap = new Dictionary<Uri, Uri>();
 
-            foreach (var mediaUri in posts.SelectMany(x => x.Media).Distinct())
+            foreach (var mediaUri in posts.SelectMany(ExtractMediaFromPost).Distinct())
             {
                 // Do this sync so as not to overload the downstream service
                 uriMap.Add(mediaUri, await CacheMedia(mediaUri, cancellation));
@@ -39,6 +52,11 @@ namespace Ae.Nuntium.Enrichers
             foreach (var post in posts)
             {
                 post.Media = post.Media.Select(x => uriMap[x]).ToHashSet();
+                
+                if (post.Avatar != null)
+                {
+                    post.Avatar = uriMap[post.Avatar];
+                }
             }
         }
 

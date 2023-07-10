@@ -69,7 +69,8 @@ namespace Ae.Nuntium.Tests
             {
                 new ExtractedPost(new Uri("https://www.example.com/"))
                 {
-                    Media = new HashSet<Uri> { media1, media2 }
+                    Media = new HashSet<Uri> { media1, media2 },
+                    Avatar = media1
                 }
             };
 
@@ -77,6 +78,7 @@ namespace Ae.Nuntium.Tests
 
             // This media got replaced
             Assert.Equal(new Uri("https://www.example.com/replaced"), posts[0].Media.First());
+            Assert.Equal(new Uri("https://www.example.com/replaced"), posts[0].Avatar);
 
             // This errored and didn't
             Assert.Equal(media2, posts[0].Media.Last());

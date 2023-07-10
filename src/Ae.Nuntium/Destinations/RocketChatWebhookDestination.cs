@@ -62,7 +62,8 @@ namespace Ae.Nuntium.Destinations
                 var payload = new RocketChatPayload
                 {
                     Text = parts.Length == 0 ? null : string.Join("\n\n", parts),
-                    Alias = post.Author
+                    Alias = post.Author,
+                    Avatar = post.Avatar
                 };
 
                 foreach (var media in post.Media)

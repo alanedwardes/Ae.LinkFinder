@@ -44,6 +44,7 @@ namespace Ae.Nuntium.Tests
                     RawContent = "<html>",
                     TextSummary = "hello this is a summary",
                     Author = "wibble",
+                    Avatar = new Uri("https://www.example.com/avatar.png"),
                     Title = "Title",
                     Media = new HashSet<Uri>
                     {
@@ -53,7 +54,7 @@ namespace Ae.Nuntium.Tests
             }, CancellationToken.None);
 
             Assert.Equal("https://www.example.com/", _requestMessage.RequestUri.ToString());
-            Assert.Equal("{\"username\":\"wibble\",\"embeds\":[{\"title\":\"Title\",\"description\":\"hello this is a summary\",\"url\":\"https://www.example.com/\"},{\"image\":{\"url\":\"https://www.example.com/test.jpg\"}}]}", await _requestMessage.Content.ReadAsStringAsync());
+            Assert.Equal("{\"username\":\"wibble\",\"avatar_url\":\"https://www.example.com/avatar.png\",\"embeds\":[{\"title\":\"Title\",\"description\":\"hello this is a summary\",\"url\":\"https://www.example.com/\"},{\"image\":{\"url\":\"https://www.example.com/test.jpg\"}}]}", await _requestMessage.Content.ReadAsStringAsync());
         }
 
         [Fact]

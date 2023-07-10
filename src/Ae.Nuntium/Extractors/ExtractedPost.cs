@@ -17,6 +17,10 @@
         /// </summary>
         public string? Author { get; set; }
         /// <summary>
+        /// The optional avatar of the author.
+        /// </summary>
+        public Uri? Avatar { get; set; }
+        /// <summary>
         /// An optional short text version of the post content. This cannot contain HTML.
         /// </summary>
         public string? TextSummary { get; set; }
