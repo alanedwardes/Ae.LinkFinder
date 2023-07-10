@@ -33,7 +33,10 @@ namespace Ae.Nuntium.Destinations
                 [JsonPropertyName("color")]
                 public string? Color { get; set; }
             }
-
+            [JsonPropertyName("alias")]
+            public string? Alias { get; set; }
+            [JsonPropertyName("avatar")]
+            public Uri? Avatar { get; set; }
             [JsonPropertyName("text")]
             public string? Text { get; set; }
             [JsonPropertyName("attachments")]
@@ -53,20 +56,13 @@ namespace Ae.Nuntium.Destinations
 
             foreach (var post in posts)
             {
-                string? header = string.Join(": ", post.Author, post.TextSummary);
-                if (post.Author == null)
-                {
-                    header = post.TextSummary;
-                }
-
-                string? footer = post.Permalink.ToString();
-
-                var parts = new[] { header, footer }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                var parts = new[] { post.TextSummary, post.Permalink.ToString() }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
                 // https://docs.rocket.chat/use-rocket.chat/workspace-administration/integrations
                 var payload = new RocketChatPayload
                 {
-                    Text = parts.Length == 0 ? null : string.Join("\n\n", parts)
+                    Text = parts.Length == 0 ? null : string.Join("\n\n", parts),
+                    Alias = post.Author
                 };
 
                 foreach (var media in post.Media)

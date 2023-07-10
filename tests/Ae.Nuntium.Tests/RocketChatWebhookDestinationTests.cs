@@ -53,7 +53,7 @@ namespace Ae.Nuntium.Tests
             }, CancellationToken.None);
 
             Assert.Equal("https://www.example.com/", _requestMessage.RequestUri.ToString());
-            Assert.Equal("{\"text\":\"wibble: hello this is a summary\\n\\nhttps://www.example.com/\",\"attachments\":[{\"image_url\":\"https://www.example.com/test.jpg\"}]}", await _requestMessage.Content.ReadAsStringAsync());
+            Assert.Equal("{\"alias\":\"wibble\",\"text\":\"hello this is a summary\\n\\nhttps://www.example.com/\",\"attachments\":[{\"image_url\":\"https://www.example.com/test.jpg\"}]}", await _requestMessage.Content.ReadAsStringAsync());
         }
 
         [Fact]
