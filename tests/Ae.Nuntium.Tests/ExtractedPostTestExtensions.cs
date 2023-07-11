@@ -17,7 +17,7 @@ public static class ExtractedPostTestExtensions
 
     public static string ToJson(this IEnumerable<ExtractedPost> posts)
     {
-        return JsonSerializer.Serialize(posts, _options);
+        return JsonSerializer.Serialize(posts, _options).Replace("\\r\\n", "\\n");
     }
 
     public static IEnumerable<ExtractedPost> FromJson(string json)
