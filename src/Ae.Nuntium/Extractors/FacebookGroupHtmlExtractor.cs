@@ -86,7 +86,7 @@ namespace Ae.Nuntium.Extractors
                 }
 
                 var avatar = article.SelectSingleNode(".//image['@xlink:href' != '']");
-                if (avatar != null && UriExtensions.TryCreateAbsoluteUri(avatar.GetAttributeValue<string>("xlink:href", null), sourceDocument.Source, out var avatarUri))
+                if (avatar != null && UriExtensions.TryCreateAbsoluteUri(HttpUtility.HtmlDecode(avatar.GetAttributeValue<string>("xlink:href", null)), sourceDocument.Source, out var avatarUri))
                 {
                     extractedPost.Avatar = avatarUri;
                 }
