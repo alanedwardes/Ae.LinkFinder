@@ -22,8 +22,7 @@ namespace Ae.Nuntium.Extractors
             {
                 if (node.Name == "a")
                 {
-                    var href = node.GetAttributeValue<string>("href", null);
-                    if (href != "#" && UriExtensions.TryCreateAbsoluteUri(HttpUtility.HtmlDecode(href), documentUri, out var hrefUri))
+                    if (node.TryGetUriFromAttribute("href", documentUri, out var hrefUri))
                     {
                         foundLink(hrefUri);
                     }
@@ -31,13 +30,30 @@ namespace Ae.Nuntium.Extractors
 
                 if (node.Name == "img")
                 {
-                    var src = node.GetAttributeValue<string>("src", null);
-                    if (!src.StartsWith("data") && UriExtensions.TryCreateAbsoluteUri(HttpUtility.HtmlDecode(src), documentUri, out var srcUri))
+                    if (node.TryGetUriFromAttribute("src", documentUri, out var srcUri))
                     {
                         foundMedia(srcUri);
                     }
                 }
             }
+        }
+
+        public static bool TryGetUriFromAttribute(this HtmlNode node, string attributeName, Uri baseAddress, out Uri newUri)
+        {
+            if (node == null)
+            {
+                newUri = null;
+                return false;
+            }
+
+            var attributeValue = node.GetAttributeValue<string>(attributeName, null);
+            if (attributeValue == null)
+            {
+                newUri = null;
+                return false;
+            }
+
+            return UriExtensions.TryCreateAbsoluteUri(HttpUtility.HtmlDecode(attributeValue.Trim()), baseAddress, out newUri);
         }
     }
 }

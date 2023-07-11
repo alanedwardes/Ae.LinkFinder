@@ -4,15 +4,20 @@
     {
         public static bool TryCreateAbsoluteUri(string url, Uri baseAddress, out Uri newUri)
         {
+            if (string.IsNullOrWhiteSpace(url) || url.StartsWith("data") || url == "#")
+            {
+                newUri = null;
+                return false;
+            }
+
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
                 newUri = new Uri(url);
                 return true;
             }
 
-            if (Uri.TryCreate(baseAddress, url, out var uri1))
+            if (Uri.TryCreate(baseAddress, url, out newUri))
             {
-                newUri = uri1;
                 return true;
             }
 
