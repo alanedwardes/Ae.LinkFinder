@@ -1,5 +1,7 @@
 ﻿using Ae.Nuntium.Sources;
+using Amazon.Runtime.Internal.Util;
 using HtmlAgilityPack;
+using SmartReader;
 using System.ServiceModel.Syndication;
 using System.Web;
 using System.Xml;
@@ -88,11 +90,11 @@ namespace Ae.Nuntium.Extractors
                 var summaryHtml = TryParseHtml(item.Summary?.Text);
                 if (summaryHtml == null)
                 {
-                    extractedPost.TextSummary = HttpUtility.HtmlDecode(item.Summary?.Text?.Trim());
+                    extractedPost.TextSummary = item.Summary?.Text?.ToMarkdown();
                 }
                 else
                 {
-                    extractedPost.TextSummary = HttpUtility.HtmlDecode(summaryHtml.DocumentNode.InnerText?.Trim());
+                    extractedPost.TextSummary = summaryHtml.DocumentNode.ToMarkdown();
                 }
 
                 var contentHtml = TryParseHtml(content);
@@ -105,26 +107,9 @@ namespace Ae.Nuntium.Extractors
                     extractedPost.RawContent = (content ?? summaryHtml?.DocumentNode.InnerHtml)?.Trim();
                 }
 
-                foreach (var node in (contentHtml?.DocumentNode ?? summaryHtml?.DocumentNode ?? new HtmlDocument().DocumentNode).GetChildrenAndSelf())
-                {
-                    if (node.Name == "a")
-                    {
-                        var href = node.GetAttributeValue<string>("href", null);
-                        if (href != "#" && Uri.TryCreate(HttpUtility.HtmlDecode(href), UriKind.Absolute, out var hrefUri))
-                        {
-                            extractedPost.Links.Add(hrefUri);
-                        }
-                    }
+                var article = contentHtml?.DocumentNode ?? summaryHtml?.DocumentNode ?? new HtmlDocument().DocumentNode;
 
-                    if (node.Name == "img")
-                    {
-                        var src = node.GetAttributeValue<string>("src", null);
-                        if (!src.StartsWith("data") && Uri.TryCreate(HttpUtility.HtmlDecode(src), UriKind.Absolute, out var srcUri))
-                        {
-                            extractedPost.Media.Add(srcUri);
-                        }
-                    }
-                }
+                article.GetLinksAndMedia(sourceDocument.Source, link => extractedPost.Links.Add(link), mediaUri => extractedPost.Media.Add(mediaUri));
 
                 extractedPosts.Add(extractedPost);
             }

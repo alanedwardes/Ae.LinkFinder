@@ -93,7 +93,7 @@ namespace Ae.Nuntium.Extractors
                 var content = article.SelectSingleNode(".//div[@data-ad-preview = 'message']");
                 if (content != null)
                 {
-                    extractedPost.TextSummary = HttpUtility.HtmlDecode(content.InnerText);
+                    extractedPost.TextSummary = content.ToMarkdown();
                     extractedPost.RawContent = content.InnerHtml;
                 }
 

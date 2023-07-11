@@ -21,7 +21,7 @@
         /// </summary>
         public Uri? Avatar { get; set; }
         /// <summary>
-        /// An optional short text version of the post content. This cannot contain HTML.
+        /// An optional short markdown or text version of the post content. This cannot contain HTML.
         /// </summary>
         public string? TextSummary { get; set; }
         /// <summary>

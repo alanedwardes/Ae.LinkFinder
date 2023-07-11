@@ -11,6 +11,7 @@ namespace Ae.Nuntium.Tests
         [InlineData("")]
         [InlineData(" ")]
         [InlineData("#")]
+        [InlineData("#fragment")]
         public void TryCreateInvalidUri(string invalidUri)
         {
             Assert.False(UriExtensions.TryCreateAbsoluteUri(invalidUri, new Uri("https://www.example.com/"), out var newUri));

@@ -55,5 +55,16 @@ namespace Ae.Nuntium.Extractors
 
             return UriExtensions.TryCreateAbsoluteUri(HttpUtility.HtmlDecode(attributeValue.Trim()), baseAddress, out newUri);
         }
+
+        public static string ToMarkdown(this HtmlNode node)
+        {
+            return node.InnerHtml.ToMarkdown();
+        }
+
+        public static string ToMarkdown(this string html)
+        {
+            var converter = new ReverseMarkdown.Converter();
+            return converter.Convert(html);
+        }
     }
 }
