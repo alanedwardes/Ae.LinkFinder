@@ -1,9 +1,6 @@
 ﻿using Ae.Nuntium.Sources;
-using Amazon.Runtime.Internal.Util;
 using HtmlAgilityPack;
-using SmartReader;
 using System.ServiceModel.Syndication;
-using System.Web;
 using System.Xml;
 
 namespace Ae.Nuntium.Extractors
