@@ -1,5 +1,4 @@
-﻿using Ae.Nuntium.Services;
-using Ae.Nuntium.Sources;
+﻿using Ae.Nuntium.Sources;
 using HtmlAgilityPack;
 
 namespace Ae.Nuntium.Extractors
@@ -63,8 +62,7 @@ namespace Ae.Nuntium.Extractors
                 var avatar = tweet.SelectSingleNode(".//div[@data-testid = 'Tweet-User-Avatar']");
                 if (avatar != null)
                 {
-                    var img = avatar.SelectSingleNode(".//img");
-                    if (img != null && UriExtensions.TryCreateAbsoluteUri(img.GetAttributeValue("src", null), sourceDocument.Source, out var avatarUri))
+                    if (avatar.SelectSingleNode(".//img").TryGetUriFromAttribute("src", sourceDocument.Source, out var avatarUri))
                     {
                         extractedPost.Avatar = avatarUri;
                     }
