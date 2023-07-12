@@ -85,18 +85,20 @@ namespace Ae.Nuntium.Extractors
                 };
 
                 var summaryHtml = TryParseHtml(item.Summary?.Text);
-                if (summaryHtml == null)
+                if (summaryHtml != null)
                 {
-                    extractedPost.TextSummary = item.Summary?.Text?.ToMarkdown();
+                    summaryHtml.DocumentNode.MakeRelativeUrisAbsolute(sourceDocument.Source);
+                    extractedPost.TextSummary = summaryHtml.DocumentNode.ToMarkdown();
                 }
                 else
                 {
-                    extractedPost.TextSummary = summaryHtml.DocumentNode.ToMarkdown();
+                    extractedPost.TextSummary = item.Summary?.Text?.ToMarkdown();
                 }
 
                 var contentHtml = TryParseHtml(content);
                 if (contentHtml != null)
                 {
+                    contentHtml.DocumentNode.MakeRelativeUrisAbsolute(sourceDocument.Source);
                     extractedPost.RawContent = contentHtml.DocumentNode.InnerHtml?.Trim();
                 }
                 else

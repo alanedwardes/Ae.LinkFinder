@@ -16,6 +16,8 @@ namespace Ae.Nuntium.Extractors
 
             foreach (var tweet in tweets ?? Enumerable.Empty<HtmlNode>())
             {
+                tweet.MakeRelativeUrisAbsolute(sourceDocument.Source);
+
                 var links = new HashSet<Uri>();
                 var media = new HashSet<Uri>();
 
@@ -62,7 +64,7 @@ namespace Ae.Nuntium.Extractors
                 var avatar = tweet.SelectSingleNode(".//div[@data-testid = 'Tweet-User-Avatar']");
                 if (avatar != null)
                 {
-                    if (avatar.SelectSingleNode(".//img").TryGetUriFromAttribute("src", sourceDocument.Source, out var avatarUri))
+                    if (avatar.SelectSingleNode(".//img").TryGetAbsoluteUriFromAttribute("src", out var avatarUri))
                     {
                         extractedPost.Avatar = avatarUri;
                     }

@@ -4,7 +4,7 @@
     {
         public static bool TryCreateAbsoluteUri(string url, Uri baseAddress, out Uri newUri)
         {
-            if (string.IsNullOrWhiteSpace(url) || url.StartsWith("data") || url.StartsWith("#"))
+            if (string.IsNullOrWhiteSpace(url) || url.StartsWith("data"))
             {
                 newUri = null;
                 return false;

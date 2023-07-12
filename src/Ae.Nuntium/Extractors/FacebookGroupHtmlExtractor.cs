@@ -28,6 +28,8 @@ namespace Ae.Nuntium.Extractors
 
             foreach (var article in articles ?? Enumerable.Empty<HtmlNode>())
             {
+                article.MakeRelativeUrisAbsolute(sourceDocument.Source);
+
                 if (!article.ChildNodes.Any())
                 {
                     continue;
@@ -85,7 +87,7 @@ namespace Ae.Nuntium.Extractors
                     extractedPost.Author = HttpUtility.HtmlDecode(author.InnerText);
                 }
 
-                if (article.SelectSingleNode(".//image['@xlink:href' != '']").TryGetUriFromAttribute("xlink:href", sourceDocument.Source, out var avatarUri))
+                if (article.SelectSingleNode(".//image['@xlink:href' != '']").TryGetAbsoluteUriFromAttribute("xlink:href", out var avatarUri))
                 {
                     extractedPost.Avatar = avatarUri;
                 }

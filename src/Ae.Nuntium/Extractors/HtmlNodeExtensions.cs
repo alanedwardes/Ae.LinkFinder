@@ -22,7 +22,7 @@ namespace Ae.Nuntium.Extractors
             {
                 if (node.Name == "a")
                 {
-                    if (node.TryGetUriFromAttribute("href", documentUri, out var hrefUri))
+                    if (node.TryGetAbsoluteUriFromAttribute("href", out var hrefUri))
                     {
                         foundLink(hrefUri);
                     }
@@ -30,7 +30,7 @@ namespace Ae.Nuntium.Extractors
 
                 if (node.Name == "img")
                 {
-                    if (node.TryGetUriFromAttribute("src", documentUri, out var srcUri))
+                    if (node.TryGetAbsoluteUriFromAttribute("src", out var srcUri))
                     {
                         foundMedia(srcUri);
                     }
@@ -38,7 +38,7 @@ namespace Ae.Nuntium.Extractors
             }
         }
 
-        public static bool TryGetUriFromAttribute(this HtmlNode node, string attributeName, Uri baseAddress, out Uri newUri)
+        public static bool TryGetAbsoluteUriFromAttribute(this HtmlNode node, string attributeName, out Uri newUri)
         {
             if (node == null)
             {
@@ -53,7 +53,55 @@ namespace Ae.Nuntium.Extractors
                 return false;
             }
 
-            return UriExtensions.TryCreateAbsoluteUri(HttpUtility.HtmlDecode(attributeValue.Trim()), baseAddress, out newUri);
+            return Uri.TryCreate(HttpUtility.HtmlDecode(attributeValue.Trim()), UriKind.Absolute, out newUri);
+        }
+
+        private static bool TryGetUriFromAttribute(this HtmlNode node, string attributeName, Uri baseAddress, out Uri newUri)
+        {
+            if (node == null)
+            {
+                newUri = null;
+                return false;
+            }
+
+            var attributeValue = node.GetAttributeValue<string>(attributeName, null);
+            if (attributeValue == null)
+            {
+                newUri = null;
+                return false;
+            }
+
+            return UriExtensions.TryCreateAbsoluteUri(attributeValue.Trim(), baseAddress, out newUri);
+        }
+
+        public static void MakeRelativeUrisAbsolute(this HtmlNode parent, Uri documentUri)
+        {
+            foreach (var node in parent.GetChildrenAndSelf())
+            {
+                if (node.Name == "a")
+                {
+                    if (node.TryGetUriFromAttribute("href", documentUri, out var hrefUri))
+                    {
+                        node.SetAttributeValue("href", hrefUri.AbsoluteUri);
+                    }
+                    else
+                    {
+                        node.Attributes.Remove("href");
+                    }
+                }
+
+                if (node.Name == "img")
+                {
+                    if (node.TryGetUriFromAttribute("src", documentUri, out var srcUri))
+                    {
+                        node.SetAttributeValue("src", srcUri.AbsoluteUri);
+                    }
+                    else
+                    {
+                        node.Attributes.Remove("src");
+                    }
+                }
+            }
         }
 
         public static string ToMarkdown(this HtmlNode node)
