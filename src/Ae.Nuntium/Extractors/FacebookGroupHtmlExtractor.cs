@@ -57,12 +57,33 @@ namespace Ae.Nuntium.Extractors
                     node.ParentNode.RemoveChild(node);
                 }
 
+                // Replace all emoji images with a span element + the emoji characters
+                foreach (var node in article.GetChildrenAndSelf())
+                {
+                    if (node.Name == "img")
+                    {
+                        var src = node.GetAttributeValue("src", string.Empty);
+                        if (!src.Contains("emoji.php"))
+                        {
+                            continue;
+                        }
+
+                        var alt = node.GetAttributeValue("alt", string.Empty);
+                        if (!string.IsNullOrEmpty(alt))
+                        {
+                            node.Name = "span";
+                            node.InnerHtml = alt;
+                            node.Attributes.RemoveAll();
+                        }
+                    }
+                }
+
                 var links = new HashSet<Uri>();
                 var media = new HashSet<Uri>();
 
                 article.GetLinksAndMedia(sourceDocument.Source, link => links.Add(link), mediaUri =>
                 {
-                    if (!mediaUri.PathAndQuery.Contains("rsrc.php") && !mediaUri.PathAndQuery.Contains("emoji"))
+                    if (!mediaUri.PathAndQuery.Contains("rsrc.php"))
                     {
                         media.Add(mediaUri);
                     }
