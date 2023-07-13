@@ -116,5 +116,33 @@ namespace Ae.Nuntium.Tests
 
             posts.Compare("Files/feed8.json");
         }
+
+        [Fact]
+        public async Task RssExtractorFeed9()
+        {
+            var extractor = new RssExtractor();
+
+            var posts = await extractor.ExtractPosts(new Sources.SourceDocument
+            {
+                Body = File.ReadAllText("Files/feed9.xml"),
+                Source = new Uri("http://esawebb.org/images/feed/", UriKind.Absolute)
+            });
+
+            posts.Compare("Files/feed9.json");
+        }
+
+        [Fact]
+        public async Task RssExtractorFeed10()
+        {
+            var extractor = new RssExtractor();
+
+            var posts = await extractor.ExtractPosts(new Sources.SourceDocument
+            {
+                Body = File.ReadAllText("Files/feed10.xml"),
+                Source = new Uri("http://esahubble.org/images/feed/", UriKind.Absolute)
+            });
+
+            posts.Compare("Files/feed10.json");
+        }
     }
 }
