@@ -102,5 +102,19 @@ namespace Ae.Nuntium.Tests
 
             posts.Compare("Files/feed7.json");
         }
+
+        [Fact]
+        public async Task RssExtractorFeed8()
+        {
+            var extractor = new RssExtractor();
+
+            var posts = await extractor.ExtractPosts(new Sources.SourceDocument
+            {
+                Body = File.ReadAllText("Files/feed8.xml"),
+                Source = new Uri("https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss", UriKind.Absolute)
+            });
+
+            posts.Compare("Files/feed8.json");
+        }
     }
 }

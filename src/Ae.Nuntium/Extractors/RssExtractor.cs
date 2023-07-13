@@ -110,6 +110,18 @@ namespace Ae.Nuntium.Extractors
 
                 article.GetLinksAndMedia(sourceDocument.Source, link => extractedPost.Links.Add(link), mediaUri => extractedPost.Media.Add(mediaUri));
 
+                foreach (var link in item.Links ?? Enumerable.Empty<SyndicationLink>())
+                {
+                    if (link.MediaType != null && (link.MediaType.StartsWith("image") || link.MediaType.StartsWith("video")))
+                    {
+                        extractedPost.Media.Add(link.GetAbsoluteUri());
+                    }
+                    else if (extractedPost.Permalink != link.GetAbsoluteUri())
+                    {
+                        extractedPost.Links.Add(link.GetAbsoluteUri());
+                    }
+                }
+
                 extractedPosts.Add(extractedPost);
             }
 
