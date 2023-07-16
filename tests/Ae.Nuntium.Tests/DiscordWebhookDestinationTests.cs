@@ -58,6 +58,30 @@ namespace Ae.Nuntium.Tests
         }
 
         [Fact]
+        public async Task TestFullPostWithThumbnail()
+        {
+            await _destination.ShareExtractedPosts(new List<ExtractedPost>
+            {
+                new ExtractedPost(new Uri("https://www.example.com/", UriKind.Absolute))
+                {
+                    RawContent = "<html>",
+                    TextSummary = "hello this is a summary",
+                    Author = "wibble",
+                    Avatar = new Uri("https://www.example.com/avatar.png"),
+                    Title = "Title",
+                    Thumbnail = new Uri("https://www.example.com/thumbnail.jpg"),
+                    Media = new HashSet<Uri>
+                    {
+                        new Uri("https://www.example.com/test.jpg")
+                    }
+                }
+            }, CancellationToken.None);
+
+            Assert.Equal("https://www.example.com/", _requestMessage.RequestUri.ToString());
+            Assert.Equal("{\"username\":\"wibble\",\"avatar_url\":\"https://www.example.com/avatar.png\",\"embeds\":[{\"title\":\"Title\",\"description\":\"hello this is a summary\",\"url\":\"https://www.example.com/\",\"image\":{\"url\":\"https://www.example.com/thumbnail.jpg\"}}]}", await _requestMessage.Content.ReadAsStringAsync());
+        }
+
+        [Fact]
         public async Task TestPartialPost()
         {
             await _destination.ShareExtractedPosts(new List<ExtractedPost>

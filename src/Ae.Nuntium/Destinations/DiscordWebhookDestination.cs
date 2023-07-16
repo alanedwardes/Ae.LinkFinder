@@ -84,24 +84,37 @@ namespace Ae.Nuntium.Destinations
             else
             {
                 // Limits: https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
-                payload.Embeds.Add(new DiscordPayload.DiscordEmbed
+                var embed = new DiscordPayload.DiscordEmbed
                 {
                     Title = post.Title.Truncate(256),
                     Description = post.TextSummary.Truncate(4096),
                     Url = post.Permalink.ToString()
-                });
+                };
+
+                if (post.Thumbnail != null)
+                {
+                    embed.Image = new DiscordPayload.DiscordMedia
+                    {
+                        Url = post.Thumbnail.ToString(),
+                    };
+                }
+
+                payload.Embeds.Add(embed);
             }
 
-            // Limits: https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
-            foreach (var media in post.Media.Take(10))
+            if (post.Thumbnail == null)
             {
-                payload.Embeds.Add(new DiscordPayload.DiscordEmbed
+                // Limits: https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
+                foreach (var media in post.Media.Take(10))
                 {
-                    Image = new DiscordPayload.DiscordMedia
+                    payload.Embeds.Add(new DiscordPayload.DiscordEmbed
                     {
-                        Url = media.ToString()
-                    }
-                });
+                        Image = new DiscordPayload.DiscordMedia
+                        {
+                            Url = media.ToString()
+                        }
+                    });
+                }
             }
 
             _logger.LogInformation("Posting {Link} to Discord", post.Permalink);

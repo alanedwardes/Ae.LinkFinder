@@ -66,11 +66,21 @@ namespace Ae.Nuntium.Destinations
                     Avatar = post.Avatar
                 };
 
-                foreach (var media in post.Media)
+                if (post.Thumbnail == null)
+                {
+                    foreach (var media in post.Media)
+                    {
+                        payload.Attachments?.Add(new RocketChatPayload.RocketChatAttachment
+                        {
+                            ImageUrl = media.ToString()
+                        });
+                    }
+                }
+                else
                 {
                     payload.Attachments?.Add(new RocketChatPayload.RocketChatAttachment
                     {
-                        ImageUrl = media.ToString()
+                        ImageUrl = post.Thumbnail.ToString()
                     });
                 }
 
