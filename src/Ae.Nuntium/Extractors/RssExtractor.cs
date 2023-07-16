@@ -112,7 +112,11 @@ namespace Ae.Nuntium.Extractors
 
                 foreach (var link in item.Links ?? Enumerable.Empty<SyndicationLink>())
                 {
-                    if (link.MediaType != null && (link.MediaType.StartsWith("image") || link.MediaType.StartsWith("video")))
+                    if (link.RelationshipType == "enclosure" && link.MediaType != null && link.MediaType.StartsWith("image"))
+                    {
+                        extractedPost.Thumbnail = link.GetAbsoluteUri();
+                    }
+                    else if (link.MediaType != null && (link.MediaType.StartsWith("image") || link.MediaType.StartsWith("video")))
                     {
                         extractedPost.Media.Add(link.GetAbsoluteUri());
                     }

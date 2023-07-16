@@ -21,6 +21,10 @@
         /// </summary>
         public Uri? Avatar { get; set; }
         /// <summary>
+        /// An optional main thumbnail uri for the post.
+        /// </summary>
+        public Uri? Thumbnail { get; set; }
+        /// <summary>
         /// An optional short markdown or text version of the post content. This cannot contain HTML.
         /// </summary>
         public string? TextSummary { get; set; }
