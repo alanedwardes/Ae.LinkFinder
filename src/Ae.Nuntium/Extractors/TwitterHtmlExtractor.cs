@@ -18,6 +18,27 @@ namespace Ae.Nuntium.Extractors
             {
                 tweet.MakeRelativeUrisAbsolute(sourceDocument.Source);
 
+                // Replace all emoji images with a span element + the emoji characters
+                foreach (var node in tweet.GetChildrenAndSelf())
+                {
+                    if (node.Name == "img")
+                    {
+                        var src = node.GetAttributeValue("src", string.Empty);
+                        if (!src.Contains("emoji") && !src.EndsWith(".svg"))
+                        {
+                            continue;
+                        }
+
+                        var alt = node.GetAttributeValue("alt", string.Empty);
+                        if (!string.IsNullOrEmpty(alt))
+                        {
+                            node.Name = "span";
+                            node.InnerHtml = alt;
+                            node.Attributes.RemoveAll();
+                        }
+                    }
+                }
+
                 var links = new HashSet<Uri>();
                 var media = new HashSet<Uri>();
 
