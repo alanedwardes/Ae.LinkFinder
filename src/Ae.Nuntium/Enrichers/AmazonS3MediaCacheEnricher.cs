@@ -33,6 +33,11 @@ namespace Ae.Nuntium.Enrichers
                 yield return post.Avatar;
             }
 
+            if (post.Thumbnail != null)
+            {
+                yield return post.Thumbnail;
+            }
+
             foreach (var mediaUri in post.Media)
             {
                 yield return mediaUri;
@@ -56,6 +61,11 @@ namespace Ae.Nuntium.Enrichers
                 if (post.Avatar != null)
                 {
                     post.Avatar = uriMap[post.Avatar];
+                }
+
+                if (post.Thumbnail != null)
+                {
+                    post.Thumbnail = uriMap[post.Thumbnail];
                 }
             }
         }
