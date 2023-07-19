@@ -107,6 +107,8 @@ namespace Ae.Nuntium
                     return ActivatorUtilities.CreateInstance<SmartReaderArticleEnricher>(_serviceProvider);
                 case "WhitespaceRemoval":
                     return ActivatorUtilities.CreateInstance<WhitespaceRemovalEnricher>(_serviceProvider);
+                case "HomepageMetadata":
+                    return ActivatorUtilities.CreateInstance<HomepageMetadataEnricher>(_serviceProvider);
                 case "AmazonS3MediaCache":
                     return ActivatorUtilities.CreateInstance<AmazonS3MediaCacheEnricher>(_serviceProvider, GetConfiguration<AmazonS3MediaCacheEnricher.Configuration>(type.Configuration));
                 default:

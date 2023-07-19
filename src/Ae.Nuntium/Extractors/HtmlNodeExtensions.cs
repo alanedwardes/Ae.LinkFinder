@@ -37,26 +37,37 @@ namespace Ae.Nuntium.Extractors
                 }
             }
         }
-
-        public static bool TryGetAbsoluteUriFromAttribute(this HtmlNode node, string attributeName, out Uri newUri)
+        public static bool TryGetTextFromAttribute(this HtmlNode node, string attributeName, out string text)
         {
             if (node == null)
             {
-                newUri = null;
+                text = null;
                 return false;
             }
 
             var attributeValue = node.GetAttributeValue<string>(attributeName, null);
             if (attributeValue == null)
             {
-                newUri = null;
+                text = null;
                 return false;
             }
 
-            return Uri.TryCreate(HttpUtility.HtmlDecode(attributeValue.Trim()), UriKind.Absolute, out newUri);
+            text = HttpUtility.HtmlDecode(attributeValue.Trim());
+            return true;
         }
 
-        private static bool TryGetUriFromAttribute(this HtmlNode node, string attributeName, Uri baseAddress, out Uri newUri)
+        public static bool TryGetAbsoluteUriFromAttribute(this HtmlNode node, string attributeName, out Uri newUri)
+        {
+            if (TryGetTextFromAttribute(node, attributeName, out var attributeValue))
+            {
+                return Uri.TryCreate(HttpUtility.HtmlDecode(attributeValue.Trim()), UriKind.Absolute, out newUri);
+            }
+
+            newUri = null;
+            return false; 
+        }
+
+        public static bool TryGetUriFromAttribute(this HtmlNode node, string attributeName, Uri baseAddress, out Uri newUri)
         {
             if (node == null)
             {
