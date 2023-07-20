@@ -13,30 +13,32 @@ namespace Ae.Nuntium
 
         public PipelineExecutor(ILogger<PipelineExecutor> logger) => _logger = logger;
 
-        public async Task RunPipeline(IContentSource source, IPostExtractor extractor, IPostTracker tracker, IList<IExtractedPostEnricher> enrichers, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task RunPipeline(IList<IContentSource> sources, IPostExtractor extractor, IPostTracker tracker, IList<IExtractedPostEnricher> enrichers, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
-            _logger.LogInformation("Getting links with source {Source}", source);
+            _logger.LogInformation("Getting links with sources {Sources}", string.Join(", ", sources.Select(x => x.ToString())));
 
-            var content = await source.GetContent(cancellation);
+            var content = await Task.WhenAll(sources.Select(x => x.GetContent(cancellation)));
 
-            var posts = (await extractor.ExtractPosts(content)).Select((Post, Index) => (Post, Index)).ToList();
+            var allPosts = (await Task.WhenAll(content.Select(x => extractor.ExtractPosts(x)))).SelectMany(x => x);
+
+            var posts = allPosts.Select((Post, Index) => (Post, Index)).ToList();
             if (posts.Count == 0)
             {
-                _logger.LogWarning("Found no posts from source {Source}", source);
+                _logger.LogWarning("Found no posts from source {Sources}", string.Join(", ", sources.Select(x => x.ToString())));
                 return;
             }
 
             var duplicatedPosts = posts.GroupBy(x => x.Post.Permalink).Where(x => x.Count() > 1).Select(x => x.Key).ToList();
             if (duplicatedPosts.Count > 0)
             {
-                _logger.LogWarning("Source {Source} found duplicated posts with the same set of URIs: {DuplicatedPermalinks} (all will be posted)", source, string.Join(", ", duplicatedPosts));
+                _logger.LogWarning("Source {Sources} found duplicated posts with the same set of URIs: {DuplicatedPermalinks} (all will be posted)", string.Join(", ", sources.Select(x => x.ToString())), string.Join(", ", duplicatedPosts));
             }
 
             IList<ExtractedPost> unseenLinks = (await tracker.GetUnseenPosts(posts.Select(x => x.Post), cancellation)).ToList();
             IList<ExtractedPost> unseenPosts = posts.Where(x => unseenLinks.Contains(x.Post)).OrderByDescending(x => x.Index).Select(x => x.Post).ToList();
             if (unseenPosts.Count == 0)
             {
-                _logger.LogInformation("All {Total} posts from {Source} were seen before", posts.Count, source);
+                _logger.LogInformation("All {Total} posts from {Sources} were seen before", posts.Count, string.Join(", ", sources.Select(x => x.ToString())));
                 return;
             }
 
@@ -46,7 +48,7 @@ namespace Ae.Nuntium
                 await enricher.EnrichExtractedPosts(unseenPosts, cancellation);
             }
 
-            _logger.LogInformation("Found {Unseen} unseen links of {Total} total from source {Source}", unseenLinks.Count, posts.Count, source);
+            _logger.LogInformation("Found {Unseen} unseen links of {Total} total from source {Sources}", unseenLinks.Count, posts.Count, string.Join(", ", sources.Select(x => x.ToString())));
 
             foreach (var destination in destinations)
             {

@@ -7,6 +7,7 @@
         public string? Cron { get; set; }
         public int JitterSeconds { get; set; }
         public ConfiguredType? Source { get; set; }
+        public IList<ConfiguredType>? Sources { get; set; }
         public ConfiguredType? Extractor { get; set; }
         public ConfiguredType? Tracker { get; set; }
         public ConfiguredType? Enricher { get; set; } = new ConfiguredType { Type = "WhitespaceRemoval" };
@@ -14,6 +15,7 @@
         public ConfiguredType? Destination { get; set; } = new ConfiguredType { Type = "Console" };
         public IList<ConfiguredType>? Destinations { get; set; }
 
+        public IEnumerable<ConfiguredType> SourcesMarshaled => GetConfiguredTypes(Source, Sources);
         public IEnumerable<ConfiguredType> EnrichersMarshaled => GetConfiguredTypes(Enricher, Enrichers);
         public IEnumerable<ConfiguredType> DestinationsMarshaled => GetConfiguredTypes(Destination, Destinations);
         private static IEnumerable<ConfiguredType> GetConfiguredTypes(ConfiguredType? single, IEnumerable<ConfiguredType>? collection)
