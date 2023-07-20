@@ -29,7 +29,7 @@ namespace Ae.Nuntium
             foreach (var pipeline in configuration.Pipelines.Where(x => !x.Skip))
             {
                 var sources = pipeline.SourcesMarshaled.Select(x => _serviceFactory.GetSource(x)).ToList();
-                var extractors = pipeline.SourcesMarshaled.Select(x => _serviceFactory.GetExtractor(x)).ToList();
+                var extractors = pipeline.ExtractorsMarshaled.Select(x => _serviceFactory.GetExtractor(x)).ToList();
                 var tracker = _serviceFactory.GetTracker(pipeline.Tracker ?? new());
                 var enrichers = pipeline.EnrichersMarshaled.Select(x => _serviceFactory.GetEnricher(x)).ToList();
                 var destinations = pipeline.DestinationsMarshaled.Select(x => _serviceFactory.GetDestination(x)).ToList();
