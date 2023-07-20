@@ -29,7 +29,7 @@ namespace Ae.Nuntium
             foreach (var pipeline in configuration.Pipelines.Where(x => !x.Skip))
             {
                 var sources = pipeline.SourcesMarshaled.Select(x => _serviceFactory.GetSource(x)).ToList();
-                var extractor = _serviceFactory.GetExtractor(pipeline.Extractor ?? new());
+                var extractors = pipeline.SourcesMarshaled.Select(x => _serviceFactory.GetExtractor(x)).ToList();
                 var tracker = _serviceFactory.GetTracker(pipeline.Tracker ?? new());
                 var enrichers = pipeline.EnrichersMarshaled.Select(x => _serviceFactory.GetEnricher(x)).ToList();
                 var destinations = pipeline.DestinationsMarshaled.Select(x => _serviceFactory.GetDestination(x)).ToList();
@@ -37,11 +37,11 @@ namespace Ae.Nuntium
                 if (pipeline.Testing)
                 {
                     _logger.LogInformation("Running {Sources} in test mode", string.Join(", ", sources.Select(x => x.ToString())));
-                    await _pipelineExecutor.RunPipeline(sources, extractor, tracker, enrichers, destinations, cancellation);
+                    await _pipelineExecutor.RunPipeline(sources, extractors, tracker, enrichers, destinations, cancellation);
                 }
                 else
                 {
-                    tasks.Add(RunContinuously(pipeline, sources, extractor, tracker, enrichers, destinations, cancellation));
+                    tasks.Add(RunContinuously(pipeline, sources, extractors, tracker, enrichers, destinations, cancellation));
                 }
             }
 
@@ -50,7 +50,7 @@ namespace Ae.Nuntium
             await Task.WhenAll(tasks);
         }
 
-        public async Task RunContinuously(PipelineConfiguration pipelineConfiguration, IList<IContentSource> sources, IPostExtractor extractor, IPostTracker tracker, IList<IExtractedPostEnricher> enrichers, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task RunContinuously(PipelineConfiguration pipelineConfiguration, IList<IContentSource> sources, IList<IPostExtractor> extractor, IPostTracker tracker, IList<IExtractedPostEnricher> enrichers, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
             var cron = CronExpression.Parse(pipelineConfiguration.Cron);
             var random = new Random();

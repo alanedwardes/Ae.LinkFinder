@@ -13,15 +13,17 @@ namespace Ae.Nuntium
 
         public PipelineExecutor(ILogger<PipelineExecutor> logger) => _logger = logger;
 
-        public async Task RunPipeline(IList<IContentSource> sources, IPostExtractor extractor, IPostTracker tracker, IList<IExtractedPostEnricher> enrichers, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
+        public async Task RunPipeline(IList<IContentSource> sources, IList<IPostExtractor> extractors, IPostTracker tracker, IList<IExtractedPostEnricher> enrichers, IList<IExtractedPostDestination> destinations, CancellationToken cancellation)
         {
             _logger.LogInformation("Getting links with sources {Sources}", string.Join(", ", sources.Select(x => x.ToString())));
 
-            var content = await Task.WhenAll(sources.Select(x => x.GetContent(cancellation)));
+            var documents = await Task.WhenAll(sources.Select(x => x.GetContent(cancellation)));
 
-            var allPosts = (await Task.WhenAll(content.Select(x => extractor.ExtractPosts(x)))).SelectMany(x => x);
+            var extractionTasks = documents.Select(document => extractors.Select(extractor => extractor.ExtractPosts(document)));
 
-            var posts = allPosts.Select((Post, Index) => (Post, Index)).ToList();
+            var allExtractedPosts = (await Task.WhenAll(extractionTasks.SelectMany(x => x))).SelectMany(x => x);
+
+            var posts = allExtractedPosts.Select((Post, Index) => (Post, Index)).ToList();
             if (posts.Count == 0)
             {
                 _logger.LogWarning("Found no posts from source {Sources}", string.Join(", ", sources.Select(x => x.ToString())));

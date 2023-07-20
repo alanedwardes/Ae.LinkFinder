@@ -8,6 +8,6 @@ namespace Ae.Nuntium
 {
     public interface IPipelineExecutor
     {
-        Task RunPipeline(IList<IContentSource> sources, IPostExtractor extractor, IPostTracker tracker, IList<IExtractedPostEnricher> enrichers, IList<IExtractedPostDestination> destinations, CancellationToken cancellation);
+        Task RunPipeline(IList<IContentSource> sources, IList<IPostExtractor> extractors, IPostTracker tracker, IList<IExtractedPostEnricher> enrichers, IList<IExtractedPostDestination> destinations, CancellationToken cancellation);
     }
 }

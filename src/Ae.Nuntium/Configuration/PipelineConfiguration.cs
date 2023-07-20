@@ -9,6 +9,7 @@
         public ConfiguredType? Source { get; set; }
         public IList<ConfiguredType>? Sources { get; set; }
         public ConfiguredType? Extractor { get; set; }
+        public IList<ConfiguredType>? Extractors { get; set; }
         public ConfiguredType? Tracker { get; set; }
         public ConfiguredType? Enricher { get; set; } = new ConfiguredType { Type = "WhitespaceRemoval" };
         public IList<ConfiguredType>? Enrichers { get; set; }
@@ -16,6 +17,7 @@
         public IList<ConfiguredType>? Destinations { get; set; }
 
         public IEnumerable<ConfiguredType> SourcesMarshaled => GetConfiguredTypes(Source, Sources);
+        public IEnumerable<ConfiguredType> ExtractorsMarshaled => GetConfiguredTypes(Extractor, Extractors);
         public IEnumerable<ConfiguredType> EnrichersMarshaled => GetConfiguredTypes(Enricher, Enrichers);
         public IEnumerable<ConfiguredType> DestinationsMarshaled => GetConfiguredTypes(Destination, Destinations);
         private static IEnumerable<ConfiguredType> GetConfiguredTypes(ConfiguredType? single, IEnumerable<ConfiguredType>? collection)
