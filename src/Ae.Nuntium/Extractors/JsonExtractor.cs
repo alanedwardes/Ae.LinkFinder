@@ -18,6 +18,7 @@ namespace Ae.Nuntium.Extractors
             public string RawContentFormat { get; set; }
             public string TextSummaryFormat { get; set; }
             public string AuthorFormat { get; set; }
+            public IDictionary<string, string> AdditionalVariables { get; set; } = new Dictionary<string, string>();
         }
 
         public JsonExtractor(Configuration configuration)
@@ -43,6 +44,11 @@ namespace Ae.Nuntium.Extractors
 
             foreach (var token in JObject.Parse(sourceDocument.Body).SelectTokens(_configuration.ItemPath))
             {
+                foreach (var key in _configuration.AdditionalVariables.Keys)
+                {
+                    token[key] = _configuration.AdditionalVariables[key];
+                }
+
                 string? permalink = null;
                 if (_configuration.PermalinkFormat != null)
                 {

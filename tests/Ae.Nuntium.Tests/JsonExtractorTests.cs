@@ -11,10 +11,14 @@ namespace Ae.Nuntium.Tests
             var extractor = new JsonExtractor(new JsonExtractor.Configuration
             {
                 ItemPath = "$.reviews[*]",
-                PermalinkFormat = "https://steamcommunity.com/profiles/{author.steamid}/recommended/582890",
+                PermalinkFormat = "https://steamcommunity.com/profiles/{author.steamid}/recommended/{appId}",
                 TitleFormat = "{voted_up:choose(True|False):Recommended 👍|Not Recommended 👎}",
                 TextSummaryFormat = "{review}",
-                AuthorFormat = "{author.steamid}"
+                AuthorFormat = "{author.steamid}",
+                AdditionalVariables = new Dictionary<string, string>
+                {
+                    { "appId", "<appId>" }
+                }
             });
 
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
