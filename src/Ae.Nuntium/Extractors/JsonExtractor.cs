@@ -1,5 +1,7 @@
 ﻿using Ae.Nuntium.Sources;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using SmartFormat;
 using SmartFormat.Core.Settings;
 using SmartFormat.Extensions;
@@ -31,7 +33,7 @@ namespace Ae.Nuntium.Extractors
                 // NewtonsoftJsonSource MUST be registered before ReflectionSource (which is not required here)
                 // We also need the ListFormatter to process arrays
                 .AddExtensions(new ListFormatter(), new NewtonsoftJsonSource(), new DefaultSource())
-                .AddExtensions(new NullFormatter(), new DefaultFormatter(), new ChooseFormatter());
+                .AddExtensions(new NullFormatter(), new DefaultFormatter(), new ChooseFormatter(), new IsMatchFormatter());
             return smart;
         }
 
@@ -41,36 +43,47 @@ namespace Ae.Nuntium.Extractors
 
             var extractedPosts = new List<ExtractedPost>();
 
-            foreach (var token in JObject.Parse(sourceDocument.Body).SelectTokens(_configuration.ItemPath))
+            var sourceToken = JToken.FromObject(sourceDocument, new JsonSerializer
             {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            });
+
+            foreach (var itemToken in JObject.Parse(sourceDocument.Body).SelectTokens(_configuration.ItemPath))
+            {
+                var parameters = new JObject
+                {
+                    ["item"] = itemToken,
+                    ["source"] = sourceToken
+                };
+
                 string? permalink = null;
                 if (_configuration.PermalinkFormat != null)
                 {
-                    permalink = formatter.Format(_configuration.PermalinkFormat, token);
+                    permalink = formatter.Format(_configuration.PermalinkFormat, parameters);
                 }
                 
                 string? rawContent = null;
                 if (_configuration.RawContentFormat != null)
                 {
-                    rawContent = formatter.Format(_configuration.RawContentFormat, token);
+                    rawContent = formatter.Format(_configuration.RawContentFormat, parameters);
                 }
 
                 string? author = null;
                 if (_configuration.AuthorFormat != null)
                 {
-                    author = formatter.Format(_configuration.AuthorFormat, token);
+                    author = formatter.Format(_configuration.AuthorFormat, parameters);
                 }
 
                 string? textSummary = null;
                 if (_configuration.TitleFormat != null)
                 {
-                    textSummary = formatter.Format(_configuration.TextSummaryFormat, token);
+                    textSummary = formatter.Format(_configuration.TextSummaryFormat, parameters);
                 }
 
                 string? title = null;
                 if (_configuration.TitleFormat != null)
                 {
-                    title = formatter.Format(_configuration.TitleFormat, token);
+                    title = formatter.Format(_configuration.TitleFormat, parameters);
                 }
 
                 extractedPosts.Add(new ExtractedPost(new Uri(permalink, UriKind.Absolute))

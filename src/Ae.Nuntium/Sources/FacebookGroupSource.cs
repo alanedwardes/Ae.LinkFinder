@@ -72,7 +72,7 @@ namespace Ae.Nuntium.Sources
             var sourceDocument = new SourceDocument
             {
                 Body = driver.PageSource,
-                Source = new Uri(driver.Url, UriKind.Absolute)
+                Address = new Uri(driver.Url, UriKind.Absolute)
             };
 
             driver.Quit();

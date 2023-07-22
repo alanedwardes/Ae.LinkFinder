@@ -16,7 +16,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/regex1.html"),
-                Source = new Uri("https://steamcommunity.com/app/582890/screenshots/?browsefilter=mostrecent", UriKind.Absolute)
+                Address = new Uri("https://steamcommunity.com/app/582890/screenshots/?browsefilter=mostrecent", UriKind.Absolute)
             });
 
             posts.Compare("Files/regex1.json");
@@ -33,7 +33,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/regex2.html"),
-                Source = new Uri("https://steamcommunity.com/app/582890/discussions/", UriKind.Absolute)
+                Address = new Uri("https://steamcommunity.com/app/582890/discussions/", UriKind.Absolute)
             });
 
             posts.Compare("Files/regex2.json");
@@ -50,7 +50,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/regex3.html"),
-                Source = new Uri("https://blog.twitter.com/", UriKind.Absolute)
+                Address = new Uri("https://blog.twitter.com/", UriKind.Absolute)
             });
 
             posts.Compare("Files/regex3.json");

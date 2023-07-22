@@ -11,7 +11,7 @@ public sealed class TwitterHtmlExtractorTests
     {
         var extractor = new TwitterHtmlExtractor();
 
-        var posts = await extractor.ExtractPosts(new SourceDocument { Body = File.ReadAllText("Files/tweets1.html"), Source = new Uri("https://twitter.com/microsoft", UriKind.Absolute) });
+        var posts = await extractor.ExtractPosts(new SourceDocument { Body = File.ReadAllText("Files/tweets1.html"), Address = new Uri("https://twitter.com/microsoft", UriKind.Absolute) });
 
         posts.Compare("Files/tweets1.json");
     }
@@ -21,7 +21,7 @@ public sealed class TwitterHtmlExtractorTests
     {
         var extractor = new TwitterHtmlExtractor();
 
-        var posts = await extractor.ExtractPosts(new SourceDocument { Body = File.ReadAllText("Files/tweets2.html"), Source = new Uri("https://twitter.com/microsoft", UriKind.Absolute) });
+        var posts = await extractor.ExtractPosts(new SourceDocument { Body = File.ReadAllText("Files/tweets2.html"), Address = new Uri("https://twitter.com/microsoft", UriKind.Absolute) });
 
         Assert.Empty(posts);
     }

@@ -16,7 +16,7 @@ namespace Ae.Nuntium.Extractors
 
             foreach (var tweet in tweets ?? Enumerable.Empty<HtmlNode>())
             {
-                tweet.MakeRelativeUrisAbsolute(sourceDocument.Source);
+                tweet.MakeRelativeUrisAbsolute(sourceDocument.Address);
 
                 // Replace all emoji images with a span element + the emoji characters
                 foreach (var node in tweet.GetChildrenAndSelf())
@@ -42,7 +42,7 @@ namespace Ae.Nuntium.Extractors
                 var links = new HashSet<Uri>();
                 var media = new HashSet<Uri>();
 
-                tweet.GetLinksAndMedia(sourceDocument.Source, link => links.Add(link), mediaUri =>
+                tweet.GetLinksAndMedia(sourceDocument.Address, link => links.Add(link), mediaUri =>
                 {
                     if (!mediaUri.PathAndQuery.Contains("/profile_images/", StringComparison.InvariantCultureIgnoreCase) &&
                         !mediaUri.PathAndQuery.Contains("/hashflags/", StringComparison.InvariantCultureIgnoreCase) &&
@@ -52,7 +52,7 @@ namespace Ae.Nuntium.Extractors
                     }
                 });
 
-                var permalinks = links.Where(x => sourceDocument.Source.IsBaseOf(x) && x.PathAndQuery.Contains("/status/") && !x.PathAndQuery.EndsWith("/analytics"));
+                var permalinks = links.Where(x => sourceDocument.Address.IsBaseOf(x) && x.PathAndQuery.Contains("/status/") && !x.PathAndQuery.EndsWith("/analytics"));
                 if (!permalinks.Any())
                 {
                     // This is invalid if there are no appropriate permalinks

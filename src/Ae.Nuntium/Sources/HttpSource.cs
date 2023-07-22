@@ -29,7 +29,7 @@ namespace Ae.Nuntium.Sources
             return new SourceDocument
             {
                 Body = await response.Content.ReadAsStringAsync(cancellation),
-                Source = response.RequestMessage.RequestUri
+                Address = response.RequestMessage.RequestUri
             };
         }
 

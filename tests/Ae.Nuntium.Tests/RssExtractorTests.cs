@@ -13,7 +13,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/feed1.xml"),
-                Source = new Uri("https://github.blog/feed/", UriKind.Absolute)
+                Address = new Uri("https://github.blog/feed/", UriKind.Absolute)
             });
 
             posts.Compare("Files/feed1.json");
@@ -27,7 +27,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/feed2.xml"),
-                Source = new Uri("https://devblogs.microsoft.com/dotnet/feed/", UriKind.Absolute)
+                Address = new Uri("https://devblogs.microsoft.com/dotnet/feed/", UriKind.Absolute)
             });
 
             posts.Compare("Files/feed2.json");
@@ -41,7 +41,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/feed3.xml"),
-                Source = new Uri("https://blog.google/rss/", UriKind.Absolute)
+                Address = new Uri("https://blog.google/rss/", UriKind.Absolute)
             });
 
             posts.Compare("Files/feed3.json");
@@ -55,7 +55,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/feed4.xml"),
-                Source = new Uri("https://blog.google/rss/", UriKind.Absolute)
+                Address = new Uri("https://blog.google/rss/", UriKind.Absolute)
             });
 
             posts.Compare("Files/feed4.json");
@@ -69,7 +69,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/feed5.xml"),
-                Source = new Uri("https://blog.google/rss/", UriKind.Absolute)
+                Address = new Uri("https://blog.google/rss/", UriKind.Absolute)
             });
 
             posts.Compare("Files/feed5.json");
@@ -83,7 +83,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/feed6.xml"),
-                Source = new Uri("https://blog.google/rss/", UriKind.Absolute)
+                Address = new Uri("https://blog.google/rss/", UriKind.Absolute)
             });
 
             posts.Compare("Files/feed6.json");
@@ -97,7 +97,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/feed7.xml"),
-                Source = new Uri("https://blog.google/rss/", UriKind.Absolute)
+                Address = new Uri("https://blog.google/rss/", UriKind.Absolute)
             });
 
             posts.Compare("Files/feed7.json");
@@ -111,7 +111,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/feed8.xml"),
-                Source = new Uri("https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss", UriKind.Absolute)
+                Address = new Uri("https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss", UriKind.Absolute)
             });
 
             posts.Compare("Files/feed8.json");
@@ -125,7 +125,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/feed9.xml"),
-                Source = new Uri("http://esawebb.org/images/feed/", UriKind.Absolute)
+                Address = new Uri("http://esawebb.org/images/feed/", UriKind.Absolute)
             });
 
             posts.Compare("Files/feed9.json");
@@ -139,7 +139,7 @@ namespace Ae.Nuntium.Tests
             var posts = await extractor.ExtractPosts(new Sources.SourceDocument
             {
                 Body = File.ReadAllText("Files/feed10.xml"),
-                Source = new Uri("http://esahubble.org/images/feed/", UriKind.Absolute)
+                Address = new Uri("http://esahubble.org/images/feed/", UriKind.Absolute)
             });
 
             posts.Compare("Files/feed10.json");

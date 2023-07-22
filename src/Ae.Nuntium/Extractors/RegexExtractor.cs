@@ -26,7 +26,7 @@ namespace Ae.Nuntium.Extractors
 
             foreach (Match match in regex.Matches(sourceDocument.Body))
             {
-                if (UriExtensions.TryCreateAbsoluteUri(match.Value, sourceDocument.Source, out var absoluteUri))
+                if (UriExtensions.TryCreateAbsoluteUri(match.Value, sourceDocument.Address, out var absoluteUri))
                 {
                     posts.Add(new ExtractedPost(absoluteUri));
                 }

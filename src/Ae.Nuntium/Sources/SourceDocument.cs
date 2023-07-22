@@ -3,6 +3,6 @@
     public sealed class SourceDocument
     {
         public string Body { get; set; }
-        public Uri Source { get; set; }
+        public Uri Address { get; set; }
     }
 }

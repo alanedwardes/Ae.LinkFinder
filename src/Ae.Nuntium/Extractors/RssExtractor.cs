@@ -87,7 +87,7 @@ namespace Ae.Nuntium.Extractors
                 var summaryHtml = TryParseHtml(item.Summary?.Text);
                 if (summaryHtml != null)
                 {
-                    summaryHtml.DocumentNode.MakeRelativeUrisAbsolute(sourceDocument.Source);
+                    summaryHtml.DocumentNode.MakeRelativeUrisAbsolute(sourceDocument.Address);
                     extractedPost.TextSummary = summaryHtml.DocumentNode.ToMarkdown();
                 }
                 else
@@ -98,7 +98,7 @@ namespace Ae.Nuntium.Extractors
                 var contentHtml = TryParseHtml(content);
                 if (contentHtml != null)
                 {
-                    contentHtml.DocumentNode.MakeRelativeUrisAbsolute(sourceDocument.Source);
+                    contentHtml.DocumentNode.MakeRelativeUrisAbsolute(sourceDocument.Address);
                     extractedPost.RawContent = contentHtml.DocumentNode.InnerHtml?.Trim();
                 }
                 else
@@ -108,7 +108,7 @@ namespace Ae.Nuntium.Extractors
 
                 var article = contentHtml?.DocumentNode ?? summaryHtml?.DocumentNode ?? new HtmlDocument().DocumentNode;
 
-                article.GetLinksAndMedia(sourceDocument.Source, link => extractedPost.Links.Add(link), mediaUri => extractedPost.Media.Add(mediaUri));
+                article.GetLinksAndMedia(sourceDocument.Address, link => extractedPost.Links.Add(link), mediaUri => extractedPost.Media.Add(mediaUri));
 
                 foreach (var link in item.Links ?? Enumerable.Empty<SyndicationLink>())
                 {

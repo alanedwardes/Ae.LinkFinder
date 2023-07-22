@@ -28,7 +28,7 @@ namespace Ae.Nuntium.Extractors
 
             foreach (var article in articles ?? Enumerable.Empty<HtmlNode>())
             {
-                article.MakeRelativeUrisAbsolute(sourceDocument.Source);
+                article.MakeRelativeUrisAbsolute(sourceDocument.Address);
 
                 if (!article.ChildNodes.Any())
                 {
@@ -81,7 +81,7 @@ namespace Ae.Nuntium.Extractors
                 var links = new HashSet<Uri>();
                 var media = new HashSet<Uri>();
 
-                article.GetLinksAndMedia(sourceDocument.Source, link => links.Add(link), mediaUri =>
+                article.GetLinksAndMedia(sourceDocument.Address, link => links.Add(link), mediaUri =>
                 {
                     if (!mediaUri.PathAndQuery.Contains("rsrc.php"))
                     {
