@@ -59,7 +59,8 @@ namespace Ae.Nuntium.Enrichers
                 return;
             }
 
-            post.TextSummary = $"(Translated from {result.DetectedSourceLanguage}) {result.TranslatedText}";
+            var sourceLanguage = result.DetectedSourceLanguage.ToUpperInvariant();
+            post.TextSummary = $"(Translated from {sourceLanguage}) {result.TranslatedText}";
         }
     }
 }
