@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Ae.Nuntium.Tests;
 
-public class FacebookGroupHtmlExtractorTests
+public sealed class FacebookGroupHtmlExtractorTests
 {
     [Fact]
     public async Task ExtractPosts1()

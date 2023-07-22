@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Ae.Nuntium.Tests;
 
-public class TwitterHtmlExtractorTests
+public sealed class TwitterHtmlExtractorTests
 {
     [Fact]
     public async Task ExtractTweets()
