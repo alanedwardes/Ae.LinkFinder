@@ -41,8 +41,8 @@ namespace Ae.Nuntium.Tests
             {
                 new ExtractedPost(new Uri("https://www.example.com/", UriKind.Absolute))
                 {
-                    RawContent = "<html>",
-                    TextSummary = "hello this is a summary",
+                    FullContent = "<html>",
+                    SummaryContent = "hello this is a summary",
                     Author = "wibble",
                     Avatar = new Uri("https://www.example.com/avatar.jpg"),
                     Title = "Title",
@@ -64,8 +64,8 @@ namespace Ae.Nuntium.Tests
             {
                 new ExtractedPost(new Uri("https://www.example.com/", UriKind.Absolute))
                 {
-                    RawContent = "<html>",
-                    TextSummary = "hello this is a summary",
+                    FullContent = "<html>",
+                    SummaryContent = "hello this is a summary",
                     Author = "wibble",
                     Avatar = new Uri("https://www.example.com/avatar.jpg"),
                     Title = "Title",
@@ -88,7 +88,7 @@ namespace Ae.Nuntium.Tests
             {
                 new ExtractedPost(new Uri("https://www.example.com/", UriKind.Absolute))
                 {
-                    TextSummary = "hello this is a summary"
+                    SummaryContent = "hello this is a summary"
                 }
             }, CancellationToken.None);
 

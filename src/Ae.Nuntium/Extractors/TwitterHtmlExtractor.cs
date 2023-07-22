@@ -68,8 +68,7 @@ namespace Ae.Nuntium.Extractors
                 var content = tweet.SelectSingleNode(".//div[@data-testid = 'tweetText']");
                 if (content != null)
                 {
-                    extractedPost.TextSummary = content.ToMarkdown();
-                    extractedPost.RawContent = content.InnerHtml;
+                    extractedPost.SummaryContent = content.InnerHtml;
                 }
 
                 var author = tweet.SelectSingleNode(".//div[@data-testid = 'User-Name']");

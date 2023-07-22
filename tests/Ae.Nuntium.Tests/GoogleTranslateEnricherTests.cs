@@ -24,22 +24,22 @@ namespace Ae.Nuntium.Tests
 
             var post1 = new ExtractedPost(new Uri("https://www.example.com/"))
             {
-                TextSummary = "translate me"
+                SummaryContent = "translate me"
             };
 
             var post2 = new ExtractedPost(new Uri("https://www.example.com/"))
             {
-                TextSummary = "translation error"
+                SummaryContent = "translation error"
             };
 
             var post3 = new ExtractedPost(new Uri("https://www.example.com/"))
             {
-                TextSummary = "untranslatable"
+                SummaryContent = "untranslatable"
             };
 
             var post4 = new ExtractedPost(new Uri("https://www.example.com/"))
             {
-                TextSummary = "null result"
+                SummaryContent = "null result"
             };
 
             translationClient.Setup(x => x.TranslateTextAsync("translate me", "en", null, null, CancellationToken.None))
@@ -56,10 +56,10 @@ namespace Ae.Nuntium.Tests
 
             await enricher.EnrichExtractedPosts(new[] { post1, post2, post3, post4 }, CancellationToken.None);
 
-            Assert.Equal("(Translated from FR) translated", post1.TextSummary);
-            Assert.Equal("translation error", post2.TextSummary);
-            Assert.Equal("untranslatable", post3.TextSummary);
-            Assert.Equal("null result", post4.TextSummary);
+            Assert.Equal("(Translated from FR) translated", post1.SummaryContent);
+            Assert.Equal("translation error", post2.SummaryContent);
+            Assert.Equal("untranslatable", post3.SummaryContent);
+            Assert.Equal("null result", post4.SummaryContent);
         }
     }
 }

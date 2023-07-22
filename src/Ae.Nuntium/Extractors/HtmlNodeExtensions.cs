@@ -114,16 +114,5 @@ namespace Ae.Nuntium.Extractors
                 }
             }
         }
-
-        public static string ToMarkdown(this HtmlNode node)
-        {
-            return node.InnerHtml.ToMarkdown();
-        }
-
-        public static string ToMarkdown(this string html)
-        {
-            var converter = new ReverseMarkdown.Converter();
-            return converter.Convert(html);
-        }
     }
 }

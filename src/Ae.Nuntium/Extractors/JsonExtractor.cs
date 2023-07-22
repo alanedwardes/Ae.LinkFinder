@@ -88,8 +88,8 @@ namespace Ae.Nuntium.Extractors
 
                 extractedPosts.Add(new ExtractedPost(new Uri(permalink, UriKind.Absolute))
                 {
-                    RawContent = rawContent,
-                    TextSummary = textSummary,
+                    FullContent = rawContent,
+                    SummaryContent = textSummary,
                     Title = title,
                     Author = author,
                 });

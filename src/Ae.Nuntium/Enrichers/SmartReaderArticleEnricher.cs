@@ -39,13 +39,13 @@ namespace Ae.Nuntium.Enrichers
 
             post.Title ??= article.Title;
             post.Author ??= article.Author;
-            post.TextSummary ??= article.Excerpt;
-            post.RawContent ??= article.Content;
+            post.SummaryContent ??= article.Excerpt;
+            post.FullContent ??= article.Content;
 
-            if (post.RawContent != null)
+            if (post.FullContent != null)
             {
                 var htmlDoc = new HtmlDocument();
-                htmlDoc.LoadHtml(post.RawContent);
+                htmlDoc.LoadHtml(post.FullContent);
                 htmlDoc.DocumentNode.GetLinksAndMedia(post.Permalink, foundLink => post.Links.Add(foundLink), foundMedia => post.Media.Add(foundMedia));
             }
         }

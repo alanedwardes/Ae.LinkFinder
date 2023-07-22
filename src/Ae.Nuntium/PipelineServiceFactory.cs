@@ -113,6 +113,8 @@ namespace Ae.Nuntium
                     return ActivatorUtilities.CreateInstance<AmazonS3MediaCacheEnricher>(_serviceProvider, GetConfiguration<AmazonS3MediaCacheEnricher.Configuration>(type.Configuration));
                 case "GoogleTranslate":
                     return ActivatorUtilities.CreateInstance<GoogleTranslateEnricher>(_serviceProvider, GetConfiguration<GoogleTranslateEnricher.Configuration>(type.Configuration));
+                case "SummaryMarkdown":
+                    return ActivatorUtilities.CreateInstance<SummaryMarkdownEnricher>(_serviceProvider);
                 default:
                     throw new InvalidOperationException();
             }

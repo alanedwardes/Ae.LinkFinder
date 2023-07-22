@@ -10,8 +10,8 @@ namespace Ae.Nuntium.Enrichers
             {
                 post.Title = string.IsNullOrWhiteSpace(post.Title) ? null : post.Title.Trim();
                 post.Author = string.IsNullOrWhiteSpace(post.Author) ? null : post.Author.Trim();
-                post.TextSummary = string.IsNullOrWhiteSpace(post.TextSummary) ? null : post.TextSummary.Trim();
-                post.RawContent = string.IsNullOrWhiteSpace(post.RawContent) ? null : post.RawContent.Trim();
+                post.SummaryContent = string.IsNullOrWhiteSpace(post.SummaryContent) ? null : post.SummaryContent.Trim();
+                post.FullContent = string.IsNullOrWhiteSpace(post.FullContent) ? null : post.FullContent.Trim();
             }
 
             return Task.CompletedTask;

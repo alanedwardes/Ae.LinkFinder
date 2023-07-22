@@ -56,7 +56,7 @@ namespace Ae.Nuntium.Destinations
 
             foreach (var post in posts)
             {
-                var parts = new[] { post.TextSummary, post.Permalink.ToString() }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                var parts = new[] { post.SummaryContent, post.Permalink.ToString() }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
                 // https://docs.rocket.chat/use-rocket.chat/workspace-administration/integrations
                 var payload = new RocketChatPayload

@@ -88,22 +88,22 @@ namespace Ae.Nuntium.Extractors
                 if (summaryHtml != null)
                 {
                     summaryHtml.DocumentNode.MakeRelativeUrisAbsolute(sourceDocument.Address);
-                    extractedPost.TextSummary = summaryHtml.DocumentNode.ToMarkdown();
+                    extractedPost.SummaryContent = summaryHtml.DocumentNode.InnerHtml?.Trim();
                 }
                 else
                 {
-                    extractedPost.TextSummary = item.Summary?.Text?.ToMarkdown();
+                    extractedPost.SummaryContent = item.Summary?.Text?.Trim();
                 }
 
                 var contentHtml = TryParseHtml(content);
                 if (contentHtml != null)
                 {
                     contentHtml.DocumentNode.MakeRelativeUrisAbsolute(sourceDocument.Address);
-                    extractedPost.RawContent = contentHtml.DocumentNode.InnerHtml?.Trim();
+                    extractedPost.FullContent = contentHtml.DocumentNode.InnerHtml?.Trim();
                 }
                 else
                 {
-                    extractedPost.RawContent = (content ?? summaryHtml?.DocumentNode.InnerHtml)?.Trim();
+                    extractedPost.FullContent = content?.Trim();
                 }
 
                 var article = contentHtml?.DocumentNode ?? summaryHtml?.DocumentNode ?? new HtmlDocument().DocumentNode;

@@ -77,7 +77,7 @@ namespace Ae.Nuntium.Destinations
 
             // An embed must have either a "title" or a "description"
             // If one is not present, we can't use embeds
-            if (post.Title == null && post.TextSummary == null)
+            if (post.Title == null && post.SummaryContent == null)
             {
                 payload.Content = post.Permalink.ToString();
             }
@@ -87,7 +87,7 @@ namespace Ae.Nuntium.Destinations
                 var embed = new DiscordPayload.DiscordEmbed
                 {
                     Title = post.Title.Truncate(256),
-                    Description = post.TextSummary.Truncate(4096),
+                    Description = post.SummaryContent.Truncate(4096),
                     Url = post.Permalink.ToString()
                 };
 
