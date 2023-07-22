@@ -55,7 +55,7 @@ namespace Ae.Nuntium.Enrichers
 
             if (result.DetectedSourceLanguage == _configuration.TargetLanguage)
             {
-                _logger.LogInformation("Source language is the same as the language which was detected ({Language})", result.DetectedSourceLanguage);
+                _logger.LogInformation("Target language is the same as the language which was detected ({Language})", result.DetectedSourceLanguage);
                 return;
             }
 
