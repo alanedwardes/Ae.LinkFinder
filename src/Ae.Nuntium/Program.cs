@@ -1,6 +1,7 @@
 ﻿using Ae.Nuntium.Configuration;
 using Amazon.DynamoDBv2;
 using Amazon.S3;
+using Google.Cloud.Translation.V2;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -43,6 +44,7 @@ namespace Ae.Nuntium
                 .AddSingleton<IPipelineScheduler, PipelineScheduler>()
                 .AddSingleton<IAmazonDynamoDB, AmazonDynamoDBClient>()
                 .AddSingleton<IAmazonS3, AmazonS3Client>()
+                .AddSingleton(x => TranslationClient.CreateFromApiKey(Environment.GetEnvironmentVariable("GOOGLE_TRANSLATE_API_KEY")))
                 .BuildServiceProvider();
         }
 
