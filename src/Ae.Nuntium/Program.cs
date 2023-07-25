@@ -40,7 +40,7 @@ namespace Ae.Nuntium
 
             services.AddHttpClient("GZIP_CLIENT").ConfigurePrimaryHttpMessageHandler(_ => new SocketsHttpHandler
             {
-                AutomaticDecompression = DecompressionMethods.GZip
+                AutomaticDecompression = DecompressionMethods.All
             });
 
             return services.AddHttpClient()
