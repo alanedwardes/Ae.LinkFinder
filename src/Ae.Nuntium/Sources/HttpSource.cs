@@ -23,8 +23,9 @@ namespace Ae.Nuntium.Sources
 
         public async Task<SourceDocument> GetContent(CancellationToken cancellation)
         {
-            using var httpClient = _httpClientFactory.CreateClient();
-            using var response = await HttpClientExtensions.SendWrapped(httpClient.GetAsync(_configuration.Address, cancellation));
+            using var httpClient = _httpClientFactory.CreateClient("GZIP_CLIENT");
+            using var response = await httpClient.GetAsync(_configuration.Address, cancellation);
+            response.EnsureSuccessStatusCode();
 
             return new SourceDocument
             {

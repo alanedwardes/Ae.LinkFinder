@@ -5,6 +5,7 @@ using Google.Cloud.Translation.V2;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace Ae.Nuntium
 {
@@ -35,9 +36,15 @@ namespace Ae.Nuntium
 
         private static ServiceProvider BuildProvider(MainConfiguration configuration)
         {
-            return new ServiceCollection()
+            var services = new ServiceCollection();
+
+            services.AddHttpClient("GZIP_CLIENT").ConfigurePrimaryHttpMessageHandler(_ => new SocketsHttpHandler
+            {
+                AutomaticDecompression = DecompressionMethods.GZip
+            });
+
+            return services.AddHttpClient()
                 .AddLogging(x => x.AddConsole())
-                .AddHttpClient()
                 .AddSingleton(x => x.GetRequiredService<IPipelineServiceFactory>().GetSeleniumDriver(configuration.SeleniumDriver))
                 .AddSingleton<IPipelineExecutor, PipelineExecutor>()
                 .AddSingleton<IPipelineServiceFactory, PipelineServiceFactory>()

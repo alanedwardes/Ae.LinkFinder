@@ -74,7 +74,7 @@ namespace Ae.Nuntium.Enrichers
         {
             var objectKey = Guid.NewGuid().ToString();
 
-            using var httpClient = _clientFactory.CreateClient();
+            using var httpClient = _clientFactory.CreateClient("GZIP_CLIENT");
 
             using var response = await httpClient.GetAsync(mediaUri, cancellation);
             if (!response.IsSuccessStatusCode)

@@ -18,7 +18,7 @@ namespace Ae.Nuntium.Enrichers
 
         public async Task EnrichExtractedPosts(IList<ExtractedPost> posts, CancellationToken cancellation)
         {
-            using var httpClient = _httpClientFactory.CreateClient();
+            using var httpClient = _httpClientFactory.CreateClient("GZIP_CLIENT");
 
             foreach (var post in posts)
             {

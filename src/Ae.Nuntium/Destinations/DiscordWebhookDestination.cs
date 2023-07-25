@@ -58,7 +58,7 @@ namespace Ae.Nuntium.Destinations
 
         public async Task ShareExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
         {
-            using var httpClient = _httpClientFactory.CreateClient();
+            using var httpClient = _httpClientFactory.CreateClient("GZIP_CLIENT");
 
             foreach (var post in posts)
             {
@@ -118,10 +118,12 @@ namespace Ae.Nuntium.Destinations
             }
 
             _logger.LogInformation("Posting {Link} to Discord", post.Permalink);
-            using var response = await HttpClientExtensions.SendWrapped(httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload, new JsonSerializerOptions
+            using var response = await httpClient.PostAsJsonAsync(_configuration.WebhookAddress, payload, new JsonSerializerOptions
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-            }, cancellation));
+            }, cancellation);
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }

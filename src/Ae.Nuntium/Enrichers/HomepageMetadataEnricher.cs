@@ -41,7 +41,7 @@ namespace Ae.Nuntium.Enrichers
                 Icon = new Uri($"https://s2.googleusercontent.com/s2/favicons?domain={pageAddress.Host}&sz=32"),
             };
 
-            using var client = _factory.CreateClient();
+            using var client = _factory.CreateClient("GZIP_CLIENT");
 
             var response = await client.GetAsync(pageAddress, cancellation);
             if (!response.IsSuccessStatusCode)
