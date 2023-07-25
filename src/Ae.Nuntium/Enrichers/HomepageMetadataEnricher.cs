@@ -15,7 +15,7 @@ namespace Ae.Nuntium.Enrichers
         private readonly IHttpClientFactory _factory;
         public HomepageMetadataEnricher(IHttpClientFactory factory) => _factory = factory;
 
-        public async Task EnrichExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
+        public async Task EnrichExtractedPosts(IList<ExtractedPost> posts, CancellationToken cancellation)
         {
             foreach (var domainPosts in posts.GroupBy(x => new Uri(x.Permalink, "/")))
             {

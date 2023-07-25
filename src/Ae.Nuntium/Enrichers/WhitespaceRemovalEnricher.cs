@@ -4,7 +4,7 @@ namespace Ae.Nuntium.Enrichers
 {
     public sealed class WhitespaceRemovalEnricher : IExtractedPostEnricher
     {
-        public Task EnrichExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
+        public Task EnrichExtractedPosts(IList<ExtractedPost> posts, CancellationToken cancellation)
         {
             foreach (var post in posts)
             {

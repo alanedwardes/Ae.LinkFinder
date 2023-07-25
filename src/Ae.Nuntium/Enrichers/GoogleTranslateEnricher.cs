@@ -24,7 +24,7 @@ namespace Ae.Nuntium.Enrichers
             _configuration = configuration;
         }
 
-        public async Task EnrichExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
+        public async Task EnrichExtractedPosts(IList<ExtractedPost> posts, CancellationToken cancellation)
         {
             await Task.WhenAll(posts.Select(x => TranslatePost(x, cancellation)));
         }

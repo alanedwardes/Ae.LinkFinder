@@ -44,7 +44,7 @@ namespace Ae.Nuntium.Enrichers
             }
         }
 
-        public async Task EnrichExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
+        public async Task EnrichExtractedPosts(IList<ExtractedPost> posts, CancellationToken cancellation)
         {
             var uriMap = new Dictionary<Uri, Uri>();
 

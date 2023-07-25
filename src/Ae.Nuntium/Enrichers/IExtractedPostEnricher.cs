@@ -13,6 +13,6 @@ namespace Ae.Nuntium.Enrichers
         /// <param name="posts"></param>
         /// <param name="cancellation"></param>
         /// <returns></returns>
-        Task EnrichExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation);
+        Task EnrichExtractedPosts(IList<ExtractedPost> posts, CancellationToken cancellation);
     }
 }

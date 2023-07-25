@@ -16,7 +16,7 @@ namespace Ae.Nuntium.Enrichers
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task EnrichExtractedPosts(IEnumerable<ExtractedPost> posts, CancellationToken cancellation)
+        public async Task EnrichExtractedPosts(IList<ExtractedPost> posts, CancellationToken cancellation)
         {
             using var httpClient = _httpClientFactory.CreateClient();
 
