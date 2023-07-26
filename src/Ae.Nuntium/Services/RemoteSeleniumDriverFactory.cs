@@ -21,7 +21,7 @@ namespace Ae.Nuntium.Services
             _semaphoreSlim = new SemaphoreSlim(configuration.Concurrency, configuration.Concurrency);
         }
 
-        public async Task UseWebDriver(Action<IWebDriver> drive, CancellationToken cancellation)
+        public async Task UseWebDriver(Func<IWebDriver, Task> drive, CancellationToken cancellation)
         {
             await _semaphoreSlim.WaitAsync(cancellation);
 
@@ -31,7 +31,7 @@ namespace Ae.Nuntium.Services
 
                 try
                 {
-                    drive(driver);
+                    await drive(driver);
                 }
                 finally
                 {
