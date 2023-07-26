@@ -27,55 +27,53 @@ namespace Ae.Nuntium.Sources
         {
             _logger.LogInformation("Loading {Address}", _configuration.GroupAddress);
 
-            var driver = _seleniumDriverFactory.CreateWebDriver();
+            var sourceDocument = new SourceDocument();
 
-            driver.Navigate().GoToUrl(_configuration.GroupAddress);
-
-            Actions builder = new(driver);
-
-            TimeSpan RandomShortTimeSpan()
+            await _seleniumDriverFactory.UseWebDriver(async driver =>
             {
-                var random = new Random();
-                return TimeSpan.FromSeconds(1 + random.NextDouble() * 3);
-            }
+                driver.Navigate().GoToUrl(_configuration.GroupAddress);
 
-            void PressKey(string key)
-            {
+                Actions builder = new(driver);
+
+                TimeSpan RandomShortTimeSpan()
+                {
+                    var random = new Random();
+                    return TimeSpan.FromSeconds(1 + random.NextDouble() * 3);
+                }
+
+                void PressKey(string key)
+                {
+                    builder.Pause(RandomShortTimeSpan());
+
+                    builder.KeyDown(key);
+                    builder.KeyUp(key);
+                }
+
+                await Task.Delay(RandomShortTimeSpan(), cancellation);
+
+                // Accept cookies
+                builder.KeyDown(Keys.Shift);
+                PressKey(Keys.Tab);
+                builder.KeyUp(Keys.Shift);
+                PressKey(Keys.Enter);
+
+                // Scroll down the page to load a few more posts
+                PressKey(Keys.End);
+                PressKey(Keys.End);
+                PressKey(Keys.End);
+                PressKey(Keys.End);
+
                 builder.Pause(RandomShortTimeSpan());
 
-                builder.KeyDown(key);
-                builder.KeyUp(key);
-            }
+                _logger.LogInformation("Executing input");
 
-            await Task.Delay(RandomShortTimeSpan(), cancellation);
+                builder.Perform();
 
-            // Accept cookies
-            builder.KeyDown(Keys.Shift);
-            PressKey(Keys.Tab);
-            builder.KeyUp(Keys.Shift);
-            PressKey(Keys.Enter);
+                _logger.LogInformation("Exporting page source");
 
-            // Scroll down the page to load a few more posts
-            PressKey(Keys.End);
-            PressKey(Keys.End);
-            PressKey(Keys.End);
-            PressKey(Keys.End);
-
-            builder.Pause(RandomShortTimeSpan());
-
-            _logger.LogInformation("Executing input");
-
-            builder.Perform();
-
-            _logger.LogInformation("Exporting page source");
-
-            var sourceDocument = new SourceDocument
-            {
-                Body = driver.PageSource,
-                Address = new Uri(driver.Url, UriKind.Absolute)
-            };
-
-            driver.Quit();
+                sourceDocument.Body = driver.PageSource;
+                sourceDocument.Address = new Uri(driver.Url, UriKind.Absolute);
+            }, cancellation);
 
             return sourceDocument;
         }

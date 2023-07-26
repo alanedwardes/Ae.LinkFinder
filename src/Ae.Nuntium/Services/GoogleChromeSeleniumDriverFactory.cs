@@ -5,9 +5,13 @@ namespace Ae.Nuntium.Services
 {
     public sealed class GoogleChromeSeleniumDriverFactory : ISeleniumDriverFactory
     {
-        public IWebDriver CreateWebDriver()
+        public Task UseWebDriver(Action<IWebDriver> drive, CancellationToken cancellation)
         {
-            return new ChromeDriver();
+            var driver = new ChromeDriver();
+            drive(driver);
+            driver.Quit();
+
+            return Task.CompletedTask;
         }
     }
 }

@@ -4,6 +4,6 @@ namespace Ae.Nuntium.Services
 {
     public interface ISeleniumDriverFactory
     {
-        IWebDriver CreateWebDriver();
+        Task UseWebDriver(Action<IWebDriver> drive, CancellationToken cancellation);
     }
 }

@@ -28,9 +28,9 @@ namespace Ae.Nuntium.Sources
         {
             _logger.LogInformation("Loading {Address}", _configuration.ProfileAddress);
 
-            IWebDriver driver = _seleniumDriverFactory.CreateWebDriver();
+            var sourceDocument = new SourceDocument();
 
-            if (_configuration.AuthToken != null)
+            await _seleniumDriverFactory.UseWebDriver(async driver =>
             {
                 // Load the login page first, so that Chrome allows us to set cookies
                 driver.Navigate().GoToUrl("https://twitter.com/i/flow/login");
@@ -38,48 +38,43 @@ namespace Ae.Nuntium.Sources
 
                 // Wait a little while
                 await Task.Delay(RandomShortTimeSpan(), cancellation);
-            }
 
-            driver.Navigate().GoToUrl(_configuration.ProfileAddress);
+                driver.Navigate().GoToUrl(_configuration.ProfileAddress);
 
-            Actions builder = new(driver);
+                Actions builder = new(driver);
 
-            TimeSpan RandomShortTimeSpan()
-            {
-                var random = new Random();
-                return TimeSpan.FromSeconds(1 + random.NextDouble() * 3);
-            }
+                TimeSpan RandomShortTimeSpan()
+                {
+                    var random = new Random();
+                    return TimeSpan.FromSeconds(1 + random.NextDouble() * 3);
+                }
 
-            void PressKey(string key)
-            {
+                void PressKey(string key)
+                {
+                    builder.Pause(RandomShortTimeSpan());
+                    builder.KeyDown(key);
+                    builder.KeyUp(key);
+                }
+
+                await Task.Delay(RandomShortTimeSpan(), cancellation);
+
+                // Scroll down the page to load a few more posts
+                PressKey(Keys.End);
+                PressKey(Keys.End);
+                PressKey(Keys.End);
+                PressKey(Keys.End);
+
                 builder.Pause(RandomShortTimeSpan());
-                builder.KeyDown(key);
-                builder.KeyUp(key);
-            }
 
-            await Task.Delay(RandomShortTimeSpan(), cancellation);
+                _logger.LogInformation("Executing input");
 
-            // Scroll down the page to load a few more posts
-            PressKey(Keys.End);
-            PressKey(Keys.End);
-            PressKey(Keys.End);
-            PressKey(Keys.End);
+                builder.Perform();
 
-            builder.Pause(RandomShortTimeSpan());
+                _logger.LogInformation("Exporting page source");
 
-            _logger.LogInformation("Executing input");
-
-            builder.Perform();
-
-            _logger.LogInformation("Exporting page source");
-
-            var sourceDocument = new SourceDocument
-            {
-                Body = driver.PageSource,
-                Address = new Uri(driver.Url, UriKind.Absolute)
-            };
-
-            driver.Quit();
+                sourceDocument.Body = driver.PageSource;
+                sourceDocument.Address = new Uri(driver.Url, UriKind.Absolute);
+            }, cancellation);
 
             return sourceDocument;
         }
