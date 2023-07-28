@@ -26,12 +26,12 @@ namespace Ae.Nuntium.Sources
 
         public async Task<SourceDocument> GetContent(CancellationToken cancellation)
         {
-            _logger.LogInformation("Loading {Address}", _configuration.ProfileAddress);
-
             var sourceDocument = new SourceDocument();
 
             await _seleniumDriverFactory.UseWebDriver(async driver =>
             {
+                _logger.LogInformation("Loading {Address}", _configuration.ProfileAddress);
+
                 // Load the login page first, so that Chrome allows us to set cookies
                 driver.Navigate().GoToUrl("https://twitter.com/i/flow/login");
                 driver.Manage().Cookies.AddCookie(CreateAuthCookie());

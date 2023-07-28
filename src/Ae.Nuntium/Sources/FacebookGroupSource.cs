@@ -25,12 +25,12 @@ namespace Ae.Nuntium.Sources
 
         public async Task<SourceDocument> GetContent(CancellationToken cancellation)
         {
-            _logger.LogInformation("Loading {Address}", _configuration.GroupAddress);
-
             var sourceDocument = new SourceDocument();
 
             await _seleniumDriverFactory.UseWebDriver(async driver =>
             {
+                _logger.LogInformation("Loading {Address}", _configuration.GroupAddress);
+
                 driver.Navigate().GoToUrl(_configuration.GroupAddress);
 
                 Actions builder = new(driver);
