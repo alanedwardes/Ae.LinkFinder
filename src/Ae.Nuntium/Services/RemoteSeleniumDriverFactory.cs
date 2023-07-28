@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 
@@ -7,7 +6,6 @@ namespace Ae.Nuntium.Services
 {
     public sealed class RemoteSeleniumDriverFactory : ISeleniumDriverFactory
     {
-        private readonly ILogger<RemoteSeleniumDriverFactory> _logger;
         private readonly Configuration _configuration;
         private readonly SemaphoreSlim _semaphoreSlim;
 
@@ -17,12 +15,10 @@ namespace Ae.Nuntium.Services
             public int Concurrency { get; set; } = 1;
         }
 
-        public RemoteSeleniumDriverFactory(ILogger<RemoteSeleniumDriverFactory> logger, Configuration configuration)
+        public RemoteSeleniumDriverFactory(Configuration configuration)
         {
-            _logger = logger;
             _configuration = configuration;
             _semaphoreSlim = new SemaphoreSlim(configuration.Concurrency, configuration.Concurrency);
-            _logger.LogInformation("Constructed RemoteSeleniumDriverFactory");
         }
 
         public async Task UseWebDriver(Func<IWebDriver, Task> drive, CancellationToken cancellation)
@@ -32,12 +28,10 @@ namespace Ae.Nuntium.Services
             try
             {
                 IWebDriver driver = new RemoteWebDriver(_configuration.Address, new ChromeOptions());
-                _logger.LogInformation("Constructed RemoteWebDriver");
 
                 try
                 {
                     await drive(driver);
-                    _logger.LogInformation("Finished driving RemoteWebDriver");
                 }
                 finally
                 {
