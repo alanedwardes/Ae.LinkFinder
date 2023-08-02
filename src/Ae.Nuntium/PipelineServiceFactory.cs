@@ -115,6 +115,8 @@ namespace Ae.Nuntium
                     return ActivatorUtilities.CreateInstance<GoogleTranslateEnricher>(_serviceProvider, GetConfiguration<GoogleTranslateEnricher.Configuration>(type.Configuration));
                 case "Filter":
                     return ActivatorUtilities.CreateInstance<FilterEnricher>(_serviceProvider, GetConfiguration<FilterEnricher.Configuration>(type.Configuration));
+                case "Markdown":
+                    return ActivatorUtilities.CreateInstance<MarkdownEnricher>(_serviceProvider);
                 default:
                     throw new InvalidOperationException();
             }

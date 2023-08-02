@@ -1,5 +1,4 @@
 ﻿using Ae.Nuntium.Extractors;
-using Ae.Nuntium.Services;
 using Humanizer;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
@@ -75,9 +74,11 @@ namespace Ae.Nuntium.Destinations
                 AvatarUrl = post.Avatar
             };
 
+            var content = post.TextSummary ?? post.RawContent;
+
             // An embed must have either a "title" or a "description"
             // If one is not present, we can't use embeds
-            if (post.Title == null && post.TextSummary == null)
+            if (post.Title == null && content == null)
             {
                 payload.Content = post.Permalink.ToString();
             }
@@ -87,7 +88,7 @@ namespace Ae.Nuntium.Destinations
                 var embed = new DiscordPayload.DiscordEmbed
                 {
                     Title = post.Title.Truncate(256),
-                    Description = post.TextSummary.Truncate(4096),
+                    Description = content.Truncate(4096),
                     Url = post.Permalink.ToString()
                 };
 

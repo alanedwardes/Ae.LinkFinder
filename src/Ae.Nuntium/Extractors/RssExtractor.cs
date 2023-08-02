@@ -88,11 +88,11 @@ namespace Ae.Nuntium.Extractors
                 if (summaryHtml != null)
                 {
                     summaryHtml.DocumentNode.MakeRelativeUrisAbsolute(sourceDocument.Address);
-                    extractedPost.TextSummary = summaryHtml.DocumentNode.ToMarkdown();
+                    extractedPost.TextSummary = summaryHtml.DocumentNode.InnerHtml;
                 }
                 else
                 {
-                    extractedPost.TextSummary = item.Summary?.Text?.ToMarkdown();
+                    extractedPost.TextSummary = item.Summary?.Text;
                 }
 
                 var contentHtml = TryParseHtml(content);
