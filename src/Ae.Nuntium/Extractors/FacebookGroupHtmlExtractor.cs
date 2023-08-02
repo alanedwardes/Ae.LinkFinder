@@ -116,10 +116,10 @@ namespace Ae.Nuntium.Extractors
                 var content = article.SelectSingleNode(".//div[@data-ad-preview = 'message']");
                 if (content != null)
                 {
-                    extractedPost.RawContent = content.InnerHtml;
+                    extractedPost.Body = content.InnerHtml;
                 }
 
-                if (extractedPost.RawContent == null && !extractedPost.Media.Any())
+                if (extractedPost.Body == null && !extractedPost.Media.Any())
                 {
                     _logger.LogWarning("Unable to find any content for {Permalink}, skipping", extractedPost.Permalink);
                     continue;

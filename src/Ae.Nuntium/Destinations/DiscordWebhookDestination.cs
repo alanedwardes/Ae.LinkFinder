@@ -74,7 +74,7 @@ namespace Ae.Nuntium.Destinations
                 AvatarUrl = post.Avatar
             };
 
-            var content = post.TextSummary ?? post.RawContent;
+            var content = post.Summary ?? post.Body;
 
             // An embed must have either a "title" or a "description"
             // If one is not present, we can't use embeds

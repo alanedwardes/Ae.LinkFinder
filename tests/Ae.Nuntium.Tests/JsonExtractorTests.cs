@@ -13,7 +13,8 @@ namespace Ae.Nuntium.Tests
                 ItemPath = "$.reviews[*]",
                 PermalinkFormat = "https://steamcommunity.com/profiles/{item.author.steamid}/recommended/{source.address:ismatch(261820):261820|582890}",
                 TitleFormat = "{item.voted_up:choose(True|False):Recommended 👍|Not Recommended 👎}",
-                TextSummaryFormat = "{item.review}",
+                SummaryFormat = "{item.review}",
+                BodyFormat = "{item.author.num_reviews}",
                 AuthorFormat = "{item.author.steamid}"
             });
 

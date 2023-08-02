@@ -31,7 +31,7 @@ namespace Ae.Nuntium.Enrichers
 
         public async Task TranslatePost(ExtractedPost post, CancellationToken cancellation)
         {
-            if (post.TextSummary == null)
+            if (post.Summary == null)
             {
                 return;
             }
@@ -39,7 +39,7 @@ namespace Ae.Nuntium.Enrichers
             TranslationResult result;
             try
             {
-                result = await _translation.TranslateTextAsync(post.TextSummary, _configuration.TargetLanguage, _configuration.SourceLanguage, cancellationToken: cancellation);
+                result = await _translation.TranslateTextAsync(post.Summary, _configuration.TargetLanguage, _configuration.SourceLanguage, cancellationToken: cancellation);
             }
             catch (GoogleApiException ex)
             {
@@ -60,7 +60,7 @@ namespace Ae.Nuntium.Enrichers
             }
 
             var sourceLanguage = result.DetectedSourceLanguage.ToUpperInvariant();
-            post.TextSummary = $"(Translated from {sourceLanguage}) {result.TranslatedText}";
+            post.Summary = $"(Translated from {sourceLanguage}) {result.TranslatedText}";
         }
     }
 }

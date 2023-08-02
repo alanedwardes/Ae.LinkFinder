@@ -54,14 +54,14 @@ namespace Ae.Nuntium.Trackers
         {
             var json = PermalinkToDictionary(extractedPost.Permalink);
 
-            if (extractedPost.TextSummary != null)
+            if (extractedPost.Summary != null)
             {
-                json.Add("TextSummary", new AttributeValue(extractedPost.TextSummary));
+                json.Add("TextSummary", new AttributeValue(extractedPost.Summary));
             }
 
-            if (extractedPost.RawContent != null)
+            if (extractedPost.Body != null)
             {
-                json.Add("RawContent", new AttributeValue(extractedPost.RawContent));
+                json.Add("RawContent", new AttributeValue(extractedPost.Body));
             }
 
             if (extractedPost.Author != null)

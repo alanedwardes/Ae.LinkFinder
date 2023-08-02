@@ -10,14 +10,14 @@ namespace Ae.Nuntium.Enrichers
 
             foreach (var post in posts)
             {
-                if (post.TextSummary != null)
+                if (post.Summary != null)
                 {
-                    post.TextSummary = converter.Convert(post.TextSummary);
+                    post.Summary = converter.Convert(post.Summary);
                 }
 
-                if (post.RawContent != null)
+                if (post.Body != null)
                 {
-                    post.RawContent = converter.Convert(post.RawContent);
+                    post.Body = converter.Convert(post.Body);
                 }
             }
 

@@ -17,8 +17,8 @@ namespace Ae.Nuntium.Extractors
             public string ItemPath { get; set; }
             public string PermalinkFormat { get; set; }
             public string TitleFormat { get; set; }
-            public string RawContentFormat { get; set; }
-            public string TextSummaryFormat { get; set; }
+            public string SummaryFormat { get; set; }
+            public string BodyFormat { get; set; }
             public string AuthorFormat { get; set; }
         }
 
@@ -62,22 +62,22 @@ namespace Ae.Nuntium.Extractors
                     permalink = formatter.Format(_configuration.PermalinkFormat, parameters);
                 }
                 
-                string? rawContent = null;
-                if (_configuration.RawContentFormat != null)
+                string? summary = null;
+                if (_configuration.SummaryFormat != null)
                 {
-                    rawContent = formatter.Format(_configuration.RawContentFormat, parameters);
+                    summary = formatter.Format(_configuration.SummaryFormat, parameters);
+                }
+
+                string? body = null;
+                if (_configuration.BodyFormat != null)
+                {
+                    body = formatter.Format(_configuration.BodyFormat, parameters);
                 }
 
                 string? author = null;
                 if (_configuration.AuthorFormat != null)
                 {
                     author = formatter.Format(_configuration.AuthorFormat, parameters);
-                }
-
-                string? textSummary = null;
-                if (_configuration.TitleFormat != null)
-                {
-                    textSummary = formatter.Format(_configuration.TextSummaryFormat, parameters);
                 }
 
                 string? title = null;
@@ -88,8 +88,8 @@ namespace Ae.Nuntium.Extractors
 
                 extractedPosts.Add(new ExtractedPost(new Uri(permalink, UriKind.Absolute))
                 {
-                    RawContent = rawContent,
-                    TextSummary = textSummary,
+                    Body = body,
+                    Summary = summary,
                     Title = title,
                     Author = author,
                 });
