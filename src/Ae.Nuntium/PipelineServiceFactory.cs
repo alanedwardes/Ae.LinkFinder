@@ -117,6 +117,8 @@ namespace Ae.Nuntium
                     return ActivatorUtilities.CreateInstance<FilterEnricher>(_serviceProvider, GetConfiguration<FilterEnricher.Configuration>(type.Configuration));
                 case "Markdown":
                     return ActivatorUtilities.CreateInstance<MarkdownEnricher>(_serviceProvider);
+                case "HtmlEditor":
+                    return ActivatorUtilities.CreateInstance<HtmlEditorEnricher>(_serviceProvider, GetConfiguration<HtmlEditorEnricher.Configuration>(type.Configuration));
                 default:
                     throw new InvalidOperationException();
             }
