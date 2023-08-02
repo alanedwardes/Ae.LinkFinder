@@ -6,19 +6,9 @@ namespace Ae.Nuntium.Extractors
 {
     public static class HtmlNodeExtensions
     {
-        public static IList<HtmlNode> GetChildrenAndSelf(this HtmlNode node)
-        {
-            List<HtmlNode> list = new() { node };
-            foreach (var child in node.ChildNodes)
-            {
-                list.AddRange(GetChildrenAndSelf(child));
-            }
-            return list;
-        }
-
         public static void GetLinksAndMedia(this HtmlNode parent, Uri documentUri, Action<Uri> foundLink, Action<Uri> foundMedia)
         {
-            foreach (var node in parent.GetChildrenAndSelf())
+            foreach (var node in parent.DescendantsAndSelf())
             {
                 if (node.Name == "a")
                 {
@@ -87,7 +77,7 @@ namespace Ae.Nuntium.Extractors
 
         public static void MakeRelativeUrisAbsolute(this HtmlNode parent, Uri documentUri)
         {
-            foreach (var node in parent.GetChildrenAndSelf())
+            foreach (var node in parent.DescendantsAndSelf())
             {
                 if (node.Name == "a")
                 {

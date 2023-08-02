@@ -43,7 +43,7 @@ namespace Ae.Nuntium.Extractors
 
                 var toRemove = new HashSet<HtmlNode>();
 
-                foreach (var node in article.GetChildrenAndSelf())
+                foreach (var node in article.DescendantsAndSelf())
                 {
                     // Remove comments
                     if (node != article && node.GetAttributeValue<string>("role", null) == "article")
@@ -58,7 +58,7 @@ namespace Ae.Nuntium.Extractors
                 }
 
                 // Replace all emoji images with a span element + the emoji characters
-                foreach (var node in article.GetChildrenAndSelf())
+                foreach (var node in article.DescendantsAndSelf())
                 {
                     if (node.Name == "img")
                     {

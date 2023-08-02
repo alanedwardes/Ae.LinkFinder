@@ -19,7 +19,7 @@ namespace Ae.Nuntium.Extractors
                 tweet.MakeRelativeUrisAbsolute(sourceDocument.Address);
 
                 // Replace all emoji images with a span element + the emoji characters
-                foreach (var node in tweet.GetChildrenAndSelf())
+                foreach (var node in tweet.DescendantsAndSelf())
                 {
                     if (node.Name == "img")
                     {
