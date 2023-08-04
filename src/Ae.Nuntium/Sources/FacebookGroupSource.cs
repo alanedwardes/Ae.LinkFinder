@@ -57,8 +57,10 @@ namespace Ae.Nuntium.Sources
                 builder.KeyUp(Keys.Shift);
                 PressKey(Keys.Enter);
 
+                // Escape the login modal
+                PressKey(Keys.Escape);
+
                 // Scroll down the page to load a few more posts
-                PressKey(Keys.End);
                 PressKey(Keys.End);
                 PressKey(Keys.End);
                 PressKey(Keys.End);
