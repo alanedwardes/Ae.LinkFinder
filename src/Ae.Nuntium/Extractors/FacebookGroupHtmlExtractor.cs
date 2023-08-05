@@ -113,7 +113,8 @@ namespace Ae.Nuntium.Extractors
                     extractedPost.Avatar = avatarUri;
                 }
 
-                var content = article.SelectSingleNode(".//div[@data-ad-preview = 'message']");
+                // This selector covers the "large text on an image" self important posts
+                var content = article.SelectSingleNode(".//div[@data-ad-preview = 'message']") ?? article.SelectSingleNode(".//div[contains(@style, 'text-align')]");
                 if (content != null)
                 {
                     extractedPost.Body = content.InnerHtml;
