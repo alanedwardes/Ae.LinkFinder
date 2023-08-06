@@ -38,6 +38,16 @@ public sealed class FacebookGroupHtmlExtractorTests
     }
 
     [Fact]
+    public async Task ExtractPosts4()
+    {
+        var extractor = new FacebookGroupHtmlExtractor(NullLogger<FacebookGroupHtmlExtractor>.Instance);
+
+        var posts = await extractor.ExtractPosts(new SourceDocument { Body = File.ReadAllText("Files/group4.html") });
+
+        posts.Compare("Files/group4.json");
+    }
+
+    [Fact]
     public async Task ExtractPostsInvalidHtml()
     {
         var extractor = new FacebookGroupHtmlExtractor(NullLogger<FacebookGroupHtmlExtractor>.Instance);

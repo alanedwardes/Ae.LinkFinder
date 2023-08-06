@@ -50,6 +50,12 @@ namespace Ae.Nuntium.Extractors
                     {
                         toRemove.Add(node);
                     }
+
+                    // Remove "See more"
+                    if (node.GetAttributeValue<string>("role", null) == "button" && node.InnerText == "See more")
+                    {
+                        toRemove.Add(node);
+                    }
                 }
 
                 foreach (var node in toRemove)

@@ -56,12 +56,13 @@ namespace Ae.Nuntium.Destinations
 
             foreach (var post in posts)
             {
-                var parts = new[] { post.Summary ?? post.Body, post.Permalink.ToString() }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                var text = post.Summary ?? post.Body;
+                var permalink = post.Permalink.ToString();
 
                 // https://docs.rocket.chat/use-rocket.chat/workspace-administration/integrations
                 var payload = new RocketChatPayload
                 {
-                    Text = parts.Length == 0 ? null : string.Join("\n\n", parts),
+                    Text = text == null ? permalink : text + ' ' + $"[Permalink]({permalink})",
                     Alias = post.Author,
                     Avatar = post.Avatar
                 };
