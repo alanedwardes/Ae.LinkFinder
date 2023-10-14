@@ -43,8 +43,10 @@ namespace Ae.Nuntium
                 AutomaticDecompression = DecompressionMethods.All
             });
 
+            var logLevel = configuration.Pipelines.Any(x => x.Testing) ? LogLevel.Information : LogLevel.Warning;
+
             return services.AddHttpClient()
-                .AddLogging(x => x.AddConsole())
+                .AddLogging(x => x.AddConsole().SetMinimumLevel(logLevel))
                 .AddSingleton(x => x.GetRequiredService<IPipelineServiceFactory>().GetSeleniumDriver(configuration.SeleniumDriver))
                 .AddSingleton<IPipelineExecutor, PipelineExecutor>()
                 .AddSingleton<IPipelineServiceFactory, PipelineServiceFactory>()

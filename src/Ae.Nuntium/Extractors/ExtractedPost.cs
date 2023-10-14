@@ -44,6 +44,6 @@
         /// An optional set of media contained within the post.
         /// </summary>
         public ISet<Uri> Media { get; set; } = new HashSet<Uri>();
-        public override string ToString() => $"{Permalink} {Author}: {Summary}";
+        public override string ToString() => $"{Permalink} {Author}: {Summary ?? Body}";
     }
 }
