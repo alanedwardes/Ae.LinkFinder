@@ -36,7 +36,7 @@ namespace Ae.Nuntium
 
                 if (pipeline.Testing)
                 {
-                    _logger.LogInformation("Running {Sources} in test mode", string.Join(", ", sources.Select(x => x.ToString())));
+                    _logger.LogInformation("Running {Sources} in test mode ({Extractors} extractors, {Enrichers} enrichers, {Destinations} destinations)", string.Join(", ", sources.Select(x => x.ToString())), extractors.Count, enrichers.Count, destinations.Count);
                     await _pipelineExecutor.RunPipeline(sources, extractors, tracker, enrichers, destinations, cancellation);
                 }
                 else
