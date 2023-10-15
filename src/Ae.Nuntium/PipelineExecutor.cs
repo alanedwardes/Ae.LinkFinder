@@ -44,13 +44,14 @@ namespace Ae.Nuntium
                 return;
             }
 
-            // Enrich the posts, if an enricher was supplied
+            _logger.LogInformation("Found {Unseen} unseen posts of {Total} total from source {Sources}", unseenPosts.Count, posts.Count, string.Join(", ", sources.Select(x => x.ToString())));
+
             foreach (var enricher in enrichers)
             {
                 await enricher.EnrichExtractedPosts(unseenPosts, cancellation);
             }
 
-            _logger.LogInformation("Found {Unseen} unseen posts of {Total} total from source {Sources}", unseenLinks.Count, posts.Count, string.Join(", ", sources.Select(x => x.ToString())));
+            _logger.LogInformation("After enrichment there are {Total} posts, posting to {Destinations} destinations", unseenPosts.Count, destinations.Count);
 
             foreach (var destination in destinations)
             {

@@ -96,6 +96,8 @@ namespace Ae.Nuntium.Destinations
                     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
                 }, cancellation);
 
+                _logger.LogDebug("Full response from Rocket Chat: {ResponseCode} {ResponseBody}", response.StatusCode, await response.Content.ReadAsStringAsync(cancellation));
+
                 response.EnsureSuccessStatusCode();
             }
         }

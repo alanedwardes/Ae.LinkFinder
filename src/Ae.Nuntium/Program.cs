@@ -43,7 +43,7 @@ namespace Ae.Nuntium
                 AutomaticDecompression = DecompressionMethods.All
             });
 
-            var logLevel = configuration.Pipelines.Any(x => x.Testing) ? LogLevel.Information : LogLevel.Warning;
+            var logLevel = configuration.Pipelines.Any(x => x.Testing) ? LogLevel.Debug : LogLevel.Warning;
 
             return services.AddHttpClient()
                 .AddLogging(x => x.AddConsole().SetMinimumLevel(logLevel))
