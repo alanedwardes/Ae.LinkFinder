@@ -49,24 +49,7 @@ namespace Ae.Nuntium.Sources
                     return TimeSpan.FromSeconds(1 + random.NextDouble() * 3);
                 }
 
-                void PressKey(string key)
-                {
-                    builder.Pause(RandomShortTimeSpan());
-                    builder.KeyDown(key);
-                    builder.KeyUp(key);
-                }
-
-                await Task.Delay(RandomShortTimeSpan(), cancellation);
-
-                // Scroll down the page to load a few more posts
-                PressKey(Keys.End);
-                PressKey(Keys.End);
-                PressKey(Keys.End);
-                PressKey(Keys.End);
-
                 builder.Pause(RandomShortTimeSpan());
-
-                _logger.LogInformation("Executing input");
 
                 builder.Perform();
 
