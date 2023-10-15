@@ -43,6 +43,7 @@ namespace Ae.Nuntium.Enrichers
 
             foreach (var remove in toRemove)
             {
+                _logger.LogInformation("Post {Post} is older than MaxAgeDays={MaxAgeDays}, skipping", remove, _configuration.MaxAgeDays);
                 posts.Remove(remove);
             }
 
