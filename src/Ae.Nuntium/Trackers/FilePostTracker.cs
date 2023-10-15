@@ -46,7 +46,7 @@ namespace Ae.Nuntium.Trackers
 
         private async Task<IEnumerable<Uri>> ReadUris(CancellationToken cancellation)
         {
-            return (await File.ReadAllLinesAsync(_configuration.File, cancellation)).Select(x => new Uri(x));
+            return (await File.ReadAllLinesAsync(_configuration.File, cancellation)).Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => new Uri(x));
         }
     }
 }

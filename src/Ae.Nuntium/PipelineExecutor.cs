@@ -50,7 +50,7 @@ namespace Ae.Nuntium
                 await enricher.EnrichExtractedPosts(unseenPosts, cancellation);
             }
 
-            _logger.LogInformation("Found {Unseen} unseen links of {Total} total from source {Sources}", unseenLinks.Count, posts.Count, string.Join(", ", sources.Select(x => x.ToString())));
+            _logger.LogInformation("Found {Unseen} unseen posts of {Total} total from source {Sources}", unseenLinks.Count, posts.Count, string.Join(", ", sources.Select(x => x.ToString())));
 
             foreach (var destination in destinations)
             {

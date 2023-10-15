@@ -11,6 +11,12 @@ namespace Ae.Nuntium.Tests
         {
             var file = new FileInfo(Path.GetTempFileName());
 
+            using (var fs = file.OpenWrite())
+            using (var sr = new StreamWriter(fs))
+            {
+                await sr.WriteLineAsync(" ");
+            }
+
             try
             {
                 var tracker = new FilePostTracker(new FilePostTracker.Configuration { File = file.FullName });
