@@ -36,14 +36,14 @@ namespace Ae.Nuntium.Enrichers
                     }
                     else
                     {
-                        _logger.LogWarning("Post {Post} has no published date, so MaxAgeDays={MaxAgeDays} filter will have no effect", post, _configuration.MaxAgeDays);
+                        _logger.LogWarning("Post {Post} has no published date, so MaxAgeDays={MaxAgeDays} filter will have no effect", post.Permalink, _configuration.MaxAgeDays);
                     }
                 }
             }
 
             foreach (var remove in toRemove)
             {
-                _logger.LogInformation("Post {Post} is older than MaxAgeDays={MaxAgeDays}, skipping", remove, _configuration.MaxAgeDays);
+                _logger.LogInformation("Post {Post} is older than MaxAgeDays={MaxAgeDays}, skipping", remove.Permalink, _configuration.MaxAgeDays);
                 posts.Remove(remove);
             }
 
