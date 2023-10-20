@@ -17,7 +17,11 @@ namespace Ae.Nuntium
         {
             _logger.LogInformation("Getting links with sources {Sources}", string.Join(", ", sources.Select(x => x.ToString())));
 
-            var documents = await Task.WhenAll(sources.Select(x => x.GetContent(cancellation)));
+            var documents = new List<SourceDocument>();
+            foreach (var source in sources)
+            {
+                documents.Add(await source.GetContent(cancellation));
+            }
 
             var extractionTasks = documents.Select(document => extractors.Select(extractor => extractor.ExtractPosts(document)));
 
