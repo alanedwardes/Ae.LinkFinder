@@ -22,17 +22,17 @@ namespace Ae.Nuntium.Extractors
         {
             var regex = new Regex(_configuration.Pattern);
 
-            var posts = new List<ExtractedPost>();
+            var posts = new Dictionary<Uri, ExtractedPost>();
 
             foreach (Match match in regex.Matches(sourceDocument.Body))
             {
                 if (UriExtensions.TryCreateAbsoluteUri(match.Value, sourceDocument.Address, out var absoluteUri))
                 {
-                    posts.Add(new ExtractedPost(absoluteUri));
+                    posts[absoluteUri] = new ExtractedPost(absoluteUri);
                 }
             }
 
-            return Task.FromResult<IList<ExtractedPost>>(posts);
+            return Task.FromResult<IList<ExtractedPost>>(posts.Values.ToArray());
         }
     }
 }
