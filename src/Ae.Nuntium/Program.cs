@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Net;
+using System.Net.Http.Headers;
+using System.Reflection;
 
 namespace Ae.Nuntium
 {
@@ -38,10 +40,15 @@ namespace Ae.Nuntium
         {
             var services = new ServiceCollection();
 
-            services.AddHttpClient("GZIP_CLIENT").ConfigurePrimaryHttpMessageHandler(_ => new SocketsHttpHandler
-            {
-                AutomaticDecompression = DecompressionMethods.All
-            });
+            services.AddHttpClient("GZIP_CLIENT")
+                .ConfigurePrimaryHttpMessageHandler(_ => new SocketsHttpHandler
+                {
+                    AutomaticDecompression = DecompressionMethods.All
+                })
+                .ConfigureHttpClient(httpClient =>
+                {
+                    httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Ae.Nuntium", typeof(Program).Assembly.GetName().Version.ToString(3)));
+                });
 
             var logLevel = configuration.Pipelines.Any(x => x.Testing) ? LogLevel.Debug : LogLevel.Warning;
 
