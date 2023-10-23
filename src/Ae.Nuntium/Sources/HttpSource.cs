@@ -25,7 +25,10 @@ namespace Ae.Nuntium.Sources
         {
             using var httpClient = _httpClientFactory.CreateClient("GZIP_CLIENT");
             using var response = await httpClient.GetAsync(_configuration.Address, cancellation);
-            response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"Response status code for GET {_configuration.Address} does not indicate success: {(int)response.StatusCode} ({response.StatusCode}).");
+            }
 
             return new SourceDocument
             {
