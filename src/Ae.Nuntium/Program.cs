@@ -47,7 +47,7 @@ namespace Ae.Nuntium
                 })
                 .ConfigureHttpClient(httpClient =>
                 {
-                    httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Ae.Nuntium", typeof(Program).Assembly.GetName().Version.ToString(3)));
+                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36");
                 });
 
             var logLevel = configuration.Pipelines.Any(x => x.Testing) ? LogLevel.Debug : LogLevel.Warning;
