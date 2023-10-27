@@ -39,14 +39,14 @@ namespace Ae.Nuntium
             var services = new ServiceCollection();
 
             services.AddHttpClient("GZIP_CLIENT")
-                .AddHttpMessageHandler<ExceptionDelegatingHandler>()
+                .AddHttpMessageHandler(() => new ExceptionDelegatingHandler())
+                .AddHttpMessageHandler(() => new GlobalTimeoutDelegatingHandler())
                 .ConfigurePrimaryHttpMessageHandler(_ => new SocketsHttpHandler
                 {
                     AutomaticDecompression = DecompressionMethods.All
                 })
                 .ConfigureHttpClient(httpClient =>
                 {
-                    httpClient.Timeout = TimeSpan.FromSeconds(5);
                     httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36");
                 });
 

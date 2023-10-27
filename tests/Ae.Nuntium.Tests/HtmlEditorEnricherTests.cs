@@ -1,5 +1,6 @@
 ﻿using Ae.Nuntium.Enrichers;
 using Ae.Nuntium.Extractors;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Ae.Nuntium.Tests
@@ -15,7 +16,7 @@ namespace Ae.Nuntium.Tests
                 Summary = "<img src=\"test\"/>wibble"
             };
 
-            var enricher = new HtmlEditorEnricher(new HtmlEditorEnricher.Configuration { StripImages = true });
+            var enricher = new HtmlEditorEnricher(NullLogger<HtmlEditorEnricher>.Instance, new HtmlEditorEnricher.Configuration { StripImages = true });
 
             await enricher.EnrichExtractedPosts(new[] { post }, CancellationToken.None);
 
@@ -32,7 +33,7 @@ namespace Ae.Nuntium.Tests
                 Summary = "<p>test1</p><p>test2</p>"
             };
 
-            var enricher = new HtmlEditorEnricher(new HtmlEditorEnricher.Configuration { KeepFirstParagraph = true });
+            var enricher = new HtmlEditorEnricher(NullLogger<HtmlEditorEnricher>.Instance, new HtmlEditorEnricher.Configuration { KeepFirstParagraph = true });
 
             await enricher.EnrichExtractedPosts(new[] { post }, CancellationToken.None);
 

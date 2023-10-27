@@ -1,10 +1,12 @@
 ﻿using Ae.Nuntium.Extractors;
 using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 
 namespace Ae.Nuntium.Enrichers
 {
     public sealed class HtmlEditorEnricher : IExtractedPostEnricher
     {
+        private readonly ILogger<HtmlEditorEnricher> _logger;
         private readonly Configuration _configuration;
 
         public sealed class Configuration
@@ -13,8 +15,9 @@ namespace Ae.Nuntium.Enrichers
             public bool KeepFirstParagraph { get; set; }
         }
 
-        public HtmlEditorEnricher(Configuration configuration)
+        public HtmlEditorEnricher(ILogger<HtmlEditorEnricher> logger, Configuration configuration)
         {
+            _logger = logger;
             _configuration = configuration;
         }
 
@@ -46,7 +49,7 @@ namespace Ae.Nuntium.Enrichers
                 var images = html.DocumentNode.SelectNodes(".//img");
                 if (images != null)
                 {
-                    html.DocumentNode.RemoveChildren(images);
+                    RemoveChildren(html.DocumentNode, images);
                 }
             }
 
@@ -55,11 +58,23 @@ namespace Ae.Nuntium.Enrichers
                 var paragraphs = html.DocumentNode.SelectNodes(".//p[position() > 1]");
                 if (paragraphs != null)
                 {
-                    html.DocumentNode.RemoveChildren(paragraphs);
+                    RemoveChildren(html.DocumentNode, paragraphs);
                 }
             }
 
             return html.DocumentNode.OuterHtml;
+        }
+
+        public void RemoveChildren(HtmlNode parent, HtmlNodeCollection children)
+        {
+            try
+            {
+                parent.RemoveChildren(children);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unable to remove child nodes");
+            }
         }
     }
 }
