@@ -43,8 +43,12 @@ namespace Ae.Nuntium.Enrichers
 
             using var client = _factory.CreateClient("GZIP_CLIENT");
 
-            var response = await client.GetAsync(pageAddress, cancellation);
-            if (!response.IsSuccessStatusCode)
+            HttpResponseMessage response;
+            try
+            {
+                response = await client.GetAsync(pageAddress, cancellation);
+            }
+            catch (HttpRequestException)
             {
                 return info;
             }

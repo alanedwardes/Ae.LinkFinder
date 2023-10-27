@@ -123,8 +123,6 @@ namespace Ae.Nuntium.Destinations
             {
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
             }, cancellation);
-
-            response.EnsureSuccessStatusCode();
         }
     }
 }

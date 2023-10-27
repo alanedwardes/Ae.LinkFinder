@@ -1,5 +1,4 @@
 ﻿using Ae.Nuntium.Extractors;
-using Ae.Nuntium.Services;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -97,8 +96,6 @@ namespace Ae.Nuntium.Destinations
                 }, cancellation);
 
                 _logger.LogDebug("Full response from Rocket Chat: {ResponseCode} {ResponseBody}", response.StatusCode, await response.Content.ReadAsStringAsync(cancellation));
-
-                response.EnsureSuccessStatusCode();
             }
         }
     }
