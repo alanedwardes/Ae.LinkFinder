@@ -24,17 +24,26 @@ namespace Ae.Nuntium.Sources
         public async Task<SourceDocument> GetContent(CancellationToken cancellation)
         {
             using var httpClient = _httpClientFactory.CreateClient("GZIP_CLIENT");
-            using var response = await httpClient.GetAsync(_configuration.Address, cancellation);
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new HttpRequestException($"Response status code for GET {_configuration.Address} does not indicate success: {(int)response.StatusCode} ({response.StatusCode}).");
-            }
 
-            return new SourceDocument
+            var requestDescription = $"GET {_configuration.Address}";
+            try
             {
-                Body = await response.Content.ReadAsStringAsync(cancellation),
-                Address = response.RequestMessage.RequestUri
-            };
+                using var response = await httpClient.GetAsync(_configuration.Address, cancellation);
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException($"Response status code for {requestDescription} does not indicate success: {(int)response.StatusCode} ({response.StatusCode}).");
+                }
+
+                return new SourceDocument
+                {
+                    Body = await response.Content.ReadAsStringAsync(cancellation),
+                    Address = response.RequestMessage.RequestUri
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException($"Got exception when sending {requestDescription} does not indicate success.", ex);
+            }
         }
 
         public override string ToString() => _configuration.Address.ToString();
