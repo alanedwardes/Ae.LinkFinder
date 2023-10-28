@@ -13,7 +13,7 @@
             }
             catch (OperationCanceledException) when (timeoutSource.IsCancellationRequested)
             {
-                throw new TimeoutException("Request timed out after 5 seconds");
+                throw new TimeoutException($"Request timed out after {timeout} seconds");
             }
         }
     }
