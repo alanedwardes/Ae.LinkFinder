@@ -2,8 +2,6 @@
 {
     public sealed class MockHttpClientFactory : IHttpClientFactory
     {
-        public DelegatingHandler MockHandler { get; private set; }
-
         private sealed class MockDelegatingHandler : DelegatingHandler
         {
             private readonly Func<HttpRequestMessage, HttpResponseMessage> _mockResponder;
@@ -13,8 +11,19 @@
             protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => Task.FromResult(_mockResponder(request));
         }
 
-        public MockHttpClientFactory(Func<HttpRequestMessage, HttpResponseMessage> mockResponder) => MockHandler = new MockDelegatingHandler(mockResponder);
+        private readonly IList<DelegatingHandler> _createdHandlers = new List<DelegatingHandler>();
 
-        public HttpClient CreateClient(string name) => new(MockHandler);
+        public Func<HttpRequestMessage, HttpResponseMessage> MockResponder { get; }
+
+        public DelegatingHandler CreateHandler()
+        {
+            var handler = new ExceptionDelegatingHandler { InnerHandler = new MockDelegatingHandler(MockResponder) };
+            _createdHandlers.Add(handler);
+            return handler;
+        }
+
+        public MockHttpClientFactory(Func<HttpRequestMessage, HttpResponseMessage> mockResponder) => MockResponder = mockResponder;
+
+        public HttpClient CreateClient(string name) => new(CreateHandler());
     }
 }

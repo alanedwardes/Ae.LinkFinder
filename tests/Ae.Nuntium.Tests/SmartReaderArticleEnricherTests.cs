@@ -29,7 +29,7 @@ namespace Ae.Nuntium.Tests
                 throw new InvalidOperationException();
             });
 
-            Reader.SetBaseHttpClientHandler(factory.MockHandler);
+            Reader.SetBaseHttpClientHandler(factory.CreateHandler());
 
             var enricher = new SmartReaderArticleEnricher(NullLogger<SmartReaderArticleEnricher>.Instance, factory);
 
