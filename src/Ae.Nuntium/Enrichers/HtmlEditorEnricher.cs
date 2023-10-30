@@ -25,18 +25,30 @@ namespace Ae.Nuntium.Enrichers
         {
             foreach (var post in posts)
             {
-                if (post.Summary != null)
+                try
                 {
-                    post.Summary = EditHtml(post.Summary);
+                    ProcessPost(post);
                 }
-
-                if (post.Body != null)
+                catch (Exception ex)
                 {
-                    post.Body = EditHtml(post.Body);
+                    _logger.LogWarning(ex, "Unable to enrich {Post}", post);
                 }
             }
 
             return Task.CompletedTask;
+        }
+
+        private void ProcessPost(ExtractedPost post)
+        {
+            if (post.Summary != null)
+            {
+                post.Summary = EditHtml(post.Summary);
+            }
+
+            if (post.Body != null)
+            {
+                post.Body = EditHtml(post.Body);
+            }
         }
 
         public string EditHtml(string source)
@@ -46,35 +58,25 @@ namespace Ae.Nuntium.Enrichers
 
             if (_configuration.StripImages)
             {
-                var images = html.DocumentNode.SelectNodes(".//img");
-                if (images != null)
-                {
-                    RemoveChildren(html.DocumentNode, images);
-                }
+                RemoveChildren(html.DocumentNode, ".//img");
             }
-
             if (_configuration.KeepFirstParagraph)
             {
-                var paragraphs = html.DocumentNode.SelectNodes(".//p[position() > 1]");
-                if (paragraphs != null)
-                {
-                    RemoveChildren(html.DocumentNode, paragraphs);
-                }
+                RemoveChildren(html.DocumentNode, ".//p[position() > 1]");
             }
 
             return html.DocumentNode.OuterHtml;
         }
 
-        public void RemoveChildren(HtmlNode parent, HtmlNodeCollection children)
+        public void RemoveChildren(HtmlNode parent, string selector)
         {
-            try
+            HtmlNode node;
+            do
             {
-                parent.RemoveChildren(children);
+                node = parent.SelectSingleNode(selector);
+                node?.ParentNode.RemoveChild(node);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Unable to remove child nodes");
-            }
+            while (node != null);
         }
     }
 }

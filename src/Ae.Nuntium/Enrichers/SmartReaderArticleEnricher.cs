@@ -28,7 +28,7 @@ namespace Ae.Nuntium.Enrichers
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogWarning(ex, "Unable to enrich post {Permalink}", post.Permalink);
+                    _logger.LogWarning(ex, "Unable to enrich post {Post}", post);
                 }
             }
         }
