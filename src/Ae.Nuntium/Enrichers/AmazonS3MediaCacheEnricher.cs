@@ -50,8 +50,16 @@ namespace Ae.Nuntium.Enrichers
 
             foreach (var mediaUri in posts.SelectMany(ExtractMediaFromPost).Distinct())
             {
-                // Do this sync so as not to overload the downstream service
-                uriMap.Add(mediaUri, await CacheMedia(mediaUri, cancellation));
+                try
+                {
+                    // Do this sync so as not to overload the downstream service
+                    uriMap.Add(mediaUri, await CacheMedia(mediaUri, cancellation));
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Got exception when attempting to cache {MediaUri}", mediaUri);
+                    uriMap.Add(mediaUri, mediaUri);
+                }
             }
 
             foreach (var post in posts)
@@ -75,14 +83,7 @@ namespace Ae.Nuntium.Enrichers
             var objectKey = Guid.NewGuid().ToString();
 
             using var httpClient = _clientFactory.CreateClient("GZIP_CLIENT");
-
             using var response = await httpClient.GetAsync(mediaUri, cancellation);
-            if (!response.IsSuccessStatusCode)
-            {
-                _logger.LogWarning("Got {StatusCode} when attempting to download {MediaUri}", response.StatusCode, mediaUri);
-                return mediaUri;
-            }
-
             using var stream = await response.Content.ReadAsStreamAsync(cancellation);
 
             var putObjectResponse = await _storage.PutObjectAsync(new PutObjectRequest

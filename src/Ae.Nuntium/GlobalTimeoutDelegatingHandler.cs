@@ -4,7 +4,8 @@
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            using var timeoutSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            var timeout = TimeSpan.FromSeconds(request.Method == HttpMethod.Get ? 5 : 10);
+            using var timeoutSource = new CancellationTokenSource(timeout);
             using var newSource = CancellationTokenSource.CreateLinkedTokenSource(timeoutSource.Token, cancellationToken);
             try
             {
@@ -12,7 +13,7 @@
             }
             catch (OperationCanceledException) when (timeoutSource.IsCancellationRequested)
             {
-                throw new TimeoutException("Request timed out after 5 seconds");
+                throw new TimeoutException($"Request timed out after {timeout} seconds");
             }
         }
     }
