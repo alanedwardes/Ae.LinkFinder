@@ -52,7 +52,14 @@ namespace Ae.Nuntium
 
             foreach (var enricher in enrichers)
             {
-                await enricher.EnrichExtractedPosts(unseenPosts, cancellation);
+                try
+                {
+                    await enricher.EnrichExtractedPosts(unseenPosts, cancellation);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Enricher {Enricher} failed", enricher);
+                }
             }
 
             _logger.LogInformation("After enrichment there are {Total} posts, posting to {Destinations} destinations", unseenPosts.Count, destinations.Count);
