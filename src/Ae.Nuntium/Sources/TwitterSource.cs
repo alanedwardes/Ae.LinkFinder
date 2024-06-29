@@ -33,7 +33,7 @@ namespace Ae.Nuntium.Sources
                 _logger.LogInformation("Loading {Address}", _configuration.ProfileAddress);
 
                 // Load the login page first, so that Chrome allows us to set cookies
-                driver.Navigate().GoToUrl("https://twitter.com/i/flow/login");
+                driver.Navigate().GoToUrl("https://x.com/i/flow/login");
                 driver.Manage().Cookies.AddCookie(CreateAuthCookie());
 
                 // Wait a little while
@@ -64,7 +64,7 @@ namespace Ae.Nuntium.Sources
 
         private Cookie CreateAuthCookie()
         {
-            return new Cookie("auth_token", _configuration.AuthToken, ".twitter.com", "/", DateTime.UtcNow.AddYears(1), true, true, "None");
+            return new Cookie("auth_token", _configuration.AuthToken, ".x.com", "/", DateTime.UtcNow.AddYears(1), true, true, "None");
         }
 
         public override string ToString() => _configuration.ProfileAddress.ToString();
